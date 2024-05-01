@@ -1,0 +1,92 @@
+.Register-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+
+}
+
+.cube {
+    background-color: #1a1b2d;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    position: relative;
+    flex-direction: column;
+    width: 410px; 
+    height: 900px;
+    text-align: center;
+    
+}
+
+.logo {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    top: 160px;
+}
+
+.back {
+    width:400px;
+    height: auto;
+    position: absolute; 
+    z-index: 1; 
+    top: 55px;
+    
+}
+
+
+input[type="user"],
+input[type="email"],
+input[type="pass"] {
+  width: 300px;
+  height: 25px;
+  padding: 10px;
+  top: 300px;
+  margin-bottom: 10px;
+  border: 1px solid #626477; 
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #626477;
+  outline: none; 
+  border-radius: 6px;
+}
+
+input[type="user"]::placeholder,
+input[type="email"]::placeholder,
+input[type="pass"]::placeholder {
+  color: #626477;
+}
+
+button {
+  padding: 10px 40px;
+  border: none;
+  border-radius: 50px;
+  background-color: #9c69fc93;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.6s ease;
+}
+
+button:hover {
+  background-color: #a277ca;
+}
+
+p {
+  color: #595263;
+  margin: 10px 0;
+}
+
+.forgot-password {
+    color: #595263;
+    text-decoration: none;
+    margin-left: 190px; 
+  }
+
+.link-register {
+    color: #763aca;
+    text-decoration: none;
+}
+
+.register-text {
+    margin-top: 30px;
+}
