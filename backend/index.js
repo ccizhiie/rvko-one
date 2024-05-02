@@ -1,9 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const User = require("./config");
+const { del, User, Foto, bucket, time } = require("./config");
+const multer = require("multer");
+const otpGenerator = require("otp-generator");
 const session = require("express-session");
 const app = express();
+
+const memory = multer.memoryStorage();
+const upload = multer({ storage: memory });
 
 app.use(
   session({
@@ -18,9 +23,20 @@ app.use(cors());
 app.post("/");
 
 app.post("/register", async (req, res) => {
-  const data = req.body;
+  const { email, username, password } = req.body;
   try {
-    await User.add(data);
+    const emailExists = await User.where("email", "==", email).get();
+    const usernameExists = await User.where("username", "==", username).get();
+
+    if (!emailExists.empty) {
+      return res.status(400).json({ error: "Email sudah digunakan." });
+    }
+
+    if (!usernameExists.empty) {
+      return res.status(400).json({ error: "Username sudah digunakan." });
+    }
+
+    await User.add({ email, username, password });
     res.send({ msg: "User Added" });
   } catch (error) {
     console.error("Error:", error);
@@ -86,6 +102,99 @@ app.post("/home/profil", async (req, res) => {
     return res.send({ message: "data sucefull updated" });
   } catch (error) {
     console.error("Error:", error);
+    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+  }
+});
+
+app.post("/forgotpassword/email", async (req, res) => {
+  const email = req.body.email;
+  req.session.email = email;
+  let otp = otpGenerator.generate(4, {
+    upperCase: false,
+    specialChars: false,
+  });
+  otp = otp.toUpperCase();
+  const timestamp = time;
+  try {
+    const querySnapshot = await User.where("email", "==", email).get();
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+
+      if (doc.exists) {
+        await doc.ref.update({
+          otp: otp,
+          timestamp: timestamp,
+        });
+
+        return res.status(200).send("Data updated successfully.");
+      } else {
+        res.status(404).json({ error: "folder empty." });
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+  }
+});
+
+app.post("/forgotpassword/otp", async (req, res) => {
+  const email = req.session.email;
+  const newotp = req.body.otp;
+  const realtime = time.toDate();
+  try {
+    const querySnapshot = await User.where("email", "==", email).get();
+    if (!querySnapshot.empty) {
+      const realotp = querySnapshot.docs[0].data().otp;
+      const timestroge = querySnapshot.docs[0].data().timestamp;
+      const newtime = new Date(timestroge.toDate().getTime() + 5 * 60 * 1000);
+
+      if (newotp === realotp && newtime >= realtime) {
+        const doc = querySnapshot.docs[0];
+        await doc.ref.update({
+          change: true,
+          otp: del,
+          timestamp: del,
+        });
+        return res.status(200).send("Data updated successfully.");
+      }
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Terjadi kesalahan dalam server." } + error);
+  }
+});
+
+app.post("/forgotpassword/password", async (req, res) => {});
+
+// COBA COBA
+// COBA COBA
+// COBA COBA
+app.post("/upload", upload.single("file"), async (req, res) => {
+  try {
+    const File = req.file;
+    if (!File) {
+      return res.status(400).send("No file uploaded.");
+    }
+
+    try {
+      const fileRef = bucket.file("foto/" + File.originalname);
+      await fileRef.save(File.buffer, {
+        contentType: File.mimetype,
+      });
+      const fileData = {
+        fileName: File.originalname,
+        filePath: `foto/${File.originalname}`,
+        like: 0,
+        dislike: 0,
+        contentType: File.mimetype,
+      };
+      await Foto.add(fileData);
+      return res.status(200).send("File uploaded to Firebase Storage.");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Error uploading file to Firebase Storage.");
+    }
+  } catch (error) {
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
   }
 });
