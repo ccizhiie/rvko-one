@@ -1,19 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../mobile.css";
-import Logo from "../Asset/logo.png";
+import "../forgoto.css";
 import Back from "../Asset/star.png";
+import Arrow from "../Asset/arrow.png";
 // import Eye from "../Asset/eye.png"
 
-const Login = () => {
+const Forgot2 = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    email: "",
   });
 
-  const { username, password } = formData;
+  const { email } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,8 +22,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/register", {
-        username,
-        password,
+        email,
       });
       navigate("/register");
       console.log(response.data);
@@ -36,35 +34,24 @@ const Login = () => {
     <div className="Register-container">
       <form onSubmit={handleSubmit}>
       <div className="cube">
-        <img src={Logo} alt="Logo" className="logo" />
+        <img src={Arrow} alt="arrow" className="arrow"/>
         <img src={Back} alt="back" className="back" />
-
+        <div className="cube2">
+            <h2>Forgot Passwoard</h2>
+            <div className="cube-paragraf">
+                <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
+            </div>
         <input
-            type="user"
-            name="username"
+            type="email"
+            name="email"
             onChange={handleChange}
-            placeholder="Username or Email Adress"
+            placeholder="Email Adress"
           />
           <br />
-          <input
-            type="pass"
-            name="password"
-            onChange={handleChange}
-            placeholder="Password"
-          />
-        <Link to="/" className="forgot-password">
-          Forgot Password?
-        </Link>
         <br />
-        <button type="submit">Login</button>
+        <button type="submit">Send</button>
+        
         <br />
-        <div className="register-text">
-          <p>
-            Don't have an Acount?{" "}
-            <Link to="/Register" className="link-register">
-              Register
-            </Link>
-          </p>
         </div>
       </div>
      </form>
@@ -72,4 +59,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgot2;
