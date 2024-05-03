@@ -10,20 +10,27 @@ const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
     password: "",
   });
 
-  const { username, password } = formData;
+  const { username, password, email } = formData;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+      email: name === "username" ? value : prevData.email,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/register", {
+      const response = await axios.post("http://localhost:4000/login", {
         username,
+        email,
         password,
       });
       navigate("/register");
@@ -35,11 +42,11 @@ const Login = () => {
   return (
     <div className="Register-container">
       <form onSubmit={handleSubmit}>
-      <div className="cube">
-        <img src={Logo} alt="Logo" className="logo" />
-        <img src={Back} alt="back" className="back" />
+        <div className="cube">
+          <img src={Logo} alt="Logo" className="logo" />
+          <img src={Back} alt="back" className="back" />
 
-        <input
+          <input
             type="user"
             name="username"
             onChange={handleChange}
@@ -52,22 +59,22 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Password"
           />
-        <Link to="/" className="forgot-password">
-          Forgot Password?
-        </Link>
-        <br />
-        <button type="submit">Login</button>
-        <br />
-        <div className="register-text">
-          <p>
-            Don't have an Acount?{" "}
-            <Link to="/Register" className="link-register">
-              Register
-            </Link>
-          </p>
+          <Link to="/" className="forgot-password">
+            Forgot Password?
+          </Link>
+          <br />
+          <button type="submit">Login</button>
+          <br />
+          <div className="register-text">
+            <p>
+              Don't have an Acount?{" "}
+              <Link to="/Register" className="link-register">
+                Register
+              </Link>
+            </p>
+          </div>
         </div>
-      </div>
-     </form>
+      </form>
     </div>
   );
 };
