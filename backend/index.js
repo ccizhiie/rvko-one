@@ -11,6 +11,33 @@ const app = express();
 const memory = multer.memoryStorage();
 const upload = multer({ storage: memory });
 
+async function sendOTPByEmail(email, otp) {
+  var transport = nodemailer.createTransport({
+    service: "gmail",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "teamdua2222@gmail.com",
+      pass: "dmfdyaygywssjysc",
+    },
+  });
+
+  var mailOptions = {
+    from: "teamdua2222@gmail.com",
+    to: email,
+    subject: "Kode OTP Anda",
+    text: `Kode OTP Anda adalah: ${otp}`,
+  };
+
+  transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log("Gagal mengirim email: ", error);
+    } else {
+      console.log("Email berhasil dikirim: ", info.response);
+    }
+  });
+}
+
 app.use(
   session({
     secret: "rT6x#7$Gv9zPq2*wAe5L",
@@ -126,7 +153,7 @@ app.post("/forgotpassword/email", async (req, res) => {
           otp: otp,
           timestamp: timestamp,
         });
-
+        sendOTPByEmail(email, otp);
         return res.status(200).send("Data updated successfully.");
       } else {
         res.status(404).json({ error: "folder empty." });
