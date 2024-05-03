@@ -4,6 +4,7 @@ const cors = require("cors");
 const { del, User, Foto, bucket, time } = require("./config");
 const multer = require("multer");
 const otpGenerator = require("otp-generator");
+const nodemailer = require("nodemailer");
 const session = require("express-session");
 const app = express();
 
@@ -164,7 +165,16 @@ app.post("/forgotpassword/otp", async (req, res) => {
   }
 });
 
-app.post("/forgotpassword/password", async (req, res) => {});
+app.post("/forgotpassword/password", async (req, res) => {
+  const password = req.body.password;
+  const email = req.session.email;
+  try {
+    const querySnapshot = await User.where("email", "==", email).get();
+    const change = querySnapshot.docs[0].change;
+    if (change === true) {
+    }
+  } catch (error) {}
+});
 
 // COBA COBA
 // COBA COBA

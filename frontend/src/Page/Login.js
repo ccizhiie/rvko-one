@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { React, useState } from "react";
+import axios from "axios";
 import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
@@ -21,7 +22,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/register", {
+      const response = await axios.post("http://localhost:4000/login", {
         username,
         password,
       });
@@ -34,11 +35,11 @@ const Login = () => {
   return (
     <div className="Register-container">
       <form onSubmit={handleSubmit}>
-      <div className="cube">
-        <img src={Logo} alt="Logo" className="logo" />
-        <img src={Back} alt="back" className="back" />
+        <div className="cube">
+          <img src={Logo} alt="Logo" className="logo" />
+          <img src={Back} alt="back" className="back" />
 
-        <input
+          <input
             type="user"
             name="username"
             onChange={handleChange}
@@ -51,22 +52,22 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Password"
           />
-        <Link to="/" className="forgot-password">
-          Forgot Password?
-        </Link>
-        <br />
-        <button type="submit">Login</button>
-        <br />
-        <div className="register-text">
-          <p>
-            Don't have an Acount?{" "}
-            <Link to="/Register" className="link-register">
-              Register
-            </Link>
-          </p>
+          <Link to="/" className="forgot-password">
+            Forgot Password?
+          </Link>
+          <br />
+          <button type="submit">Login</button>
+          <br />
+          <div className="register-text">
+            <p>
+              Don't have an Acount?{" "}
+              <Link to="/Register" className="link-register">
+                Register
+              </Link>
+            </p>
+          </div>
         </div>
-      </div>
-     </form>
+      </form>
     </div>
   );
 };
