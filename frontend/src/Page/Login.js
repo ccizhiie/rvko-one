@@ -10,13 +10,19 @@ const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
     password: "",
   });
 
-  const { username, password } = formData;
+  const { username, password, email } = formData;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+      email: name === "username" ? value : prevData.email,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -24,6 +30,7 @@ const Login = () => {
     try {
       const response = await axios.post("http://localhost:4000/login", {
         username,
+        email,
         password,
       });
       navigate("/register");
