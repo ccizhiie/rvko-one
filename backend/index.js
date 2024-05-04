@@ -13,12 +13,12 @@ const upload = multer({ storage: memory });
 
 async function sendOTPByEmail(email, otp) {
   var transport = nodemailer.createTransport({
-    service: "gmail",
+    service: "Gmail",
     port: 587,
     secure: false,
     auth: {
       user: "teamdua2222@gmail.com",
-      pass: "dmfdyaygywssjysc",
+      pass: "srhwtbsjpfmanmzq",
     },
   });
 
@@ -26,7 +26,10 @@ async function sendOTPByEmail(email, otp) {
     from: "teamdua2222@gmail.com",
     to: email,
     subject: "Kode OTP Anda",
-    text: `Kode OTP Anda adalah: ${otp}`,
+    html: `<p style="text-align: center; font-size: 24px;">Kode OTP Anda adalah:</p>
+    <p style="text-align: center; font-size: 36px; font-weight: bold;">${otp}</p>
+    <p style="text-align: center; font-size: 16px;">Kode OTP akan kadaluarsa dalam 5 menit</p>
+  `,
   };
 
   transport.sendMail(mailOptions, (error, info) => {
@@ -153,8 +156,8 @@ app.post("/forgotpassword/email", async (req, res) => {
           otp: otp,
           timestamp: timestamp,
         });
-        sendOTPByEmail(email, otp);
-        return res.status(200).send("Data updated successfully.");
+        // sendOTPByEmail(email, otp);
+        return res.status(200).send("Data updated successfully." + otp);
       } else {
         res.status(404).json({ error: "folder empty." });
       }
@@ -166,7 +169,7 @@ app.post("/forgotpassword/email", async (req, res) => {
 
 app.post("/forgotpassword/otp", async (req, res) => {
   const email = req.session.email;
-  const newotp = req.body.otp;
+  const otp = req.body.otp;
   const realtime = time.toDate();
   try {
     const querySnapshot = await User.where("email", "==", email).get();
@@ -175,7 +178,7 @@ app.post("/forgotpassword/otp", async (req, res) => {
       const timestroge = querySnapshot.docs[0].data().timestamp;
       const newtime = new Date(timestroge.toDate().getTime() + 5 * 60 * 1000);
 
-      if (newotp === realotp && newtime >= realtime) {
+      if (otp === realotp && newtime >= realtime) {
         const doc = querySnapshot.docs[0];
         await doc.ref.update({
           change: true,
@@ -183,6 +186,8 @@ app.post("/forgotpassword/otp", async (req, res) => {
           timestamp: del,
         });
         return res.status(200).send("Data updated successfully.");
+      } else {
+        return res.status(200).send("code OTP salah atau telah kadaluarsa.");
       }
     }
   } catch (error) {
@@ -195,12 +200,29 @@ app.post("/forgotpassword/otp", async (req, res) => {
 app.post("/forgotpassword/password", async (req, res) => {
   const password = req.body.password;
   const email = req.session.email;
+  console.log(email);
   try {
     const querySnapshot = await User.where("email", "==", email).get();
-    const change = querySnapshot.docs[0].change;
-    if (change === true) {
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      const change = doc.data().change; // Mengambil nilai 'change' dari dokumen
+      if (change === true) {
+        await doc.ref.update({
+          change: false,
+          password: password,
+        });
+        return res.status(200).send("Data updated successfully.");
+      } else {
+        return res.status(400).send("Change flag is not true.");
+      }
+    } else {
+      return res.status(404).send("User not found.");
     }
-  } catch (error) {}
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Terjadi kesalahan dalam server.", detail: error });
+  }
 });
 
 // COBA COBA
