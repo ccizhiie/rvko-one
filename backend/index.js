@@ -11,18 +11,19 @@ const app = express();
 const memory = multer.memoryStorage();
 const upload = multer({ storage: memory });
 
-async function sendOTPByEmail(email, otp) {
-  var transport = nodemailer.createTransport({
+async function sendOTP(email, otp) {
+  const transporter = nodemailer.createTransport({
     service: "Gmail",
-    port: 587,
+    host: "smtp.gmail.com",
+    port: 25,
     secure: false,
     auth: {
       user: "teamdua2222@gmail.com",
-      pass: "srhwtbsjpfmanmzq",
+      pass: "mocvtlumyjpxowze",
     },
   });
 
-  var mailOptions = {
+  const mailOptions = {
     from: "teamdua2222@gmail.com",
     to: email,
     subject: "Kode OTP Anda",
@@ -32,7 +33,7 @@ async function sendOTPByEmail(email, otp) {
   `,
   };
 
-  transport.sendMail(mailOptions, (error, info) => {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log("Gagal mengirim email: ", error);
     } else {
@@ -156,14 +157,16 @@ app.post("/forgotpassword/email", async (req, res) => {
           otp: otp,
           timestamp: timestamp,
         });
-        // sendOTPByEmail(email, otp);
+        await sendOTP(email, otp);
         return res.status(200).send("Data updated successfully." + otp);
       } else {
-        res.status(404).json({ error: "folder empty." });
+        res.status(404);
       }
     }
   } catch (error) {
-    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+    return res
+      .status(500)
+      .json({ error: "Terjadi kesalahan dalam server." } + error);
   }
 });
 
@@ -205,7 +208,7 @@ app.post("/forgotpassword/password", async (req, res) => {
     const querySnapshot = await User.where("email", "==", email).get();
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
-      const change = doc.data().change; // Mengambil nilai 'change' dari dokumen
+      const change = doc.data().change;
       if (change === true) {
         await doc.ref.update({
           change: false,
@@ -225,9 +228,49 @@ app.post("/forgotpassword/password", async (req, res) => {
   }
 });
 
+app.get("/api/game/url", async (req, res) => {
+  const directoryName = "foto/";
+  const options = {
+    prefix: directoryName,
+  };
+
+  bucket
+    .getFiles(options)
+    .then((files) => {
+      const fileUrls = files[0].map((file) => {
+        return file.getSignedUrl({
+          action: "read",
+          expires: "03-01-2500",
+        });
+      });
+      Promise.all(fileUrls)
+        .then((signedUrls) => {
+          const imageUrls = signedUrls.map((url) => url[0]);
+          res.json({ imageUrls });
+        })
+        .catch((error) => {
+          console.error("Error getting signed URLs:", error);
+          res.status(500).json({ error: "Failed to get image URLs." });
+        });
+    })
+    .catch((error) => {
+      console.error("Error getting files:", error);
+      res.status(500).json({ error: "Failed to get files from directory." });
+    });
+});
+
 // COBA COBA
 // COBA COBA
 // COBA COBA
+app.post("/kirim", async (req, res) => {
+  const { email } = req.body;
+  let otp = otpGenerator.generate(4, {
+    upperCase: false,
+    specialChars: false,
+  });
+  sendOTP(email, otp);
+  return res.json("Data updated successfully." + otp + email);
+});
 app.post("/upload", upload.single("file"), async (req, res) => {
   try {
     const File = req.file;
@@ -250,7 +293,6 @@ app.post("/upload", upload.single("file"), async (req, res) => {
       await Foto.add(fileData);
       return res.status(200).send("File uploaded to Firebase Storage.");
     } catch (error) {
-      console.error(error);
       return res.status(500).send("Error uploading file to Firebase Storage.");
     }
   } catch (error) {

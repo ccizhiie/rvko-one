@@ -8,6 +8,7 @@ import Arrow from "../Asset/arrow.png";
 
 const Forgot2 = () => {
   const navigate = useNavigate();
+  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -21,40 +22,54 @@ const Forgot2 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/register", {
-        email,
-      });
-      navigate("/register");
-      console.log(response.data);
+      console.log("ppppp");
+      const response = await axios.post(
+        "http://localhost:4000/forgotpassword/email",
+        {
+          email,
+        }
+      );
+      console.log("sdddd");
+      console.log(response.send);
+      if (response.status === 200) {
+        navigate("/login");
+      } else if (response.status === 404) {
+        setError(response.send);
+      } else if (response.status === 500) {
+        setError(response.send);
+      } else {
+        setError("Terjadi kesalahan");
+      }
     } catch (error) {
-      console.error(error);
+      setError(error);
     }
   };
   return (
     <div className="Register-container">
       <form onSubmit={handleSubmit}>
-      <div className="cube">
-        <img src={Arrow} alt="arrow" className="arrow"/>
-        <img src={Back} alt="back" className="back" />
-        <div className="cube2">
+        <div className="cube">
+          <img src={Arrow} alt="arrow" className="arrow" />
+          <img src={Back} alt="back" className="back" />
+          <div className="cube2">
             <h2>Forgot Passwoard</h2>
             <div className="cube-paragraf">
-                <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
+              <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
             </div>
-        <input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            placeholder="Email Adress"
-          />
-          <br />
-        <br />
-        <button type="submit">Send</button>
-        
-        <br />
+            <input
+              type="email"
+              name="email"
+              onChange={handleChange}
+              placeholder="Email Adress"
+            />
+            <span>{Error}</span>
+            <br />
+            <br />
+            <button type="submit">Send</button>
+
+            <br />
+          </div>
         </div>
-      </div>
-     </form>
+      </form>
     </div>
   );
 };
