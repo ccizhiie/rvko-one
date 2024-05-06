@@ -6,7 +6,7 @@ import Back from "../Asset/star.png";
 import Arrow from "../Asset/arrow.png";
 // import Eye from "../Asset/eye.png"
 
-const Forgot2 = () => {
+const Forgot3 = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -37,19 +37,25 @@ const Forgot2 = () => {
         <img src={Arrow} alt="arrow" className="arrow"/>
         <img src={Back} alt="back" className="back" />
         <div className="cube2">
-            <h2>Forgot Passwoard</h2>
-            <div className="cube-paragraf">
-                <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
+            <h2>Create New Passwoard</h2>
+            <div className="cube-paragraf2">
+                <p>Enter and confirm your new passwoard</p>
             </div>
         <input
             type="text"
-            name="email"
+            name="pass"
             onChange={handleChange}
-            placeholder="Email Adress"
+            placeholder="New Password"
           />
           <br />
+          <input
+            type="text"
+            name="pass"
+            onChange={handleChange}
+            placeholder="Confirm Password"
+          />
         <br />
-        <button type="submit">Send</button>
+        <button type="submit">Save</button>
         
         <br />
         </div>
@@ -59,4 +65,4 @@ const Forgot2 = () => {
   );
 };
 
-export default Forgot2;
+export default Forgot3;

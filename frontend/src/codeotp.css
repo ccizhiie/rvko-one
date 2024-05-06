@@ -1,0 +1,138 @@
+.Register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .cube {
+    background-color: #1a1b2d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+    width: 410px;
+    height: 900px;
+    text-align: center;
+  }
+  
+  .cube2 {
+    position: absolute;
+    top: 100px;
+  }
+  
+  .cube-paragraf {
+    width: 200px;
+    margin-left: 50px;
+  }
+  
+  .cube-paragraf2 {
+    width: 180px;
+    margin-left: 50px;
+  }
+  
+  .back {
+    width: 400px;
+    height: auto;
+    position: absolute;
+    z-index: 1;
+    top: 55px;
+  }
+  
+  button {
+    padding: 10px 40px;
+    border: none;
+    border-radius: 50px;
+    background-color: #9c69fc93;
+    color: #ffffff;
+    z-index: 2;
+    cursor: pointer;
+    transition: background-color 0.6s ease;
+  }
+  
+  button:hover {
+    background-color: #a277ca;
+  }
+  
+  p {
+    color: #ffffff;
+    margin-bottom: 40px;
+  }
+  
+  h2 {
+    color: #ffffff;
+    margin-bottom: 55px;
+  }
+  
+  .arrow {
+    width: 25px;
+    height: auto;
+    position: absolute;
+    top: 128px;
+    margin-right: 73px;
+  }
+  
+  .white-box {
+    width: 100%;
+    height: 340px; 
+    background-color: white;  
+    position: absolute; 
+    bottom: 0px;
+    z-index: 3; 
+    border-top-left-radius: 50px; 
+    border-top-right-radius: 50px; 
+  }
+  
+  .black-box {
+      width: 410px;
+      height: 900px;
+      position: absolute; 
+      top: 0px;
+      right: 0px;
+      background-color: rgba(0, 1, 19, 0.678);
+      z-index: 2;
+  }
+
+  .white-pbox {
+   font-size: 30px;
+   color: #1a1b2d;
+   font-weight: bold;
+   
+    
+  }
+
+  .white-pbox2 {
+    margin-bottom: 30px;
+    color: #3F357A;
+    font-weight: bold;
+   }
+  
+   .button2 {
+    padding: 10px 40px;
+    border: none;
+    border-radius: 50px;
+    background-color: #7b36fad2;
+    z-index: 2;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  .otp-input-container input {
+    width: 40px;
+    height: 55px;
+    padding: 10px;
+    margin: 0 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    background-color: #f1f1f1;
+    border: 3px solid #ccc;
+    color: #000000;
+    outline: none;
+    border-radius: 10px;
+    font-size: 40px;
+  }
+
+  .otp-input-container input:focus {
+    border-color: #9c69fc;
+  }

@@ -19,12 +19,18 @@
 
   .cube2 {
     position: absolute;
-    top: 130px;
+    top: 100px;
   }
 
   .cube-paragraf {
     width: 200px;
     margin-left: 50px;
+  }
+
+  .cube-paragraf2 {
+    width: 180px;
+    margin-left: 50px;
+
   }
   
   
@@ -36,14 +42,12 @@
     top: 55px;
   }
   
-  input[type="user"],
-  input[type="email"],
-  input[type="pass"] {
-    width: 288px;
+  input[type="text"] {
+    width: 286px;
     height: 26px;
     padding: 10px;
     top: 300px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     border: 1px solid #626477;
     background-color: rgba(255, 255, 255, 0.1);
     color: #626477;
@@ -52,9 +56,7 @@
     z-index: 2;
   }
   
-  input[type="user"]::placeholder,
-  input[type="email"]::placeholder,
-  input[type="pass"]::placeholder {
+  input[type="text"]::placeholder {
     color: #626477;
     z-index: 2;
   }
@@ -81,7 +83,7 @@
   
   h2 {
     color: #ffffff;
-    margin-bottom: 40px;
+    margin-bottom: 55px;
 
   }
 
@@ -89,6 +91,6 @@
     width: 25px;
     height: auto;
     position: absolute;
-    top: 155px;
-    margin-right: 60px;
+    top: 128px;
+    margin-right: 73px;
   }

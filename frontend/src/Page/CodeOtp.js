@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../forgoto.css";
+import "../codeotp.css";
 import Back from "../Asset/star.png";
 import Arrow from "../Asset/arrow.png";
 // import Eye from "../Asset/eye.png"
 
-const Forgot2 = () => {
+const CodeOtp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -34,6 +34,20 @@ const Forgot2 = () => {
     <div className="Register-container">
       <form onSubmit={handleSubmit}>
       <div className="cube">
+        <div class="black-box"></div>
+        <div class="white-box">
+            <p className="white-pbox">Code OTP</p>
+        <div class="otp-input-container">
+            <input type="text" maxlength="1" id="digit1"  />
+            <input type="text" maxlength="1" id="digit2"  />
+            <input type="text" maxlength="1" id="digit3"  />
+            <input type="text" maxlength="1" id="digit4"  />
+        </div>
+            <p className="white-pbox2">Resend code</p>
+            
+            <button className="button2" type="submit">Verify</button>
+        </div>
+
         <img src={Arrow} alt="arrow" className="arrow"/>
         <img src={Back} alt="back" className="back" />
         <div className="cube2">
@@ -52,6 +66,9 @@ const Forgot2 = () => {
         <button type="submit">Send</button>
         
         <br />
+
+        
+        
         </div>
       </div>
      </form>
@@ -59,4 +76,4 @@ const Forgot2 = () => {
   );
 };
 
-export default Forgot2;
+export default CodeOtp;
