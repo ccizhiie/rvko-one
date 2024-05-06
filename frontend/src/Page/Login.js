@@ -47,14 +47,14 @@ const Login = () => {
           <img src={Back} alt="back" className="back" />
 
           <input
-            type="user"
+            type="text"
             name="username"
             onChange={handleChange}
             placeholder="Username or Email Adress"
           />
           <br />
           <input
-            type="pass"
+            type="text"
             name="password"
             onChange={handleChange}
             placeholder="Password"

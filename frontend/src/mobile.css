@@ -32,14 +32,12 @@
   top: 55px;
 }
 
-input[type="user"],
-input[type="email"],
-input[type="pass"] {
+input[type="text"] {
   width: 300px;
   height: 25px;
   padding: 10px;
   top: 300px;
-  margin-bottom: 10px;
+
   border: 1px solid #626477;
   background-color: rgba(255, 255, 255, 0.1);
   color: #626477;
@@ -48,9 +46,8 @@ input[type="pass"] {
   z-index: 2;
 }
 
-input[type="user"]::placeholder,
-input[type="email"]::placeholder,
-input[type="pass"]::placeholder {
+
+input[type="text"]::placeholder {
   color: #626477;
   z-index: 2;
 }

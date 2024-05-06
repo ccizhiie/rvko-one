@@ -55,19 +55,17 @@ const Forgot2 = () => {
             <div className="cube-paragraf">
               <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
             </div>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              placeholder="Email Adress"
-            />
-            <span>{Error}</span>
-            <br />
-            <br />
-            <button type="submit">Send</button>
-
-            <br />
-          </div>
+        <input
+            type="text"
+            name="email"
+            onChange={handleChange}
+            placeholder="Email Adress"
+          />
+          <br />
+        <br />
+        <button type="submit">Send</button>
+        
+        <br />
         </div>
       </form>
     </div>

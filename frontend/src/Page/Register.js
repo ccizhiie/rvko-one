@@ -40,21 +40,21 @@ const Register = () => {
           <img src={Logo} alt="Logo" className="logo" />
           <img src={Back} alt="back" className="back" />
           <input
-            type="user"
+            type="text"
             name="username"
             onChange={handleChange}
             placeholder="Username"
           />
           <br />
           <input
-            type="email"
+            type="text"
             name="email"
             onChange={handleChange}
             placeholder="Email Adress"
           />
           <br />
           <input
-            type="pass"
+            type="text"
             name="password"
             onChange={handleChange}
             placeholder="Password"
@@ -67,7 +67,7 @@ const Register = () => {
           <br />
           <div className="register-text">
             <p>
-              Alredy have an Acount?
+              Alredy have an Acount? 
               <Link to="/Login" className="link-register">
                 Login
               </Link>
