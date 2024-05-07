@@ -51,21 +51,21 @@ const Forgot2 = () => {
           <img src={Arrow} alt="arrow" className="arrow" />
           <img src={Back} alt="back" className="back" />
           <div className="cube2">
-            <h2>Forgot Passwoard</h2>
+            <h2>Forgot Password</h2>
             <div className="cube-paragraf">
-              <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
+              <p>Enter Your Email Address to Receive a Verification Code</p>
             </div>
-        <input
-            type="text"
-            name="email"
-            onChange={handleChange}
-            placeholder="Email Adress"
-          />
-          <br />
-        <br />
-        <button type="submit">Send</button>
-        
-        <br />
+            <input
+              type="text"
+              name="email"
+              onChange={handleChange}
+              placeholder="Email Address"
+            />
+            <br />
+            <br />
+            <button type="submit">Send</button>
+            <br />
+          </div>
         </div>
       </form>
     </div>

@@ -1,4 +1,5 @@
 const express = require("express");
+const { google } = require("googleapis");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { del, User, Foto, bucket, time } = require("./config");
@@ -8,18 +9,39 @@ const nodemailer = require("nodemailer");
 const session = require("express-session");
 const app = express();
 
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  RENDIRECT_URL
+);
+
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
 const memory = multer.memoryStorage();
 const upload = multer({ storage: memory });
 
 async function sendOTP(email, otp) {
+  const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
   const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    host: "smtp.gmail.com",
-    port: 587,
+    service: "gmail",
+    port: 465,
     secure: true,
+    logger: true,
+    debug: true,
+    secureConnection: false,
     auth: {
-      user: "teamdua2222@gmail.com",
-      pass: "mocvtlumyjpxowze",
+      // user: "teamdua2222@gmail.com",
+      // pass: "mocvtlumyjpxowze",
+      type: "OAuth2",
+      user: MY_EMAIL,
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      refreshToken: REFRESH_TOKEN,
+      accessToken: ACCESS_TOKEN,
+      expires: 1484314697598,
+    },
+    tls: {
+      rejectUnauthorized: true,
     },
   });
 
@@ -228,42 +250,50 @@ app.post("/forgotpassword/password", async (req, res) => {
   }
 });
 
+app.post("/api/game/likedislike", async (req, res) => {
+  const { filePath, like, dislike } = req.body;
+});
+
 app.get("/api/game/url", async (req, res) => {
   const directoryName = "foto/";
   const options = {
     prefix: directoryName,
   };
 
-  bucket
-    .getFiles(options)
-    .then((files) => {
-      const fileUrls = files[0].map((file) => {
-        return file.getSignedUrl({
-          action: "read",
-          expires: "03-01-2500",
-        });
+  try {
+    const [files] = await bucket.getFiles(options);
+    const fileUrls = files.map((file) => {
+      return file.getSignedUrl({
+        action: "read",
+        expires: "03-01-2500",
       });
-      Promise.all(fileUrls)
-        .then((signedUrls) => {
-          const imageUrls = signedUrls.map((url) => url[0]);
-          res.json({ imageUrls });
-        })
-        .catch((error) => {
-          console.error("Error getting signed URLs:", error);
-          res.status(500).json({ error: "Failed to get image URLs." });
-        });
-    })
-    .catch((error) => {
-      console.error("Error getting files:", error);
-      res.status(500).json({ error: "Failed to get files from directory." });
     });
+
+    const signedUrls = await Promise.all(fileUrls);
+    const imageUrls = signedUrls.map((url) => url[0]);
+
+    const imagesWithPath = [];
+    for (const imageUrl of imageUrls) {
+      const questionMarkIndex = imageUrl.indexOf("?");
+      const urlBeforeQuestionMark = imageUrl.substring(0, questionMarkIndex);
+      const splitUrl = urlBeforeQuestionMark.split("/");
+      const dataAfterDomain = splitUrl.slice(4).join("/");
+      imagesWithPath.push({ imageUrl, path: dataAfterDomain });
+    }
+
+    res.json({ images: imagesWithPath });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Failed to fetch image URLs." });
+  }
 });
 
 // COBA COBA
 // COBA COBA
 // COBA COBA
-app.post("/kirim", async (req, res) => {
-  const { email } = req.body;
+app.get("/kirim", async (req, res) => {
+  email = "maulanajapar92@gmail.com";
+  // const { email } = req.body;
   let otp = otpGenerator.generate(4, {
     upperCase: false,
     specialChars: false,
