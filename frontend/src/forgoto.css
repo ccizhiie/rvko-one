@@ -19,8 +19,6 @@
   width: 180px;
   margin-left: 50px;
 }
-
-  
   
   
   .back {
@@ -31,7 +29,7 @@
     top: 55px;
   }
   
-  input[name="email-forgot"] {
+input[name="email-forgot"] {
     width: 286px;
     height: 26px;
     padding: 10px;
@@ -43,7 +41,7 @@
     outline: none;
     border-radius: 6px;
     z-index: 2;
-  }
+}
   
   input[name="email-forgot"]::placeholder {
     color: #626477;
