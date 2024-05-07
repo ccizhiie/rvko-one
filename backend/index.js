@@ -9,19 +9,19 @@ const nodemailer = require("nodemailer");
 const session = require("express-session");
 const app = express();
 
-const oAuth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  RENDIRECT_URL
-);
+// const oAuth2Client = new google.auth.OAuth2(
+//   CLIENT_ID,
+//   CLIENT_SECRET,
+//   RENDIRECT_URL
+// );
 
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 const memory = multer.memoryStorage();
 const upload = multer({ storage: memory });
 
 async function sendOTP(email, otp) {
-  const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
+  // const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
   const transporter = nodemailer.createTransport({
     service: "gmail",
     port: 465,
@@ -30,15 +30,15 @@ async function sendOTP(email, otp) {
     debug: true,
     secureConnection: false,
     auth: {
-      // user: "teamdua2222@gmail.com",
-      // pass: "mocvtlumyjpxowze",
-      type: "OAuth2",
-      user: MY_EMAIL,
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      refreshToken: REFRESH_TOKEN,
-      accessToken: ACCESS_TOKEN,
-      expires: 1484314697598,
+      user: "teamdua2222@gmail.com",
+      pass: "mocvtlumyjpxowze",
+      // type: "OAuth2",
+      // user: MY_EMAIL,
+      // clientId: CLIENT_ID,
+      // clientSecret: CLIENT_SECRET,
+      // refreshToken: REFRESH_TOKEN,
+      // accessToken: ACCESS_TOKEN,
+      // expires: 1484314697598,
     },
     tls: {
       rejectUnauthorized: true,
