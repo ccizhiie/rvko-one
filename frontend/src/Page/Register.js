@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../mobile.css";
+import "../Mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 
@@ -66,7 +66,7 @@ const Register = () => {
           <button type="submit">Register</button>
           <br />
           <div className="register-text">
-            <p>
+            <p className="p-register">
               Alredy have an Acount? 
               <Link to="/Login" className="link-register">
                 Login

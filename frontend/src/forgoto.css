@@ -42,7 +42,7 @@
     top: 55px;
   }
   
-  input[type="text"] {
+  input[name="email-forgot"] {
     width: 286px;
     height: 26px;
     padding: 10px;
@@ -56,7 +56,7 @@
     z-index: 2;
   }
   
-  input[type="text"]::placeholder {
+  input[name="email-forgot"]::placeholder {
     color: #626477;
     z-index: 2;
   }

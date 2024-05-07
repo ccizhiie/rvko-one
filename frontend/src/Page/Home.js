@@ -8,14 +8,13 @@ import Profil from "../Asset/profil.png";
 import Wedit from "../Asset/wedit.png";
 
 
-const Account = () => {
+const Home = () => {
   return (
     <div className="container">
     <div className="cube-account">
       <img src={Logo} alt="logo" className="logo-account" />
       <img src={Profil} alt="profil" className="profil-account" /> 
-      <img src={Profil} alt="profil" className="profil-account2" /> 
-      <img src={Back} alt="back" className="back-akun" />
+      <img src={Back} alt="back" className="back" />
       <img src={Wedit} alt="wedit" className="wedit" />
       
       <br />
@@ -46,4 +45,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Home;

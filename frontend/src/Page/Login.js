@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../mobile.css";
+import "../Mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 // import Eye from "../Asset/eye.png"

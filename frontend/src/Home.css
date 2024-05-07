@@ -27,7 +27,7 @@
     top: 160px;
 }
 
-.back-akun {
+.back {
     width:400px;
     height: auto;
     position: absolute; 
@@ -44,7 +44,7 @@ input[name="input"] {
   margin-bottom: 10px;
   border: 1px solid #626477; 
   background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  color: #626477;
   border-radius: 6px;
   z-index: 2;
 }
@@ -89,7 +89,7 @@ p {
 }
 
 .logo-account {
-    width: 90px;
+  width: 90px;
     height: auto;
     position: absolute;
     top: 60px;
@@ -99,24 +99,13 @@ p {
 .p-account {
   color:#ffffff;
   right: 280px;
-  margin-bottom: 10px;
 }
 
 .profil-account {
   width: 105px;
   height: auto;
+  top: 10px;
   position: relative;
-  z-index: 2;
-}
-
-.profil-account2 {
-  width: 35px;
-  height: auto;
-  position: absolute;
-  top: 55px;
-  left: 280px;
-  border: 2px solid #31324A;
-  border-radius: 5px;
 }
 
 .line {

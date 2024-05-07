@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../forgoto.css";
+import "../Forgoto.css";
 import Back from "../Asset/star.png";
 import Arrow from "../Asset/arrow.png";
 // import Eye from "../Asset/eye.png"
