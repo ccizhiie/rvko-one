@@ -16,11 +16,11 @@ const Forgot2 = () => {
         <div className="cube2">
             <h2>Forgot Passwoard</h2>
             <div className="cube-paragraf">
-                <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
+              <p>Enter Your Email Address to Receive a Verification Code</p>
             </div>
         <input
             type="text"
-            name="email-forgot"
+            name="pass-forgot"
             placeholder="Email Adress"
           />
           <br />
@@ -28,9 +28,8 @@ const Forgot2 = () => {
         <button type="submit">Send</button>
         
         <br />
-        </div>
-      </div>
-     </form>
+        </div></div>
+      </form>
     </div>
   );
 };

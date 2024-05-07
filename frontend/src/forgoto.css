@@ -1,37 +1,26 @@
 .Register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.cube2 {
+  position: absolute;
+  top: 100px;
+}
+
+.cube-paragraf {
+  width: 200px;
+  margin-left: 50px;
+}
+
+.cube-paragraf2 {
+  width: 180px;
+  margin-left: 50px;
+}
+
   
-  .cube {
-    background-color: #1a1b2d; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    flex-direction: column;
-    width: 410px;
-    height: 900px;
-    text-align: center;
-  }
-
-  .cube2 {
-    position: absolute;
-    top: 100px;
-  }
-
-  .cube-paragraf {
-    width: 200px;
-    margin-left: 50px;
-  }
-
-  .cube-paragraf2 {
-    width: 180px;
-    margin-left: 50px;
-
-  }
   
   
   .back {
@@ -84,13 +73,59 @@
   h2 {
     color: #ffffff;
     margin-bottom: 55px;
-
   }
+input[name="pass-forgot"] {
+  width: 286px;
+  height: 26px;
+  padding: 10px;
+  top: 300px;
+  margin-bottom: 30px;
+  border: 1px solid #626477;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #626477;
+  outline: none;
+  border-radius: 6px;
+  z-index: 2;
+}
 
-  .arrow {
-    width: 25px;
-    height: auto;
-    position: absolute;
-    top: 128px;
-    margin-right: 73px;
-  }
+input[name="pass-forgot"]::placeholder {
+  color: #626477;
+  z-index: 2;
+}
+
+button {
+  padding: 10px 40px;
+  border: none;
+  border-radius: 50px;
+  background-color: #9c69fc93;
+  color: #ffffff;
+  z-index: 2;
+  cursor: pointer;
+  transition: background-color 0.6s ease;
+}
+
+button:hover {
+  background-color: #a277ca;
+}
+
+p {
+  color: #ffffff;
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: #ffffff;
+  margin-bottom: 55px;
+}
+.cube-paragraf {
+  width: 200px;
+  margin-left: 50px;
+}
+
+.arrow {
+  width: 25px;
+  height: auto;
+  position: absolute;
+  top: 128px;
+  margin-right: 73px;
+}
