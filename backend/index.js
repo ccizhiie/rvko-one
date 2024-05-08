@@ -1,5 +1,4 @@
 const express = require("express");
-const { google } = require("googleapis");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { del, User, Foto, bucket, time } = require("./config");
@@ -9,19 +8,10 @@ const nodemailer = require("nodemailer");
 const session = require("express-session");
 const app = express();
 
-// const oAuth2Client = new google.auth.OAuth2(
-//   CLIENT_ID,
-//   CLIENT_SECRET,
-//   RENDIRECT_URL
-// );
-
-// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
 const memory = multer.memoryStorage();
 const upload = multer({ storage: memory });
 
 async function sendOTP(email, otp) {
-  // const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
   const transporter = nodemailer.createTransport({
     service: "gmail",
     port: 465,
@@ -32,13 +22,6 @@ async function sendOTP(email, otp) {
     auth: {
       user: "teamdua2222@gmail.com",
       pass: "mocvtlumyjpxowze",
-      // type: "OAuth2",
-      // user: MY_EMAIL,
-      // clientId: CLIENT_ID,
-      // clientSecret: CLIENT_SECRET,
-      // refreshToken: REFRESH_TOKEN,
-      // accessToken: ACCESS_TOKEN,
-      // expires: 1484314697598,
     },
     tls: {
       rejectUnauthorized: true,
@@ -251,10 +234,20 @@ app.post("/forgotpassword/password", async (req, res) => {
 });
 
 app.post("/api/game/likedislike", async (req, res) => {
-  const { filePath, like, dislike } = req.body;
+  const { path, like, dislike } = req.body;
+  const querySnapshot = await Foto.where("filePath", "==", path).get();
+  const doc = querySnapshot.docs[0];
+  if (!doc.empty) {
+    await doc.ref.update({
+      like: like,
+      dislike: dislike,
+    });
+
+    return res.status(200).send("Data updated successfully.");
+  }
 });
 
-app.get("/api/game/url", async (req, res) => {
+app.get("/api/game/url", async (res) => {
   const directoryName = "foto/";
   const options = {
     prefix: directoryName,
@@ -278,7 +271,21 @@ app.get("/api/game/url", async (req, res) => {
       const urlBeforeQuestionMark = imageUrl.substring(0, questionMarkIndex);
       const splitUrl = urlBeforeQuestionMark.split("/");
       const dataAfterDomain = splitUrl.slice(4).join("/");
-      imagesWithPath.push({ imageUrl, path: dataAfterDomain });
+
+      const querySnapshot = await Foto.where(
+        "filePath",
+        "==",
+        dataAfterDomain
+      ).get();
+      const doc = querySnapshot.docs[0];
+      const { like, dislike } = doc.data();
+
+      imagesWithPath.push({
+        imageUrl,
+        path: dataAfterDomain,
+        like: like,
+        dislike: dislike,
+      });
     }
 
     res.json({ images: imagesWithPath });
