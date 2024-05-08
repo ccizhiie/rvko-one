@@ -7,7 +7,7 @@ import Arrow from "../Asset/arrow.png";
 // import Eye from "../Asset/eye.png"
 
 const CodeOtp = () => {
-  const { email } = useParams();
+  const email = useParams();
   const navigate = useNavigate();
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
