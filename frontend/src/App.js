@@ -7,6 +7,7 @@ import Forgot2 from './Page/Forgot2';
 import Forgot3 from './Page/Forgot3';
 import CodeOtp from './Page/CodeOtp';
 import Home from './Page/Home';
+import Tinder from './Page/Tinder';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/forgot3' element={<Forgot3/>} />
         <Route path='/codeotp' element={<CodeOtp/>} />
         <Route path='/home' element={<Home/>} />
+        <Route path='/tinder' element={<Tinder/>} />
 
 
       </Routes>

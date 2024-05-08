@@ -48,7 +48,7 @@ const Forgot = () => {
         <input
             type="email"
             name="email"
-            onChange={handleChange}
+            // onChange={handleChange}
             placeholder="Email Adress"
           />
           <br />

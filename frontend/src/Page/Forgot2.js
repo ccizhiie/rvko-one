@@ -9,7 +9,9 @@ import Arrow from "../Asset/arrow.png";
 const Forgot2 = () => {
   return (
     <div className="Register-container">
-      <form >
+      <form 
+      // onSubmit={handleSubmit}
+      >
       <div className="cube">
         <img src={Arrow} alt="arrow" className="arrow"/>
         <img src={Back} alt="back" className="back" />
@@ -21,6 +23,7 @@ const Forgot2 = () => {
         <input
             type="text"
             name="pass-forgot"
+            // onChange={handleChange}
             placeholder="Email Adress"
           />
           <br />
