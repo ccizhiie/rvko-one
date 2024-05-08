@@ -1,18 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../Mobile.css";
+import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
+    username: "",
     email: "",
     password: "",
   });
 
-  const { email, password } = formData;
+  const { username, email, password } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,11 +24,12 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/register", {
+        username,
         email,
         password,
       });
       if (response.status === 200) {
-        navigate(`/register`);
+        navigate(`login`);
       } else {
         setError(response.data.error);
       }

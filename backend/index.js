@@ -57,10 +57,8 @@ app.use(
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/");
-
 app.post("/register", async (req, res) => {
-  const { email, username, password } = req.body;
+  const { username, email, password } = req.body;
   try {
     const emailExists = await User.where("email", "==", email).get();
     const usernameExists = await User.where("username", "==", username).get();
@@ -74,7 +72,7 @@ app.post("/register", async (req, res) => {
     }
 
     await User.add({ email, username, password });
-    res.send({ msg: "User Added" });
+    return res.status(200).json({ message: "Data berhasil di tambahkan." });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
@@ -107,16 +105,16 @@ app.post("/login", async (req, res) => {
     if (password !== storedPassword) {
       return res.status(401).json({ error: "Password salah." });
     }
-    req.session.userId = id;
-    return res.status(200).json({ message: "Autentikasi berhasil." });
+    const ID = id;
+    return res.status(200).json({ message: "Autentikasi berhasil.", id: ID });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
   }
 });
 
-app.get("/home/profil", async (req, res) => {
-  const id = req.session.userId;
+app.get("/home/profil/:id", async (req, res) => {
+  const id = req.params;
   try {
     const data = await User.doc(id).get();
     if (data.exists) {
@@ -145,7 +143,6 @@ app.post("/home/profil", async (req, res) => {
 
 app.post("/forgotpassword/email", async (req, res) => {
   const email = req.body.email;
-  req.session.email = email;
   let otp = otpGenerator.generate(4, {
     upperCase: false,
     specialChars: false,
@@ -163,7 +160,9 @@ app.post("/forgotpassword/email", async (req, res) => {
           timestamp: timestamp,
         });
         await sendOTP(email, otp);
-        return res.status(200).send("Data updated successfully." + otp);
+        return res
+          .status(200)
+          .json({ message: "Data updated successfully.", email });
       } else {
         res.status(404);
       }
@@ -176,7 +175,7 @@ app.post("/forgotpassword/email", async (req, res) => {
 });
 
 app.post("/forgotpassword/otp", async (req, res) => {
-  const email = req.session.email;
+  const email = req.body.email;
   const otp = req.body.otp;
   const realtime = time.toDate();
   try {
@@ -193,9 +192,13 @@ app.post("/forgotpassword/otp", async (req, res) => {
           otp: del,
           timestamp: del,
         });
-        return res.status(200).send("Data updated successfully.");
+        return res
+          .status(200)
+          .json({ msg: "Data updated successfully.", email });
       } else {
-        return res.status(200).send("code OTP salah atau telah kadaluarsa.");
+        return res
+          .status(400)
+          .json({ error: "code OTP salah atau telah kadaluarsa." });
       }
     }
   } catch (error) {

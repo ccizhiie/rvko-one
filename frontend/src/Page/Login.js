@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../Mobile.css";
+import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 // import Eye from "../Asset/eye.png"
@@ -35,7 +35,7 @@ const Login = () => {
         password,
       });
       if (response.status === 200) {
-        navigate(`/register`);
+        navigate(`/Home/${response.data.id}`);
       } else {
         setError(response.data.error);
       }
@@ -63,7 +63,7 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Password"
           />
-          <Link to="/" className="forgot-password">
+          <Link to="/Forgot2" className="forgot-password">
             Forgot Password?
           </Link>
           <br />
