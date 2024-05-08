@@ -8,6 +8,7 @@ import Back from "../Asset/star.png";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -33,8 +34,11 @@ const Login = () => {
         email,
         password,
       });
-      navigate("/register");
-      console.log(response.data);
+      if (response.status === 200) {
+        navigate(`/register`);
+      } else {
+        setError(response.data.error);
+      }
     } catch (error) {
       console.error(error);
     }

@@ -8,12 +8,11 @@ import Back from "../Asset/star.png";
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
 
-  const { username, email, password } = formData;
+  const { email, password } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,12 +22,14 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/register", {
-        username,
         email,
         password,
       });
-      navigate("/login");
-      console.log(response.data);
+      if (response.status === 200) {
+        navigate(`/register`);
+      } else {
+        setError(response.data.error);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +68,7 @@ const Register = () => {
           <br />
           <div className="register-text">
             <p className="p-register">
-              Alredy have an Acount? 
+              Alredy have an Acount?
               <Link to="/Login" className="link-register">
                 Login
               </Link>
