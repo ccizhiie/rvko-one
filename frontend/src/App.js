@@ -8,6 +8,8 @@ import Forgot3 from './Page/Forgot3';
 import CodeOtp from './Page/CodeOtp';
 import Home from './Page/Home';
 import Tinder from './Page/Tinder';
+import Tinderguest from './Page/Tinderguest';
+import Popup from './Page/Popup';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
@@ -24,6 +26,8 @@ function App() {
         <Route path='/codeotp' element={<CodeOtp/>} />
         <Route path='/home' element={<Home/>} />
         <Route path='/tinder' element={<Tinder/>} />
+        <Route path='/tinderguest' element={<Tinderguest/>} />
+        <Route path='/popup' element={<Popup/>} />
 
 
       </Routes>

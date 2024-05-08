@@ -71,14 +71,12 @@
   }
   
   
-  .profil-tinder {
-  width: 35px;
+  .tutorial-tinder {
+  width: 25px;
   height: auto;
   position: absolute;
-  top: 55px;
-  left: 280px;
-  border: 2px solid #31324A;
-  border-radius: 5px;
+  top: 60px;
+  right: 80px;
   }
   
   .line {

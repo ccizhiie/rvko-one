@@ -39,7 +39,7 @@ const Forgot3 = () => {
         <div className="cube2">
             <h2>Create New Passwoard</h2>
             <div className="cube-paragraf2">
-                <p>Enter and confirm your new passwoard</p>
+                <p className="pwhite">Enter and confirm your new passwoard</p>
             </div>
         <input
             type="text"

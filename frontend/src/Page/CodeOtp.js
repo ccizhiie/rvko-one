@@ -42,7 +42,7 @@ const CodeOtp = () => {
         <div className="cube2">
             <h2>Forgot Passwoard</h2>
             <div className="cube-paragraf">
-                <p>Enter Your Email Adress to Recieve a Verivication Cord</p>
+                <p className="pwhite">Enter Your Email Adress to Recieve a Verivication Cord</p>
             </div>
         <input
             type="text"
