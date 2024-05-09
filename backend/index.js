@@ -13,39 +13,45 @@ const memory = multer.memoryStorage();
 const upload = multer({ storage: memory });
 
 async function sendOTP(email, otp) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    port: 465,
-    secure: true,
-    logger: true,
-    debug: true,
-    secureConnection: false,
-    auth: {
-      user: "teamdua2222@gmail.com",
-      pass: "mocvtlumyjpxowze",
-    },
-    tls: {
-      rejectUnauthorized: true,
-    },
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      port: 465,
+      secure: true,
+      debug: true,
+      auth: {
+        user: "teamdua2222@gmail.com",
+        pass: "mocvtlumyjpxowze",
+      },
+    });
 
-  const mailOptions = {
-    from: "teamdua2222@gmail.com",
-    to: email,
-    subject: "Kode OTP Anda",
-    html: `<p style="text-align: center; font-size: 24px;">Kode OTP Anda adalah:</p>
-    <p style="text-align: center; font-size: 36px; font-weight: bold;">${otp}</p>
-    <p style="text-align: center; font-size: 16px;">Kode OTP akan kadaluarsa dalam 5 menit</p>
-  `,
-  };
+    const mailOptions = {
+      from: "teamdua2222@gmail.com",
+      to: email,
+      subject: "Kode OTP Anda",
+      html: `<p style="text-align: center; font-size: 24px;">Kode OTP Anda adalah:</p>
+      <p style="text-align: center; font-size: 36px; font-weight: bold;">${otp}</p>
+      <p style="text-align: center; font-size: 16px;">Kode OTP akan kadaluarsa dalam 5 menit</p>
+    `,
+    };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log("Gagal mengirim email: ", error);
-    } else {
-      console.log("Email berhasil dikirim: ", info.response);
-    }
-  });
+    const info = await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("Gagal mengirim email: ", error);
+          reject(error);
+        } else {
+          console.log("Email berhasil dikirim: ", info.response);
+          resolve(info);
+        }
+      });
+    });
+
+    return info;
+  } catch (error) {
+    console.log("Gagal mengirim email: ", error);
+    throw error;
+  }
 }
 
 app.use(
@@ -310,7 +316,7 @@ app.get("/kirim", async (req, res) => {
     upperCase: true,
     specialChars: false,
   });
-  sendOTP(email, otp);
+  await sendOTP(email, otp);
   return res.json("Data updated successfully." + otp + email);
 });
 app.post("/upload", upload.single("file"), async (req, res) => {
