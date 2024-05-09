@@ -10,22 +10,22 @@ import Profil from "../Asset/profil.png";
 const Tinder = () => {
   const [error, seterror] = useState([]);
   const [images, setImages] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios("/api/game/url");
-        if (response.status == 200) {
-          setImages(response.data());
-        } else {
-          seterror(response.data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching image URLs:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios("/api/game/url");
+  //       if (response.status == 200) {
+  //         setImages(response.data());
+  //       } else {
+  //         seterror(response.data.error);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching image URLs:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   return (
     <div className="container">
       <div className="cube-account">

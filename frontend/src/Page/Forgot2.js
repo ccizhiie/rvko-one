@@ -22,7 +22,7 @@ const Forgot2 = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/forgotpassword/email",
+        `https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
         {
           email,
         }
@@ -48,8 +48,8 @@ const Forgot2 = () => {
               <p>Enter Your Email Address to Receive a Verification Code</p>
             </div>
             <input
-              type="text"
-              name="pass-forgot"
+              type="email"
+              name="email"
               placeholder="Email Adress"
               onChange={handleChange}
             />

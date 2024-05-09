@@ -23,13 +23,16 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/register", {
-        username,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/register",
+        {
+          username,
+          email,
+          password,
+        }
+      );
       if (response.status === 200) {
-        navigate(`login`);
+        navigate(`/login`);
       } else {
         setError(response.data.error);
       }

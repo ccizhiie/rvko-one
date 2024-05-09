@@ -22,10 +22,13 @@ const Forgot3 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/register", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/register",
+        {
+          email,
+          password,
+        }
+      );
       navigate("/register");
       console.log(response.data);
     } catch (error) {

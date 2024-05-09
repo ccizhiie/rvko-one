@@ -31,7 +31,7 @@ async function sendOTP(email, otp) {
       subject: "Kode OTP Anda",
       html: `<p style="text-align: center; font-size: 24px;">Kode OTP Anda adalah:</p>
       <p style="text-align: center; font-size: 36px; font-weight: bold;">${otp}</p>
-      <p style="text-align: center; font-size: 16px;">Kode OTP akan kadaluarsa dalam 5 menit</p>
+     
     `,
     };
 
@@ -121,7 +121,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/home/profil/:id", async (req, res) => {
-  const id = req.params;
+  const id = req.params.id;
   try {
     const data = await User.doc(id).get();
     if (data.exists) {
@@ -136,8 +136,8 @@ app.get("/home/profil/:id", async (req, res) => {
   }
 });
 
-app.post("/home/profil", async (req, res) => {
-  const id = req.session.userId;
+app.post("/home/profil/:id", async (req, res) => {
+  const id = req.params.id;
   const newdata = req.body;
   try {
     await User.doc(id).set(newdata, { merge: true });
@@ -182,17 +182,18 @@ app.post("/forgotpassword/email", async (req, res) => {
 });
 
 app.post("/forgotpassword/otp/:email", async (req, res) => {
-  const email = req.params;
+  const email = req.params.email;
   const otp = req.body.otp;
-  const realtime = time.toDate();
+  // const realtime = time.toDate();
   try {
     const querySnapshot = await User.where("email", "==", email).get();
     if (!querySnapshot.empty) {
       const realotp = querySnapshot.docs[0].data().otp;
       const timestroge = querySnapshot.docs[0].data().timestamp;
-      const newtime = new Date(timestroge.toDate().getTime() + 5 * 60 * 1000);
+      // const newtime = new Date(timestroge.toDate().getTime() + 5 * 60 * 1000);
+      // console.log(email, otp, realotp, realtime, newtime);
 
-      if (otp === realotp && newtime >= realtime) {
+      if (otp == realotp) {
         const doc = querySnapshot.docs[0];
         await doc.ref.update({
           change: true,
@@ -207,6 +208,8 @@ app.post("/forgotpassword/otp/:email", async (req, res) => {
           .status(400)
           .json({ error: "code OTP salah atau telah kadaluarsa." });
       }
+    } else {
+      return res.status(400).json({ error: "email tidak ada." });
     }
   } catch (error) {
     return res
@@ -215,9 +218,9 @@ app.post("/forgotpassword/otp/:email", async (req, res) => {
   }
 });
 
-app.post("/forgotpassword/password", async (req, res) => {
+app.post("/forgotpassword/password/:email", async (req, res) => {
   const password = req.body.password;
-  const email = req.session.email;
+  const email = req.params.email;
   console.log(email);
   try {
     const querySnapshot = await User.where("email", "==", email).get();

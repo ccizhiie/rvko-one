@@ -27,7 +27,7 @@ const CodeOtp = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:4000/forgotpassword/otp/${email}`,
+        `https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/forgotpassword/otp/${email}`,
         {
           email,
           otp,
