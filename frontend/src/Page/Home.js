@@ -9,7 +9,7 @@ import Game from "../Asset/game1.png";
 import Play from "../Asset/play.png";
 
 const Home = () => {
-  const { id } = useParams();
+  const id = useParams();
   return (
     <div className="container">
       <div className="cube-account">

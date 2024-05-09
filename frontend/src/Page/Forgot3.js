@@ -10,9 +10,10 @@ const Forgot3 = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
+    password: "",
   });
 
-  const { email } = formData;
+  const { email, password } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +24,7 @@ const Forgot3 = () => {
     try {
       const response = await axios.post("http://localhost:4000/register", {
         email,
+        password,
       });
       navigate("/register");
       console.log(response.data);

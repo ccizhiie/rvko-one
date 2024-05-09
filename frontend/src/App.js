@@ -16,12 +16,12 @@ function App() {
         <Route path="/" element={<Register />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/account/:id" element={<Account />} />
         <Route path="/forgot2" element={<Forgot2 />} />
-        <Route path="/forgot3" element={<Forgot3 />} />
-        <Route path="/codeotp" element={<CodeOtp />} />
+        <Route path="/forgot3/:email" element={<Forgot3 />} />
+        <Route path="/codeotp/:email" element={<CodeOtp />} />
         <Route path="/home/:id" element={<Home />} />
-        <Route path="/tinder" element={<Tinder />} />
+        <Route path="/tinder/:id" element={<Tinder />} />
       </Routes>
     </Router>
   );

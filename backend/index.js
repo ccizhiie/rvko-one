@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { del, User, Foto, bucket, time } = require("./config");
@@ -142,7 +143,7 @@ app.post("/home/profil", async (req, res) => {
 });
 
 app.post("/forgotpassword/email", async (req, res) => {
-  const email = req.body.email;
+  const { email } = req.body;
   let otp = otpGenerator.generate(4, {
     upperCase: false,
     specialChars: false,
@@ -174,8 +175,8 @@ app.post("/forgotpassword/email", async (req, res) => {
   }
 });
 
-app.post("/forgotpassword/otp", async (req, res) => {
-  const email = req.body.email;
+app.post("/forgotpassword/otp/:email", async (req, res) => {
+  const email = req.params;
   const otp = req.body.otp;
   const realtime = time.toDate();
   try {
@@ -250,7 +251,7 @@ app.post("/api/game/likedislike", async (req, res) => {
   }
 });
 
-app.get("/api/game/url", async (res) => {
+app.get("/api/game/url", async (req, res) => {
   const directoryName = "foto/";
   const options = {
     prefix: directoryName,
@@ -291,10 +292,11 @@ app.get("/api/game/url", async (res) => {
       });
     }
 
-    res.json({ images: imagesWithPath });
+    return res.json({ images: imagesWithPath });
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Failed to fetch image URLs." });
+    return res
+      .status(500)
+      .json({ error: "Failed to fetch image URLs.", details: error.message });
   }
 });
 
@@ -305,7 +307,7 @@ app.get("/kirim", async (req, res) => {
   email = "maulanajapar92@gmail.com";
   // const { email } = req.body;
   let otp = otpGenerator.generate(4, {
-    upperCase: false,
+    upperCase: true,
     specialChars: false,
   });
   sendOTP(email, otp);
@@ -331,9 +333,11 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         contentType: File.mimetype,
       };
       await Foto.add(fileData);
-      return res.status(200).send("File uploaded to Firebase Storage.");
+      return res.status(200).json({ p: "File uploaded to Firebase Storage." });
     } catch (error) {
-      return res.status(500).send("Error uploading file to Firebase Storage.");
+      return res
+        .status(500)
+        .json({ p: "Error uploading file to Firebase Storage.", e: error });
     }
   } catch (error) {
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });

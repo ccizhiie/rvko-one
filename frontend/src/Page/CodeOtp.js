@@ -27,7 +27,7 @@ const CodeOtp = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/forgotpassword/otp",
+        `http://localhost:4000/forgotpassword/otp/${email}`,
         {
           email,
           otp,
