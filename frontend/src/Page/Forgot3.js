@@ -48,14 +48,14 @@ const Forgot3 = () => {
             </div>
             <input
               type="text"
-              name="pass-forgot"
+              name="passforgot"
               onChange={handleChange}
               placeholder="New Password"
             />
             <br />
             <input
               type="text"
-              name="pass-forgot"
+              name="passforgot2"
               onChange={handleChange}
               placeholder="Confirm Password"
             />

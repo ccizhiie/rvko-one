@@ -7,6 +7,7 @@ import Forgot3 from "./Page/Forgot3";
 import CodeOtp from "./Page/CodeOtp";
 import Home from "./Page/Home";
 import Tinder from "./Page/Tinder";
+import Language from "./Page/Language";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/codeotp/:email" element={<CodeOtp />} />
         <Route path="/home/:id" element={<Home />} />
         <Route path="/tinder/:id" element={<Tinder />} />
+        <Route path="bahasa" element={<Language/>} />
       </Routes>
     </Router>
   );

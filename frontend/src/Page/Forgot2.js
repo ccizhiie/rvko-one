@@ -47,9 +47,10 @@ const Forgot2 = () => {
             <div className="cube-paragraf">
               <p className="pwhite">Enter Your Email Address to Receive a Verification Code</p>
             </div>
+            <span>{Error}</span>
         <input
             type="email"
-            name="pass-forgot"
+            name="emailforgot"
             // onChange={handleChange}
             placeholder="Email Adress"
           />

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import React from "react";
-import "../Home.css";
+import "../home.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";

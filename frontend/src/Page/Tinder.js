@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../Tinder.css';
+import '../tinder.css';
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";
