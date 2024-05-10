@@ -7,7 +7,7 @@ import Arrow from "../Asset/arrow.png";
 // import Eye from "../Asset/eye.png"
 
 const CodeOtp = () => {
-  const email = useParams();
+  const { uniqueId } = useParams();
   const navigate = useNavigate();
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
@@ -25,16 +25,17 @@ const CodeOtp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const l = uniqueId;
+    console.log(l);
     try {
       const response = await axios.post(
-        `https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/forgotpassword/otp/${email}`,
+        `http://localhost:4000/forgotpassword/otp/${uniqueId}`,
         {
-          email,
           otp,
         }
       );
       if (response.status === 200) {
-        navigate(`/login`);
+        navigate(`/forgot3/${uniqueId}`);
       } else {
         setError(response.data.error);
       }

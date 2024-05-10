@@ -18,8 +18,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/account/:id" element={<Account />} />
         <Route path="/forgot2" element={<Forgot2 />} />
-        <Route path="/forgot3/:email" element={<Forgot3 />} />
-        <Route path="/codeotp/:email" element={<CodeOtp />} />
+        <Route path="/forgot3/:uniqueId" element={<Forgot3 />} />
+        <Route path="/codeotp/:uniqueId" element={<CodeOtp />} />
         <Route path="/home/:id" element={<Home />} />
         <Route path="/tinder/:id" element={<Tinder />} />
       </Routes>
