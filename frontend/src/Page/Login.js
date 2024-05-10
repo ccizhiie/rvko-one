@@ -1,13 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../Mobile.css";
+import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 // import Eye from "../Asset/eye.png"
 
 const Login = () => {
   const navigate = useNavigate();
+  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -28,13 +29,19 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/login", {
-        username,
-        email,
-        password,
-      });
-      navigate("/register");
-      console.log(response.data);
+      const response = await axios.post(
+        "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/login",
+        {
+          username,
+          email,
+          password,
+        }
+      );
+      if (response.status === 200) {
+        navigate(`/Home/${response.data.id}`);
+      } else {
+        setError(response.data.error);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +66,7 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Password"
           />
-          <Link to="/" className="forgot-password">
+          <Link to="/Forgot2" className="forgot-password">
             Forgot Password?
           </Link>
           <br />

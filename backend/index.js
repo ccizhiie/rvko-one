@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { del, User, Foto, bucket, time } = require("./config");
@@ -12,39 +13,45 @@ const memory = multer.memoryStorage();
 const upload = multer({ storage: memory });
 
 async function sendOTP(email, otp) {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    port: 465,
-    secure: true,
-    logger: true,
-    debug: true,
-    secureConnection: false,
-    auth: {
-      user: "teamdua2222@gmail.com",
-      pass: "mocvtlumyjpxowze",
-    },
-    tls: {
-      rejectUnauthorized: true,
-    },
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      port: 465,
+      secure: true,
+      debug: true,
+      auth: {
+        user: "teamdua2222@gmail.com",
+        pass: "mocvtlumyjpxowze",
+      },
+    });
 
-  const mailOptions = {
-    from: "teamdua2222@gmail.com",
-    to: email,
-    subject: "Kode OTP Anda",
-    html: `<p style="text-align: center; font-size: 24px;">Kode OTP Anda adalah:</p>
-    <p style="text-align: center; font-size: 36px; font-weight: bold;">${otp}</p>
-    <p style="text-align: center; font-size: 16px;">Kode OTP akan kadaluarsa dalam 5 menit</p>
-  `,
-  };
+    const mailOptions = {
+      from: "teamdua2222@gmail.com",
+      to: email,
+      subject: "Kode OTP Anda",
+      html: `<p style="text-align: center; font-size: 24px;">Kode OTP Anda adalah:</p>
+      <p style="text-align: center; font-size: 36px; font-weight: bold;">${otp}</p>
+     
+    `,
+    };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log("Gagal mengirim email: ", error);
-    } else {
-      console.log("Email berhasil dikirim: ", info.response);
-    }
-  });
+    const info = await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("Gagal mengirim email: ", error);
+          reject(error);
+        } else {
+          console.log("Email berhasil dikirim: ", info.response);
+          resolve(info);
+        }
+      });
+    });
+
+    return info;
+  } catch (error) {
+    console.log("Gagal mengirim email: ", error);
+    throw error;
+  }
 }
 
 app.use(
@@ -57,10 +64,8 @@ app.use(
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/");
-
 app.post("/register", async (req, res) => {
-  const { email, username, password } = req.body;
+  const { username, email, password } = req.body;
   try {
     const emailExists = await User.where("email", "==", email).get();
     const usernameExists = await User.where("username", "==", username).get();
@@ -74,7 +79,7 @@ app.post("/register", async (req, res) => {
     }
 
     await User.add({ email, username, password });
-    res.send({ msg: "User Added" });
+    return res.status(200).json({ message: "Data berhasil di tambahkan." });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
@@ -107,16 +112,16 @@ app.post("/login", async (req, res) => {
     if (password !== storedPassword) {
       return res.status(401).json({ error: "Password salah." });
     }
-    req.session.userId = id;
-    return res.status(200).json({ message: "Autentikasi berhasil." });
+    const ID = id;
+    return res.status(200).json({ message: "Autentikasi berhasil.", id: ID });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
   }
 });
 
-app.get("/home/profil", async (req, res) => {
-  const id = req.session.userId;
+app.get("/home/profil/:id", async (req, res) => {
+  const id = req.params.id;
   try {
     const data = await User.doc(id).get();
     if (data.exists) {
@@ -131,8 +136,8 @@ app.get("/home/profil", async (req, res) => {
   }
 });
 
-app.post("/home/profil", async (req, res) => {
-  const id = req.session.userId;
+app.post("/home/profil/:id", async (req, res) => {
+  const id = req.params.id;
   const newdata = req.body;
   try {
     await User.doc(id).set(newdata, { merge: true });
@@ -144,8 +149,7 @@ app.post("/home/profil", async (req, res) => {
 });
 
 app.post("/forgotpassword/email", async (req, res) => {
-  const email = req.body.email;
-  req.session.email = email;
+  const { email } = req.body;
   let otp = otpGenerator.generate(4, {
     upperCase: false,
     specialChars: false,
@@ -163,7 +167,9 @@ app.post("/forgotpassword/email", async (req, res) => {
           timestamp: timestamp,
         });
         await sendOTP(email, otp);
-        return res.status(200).send("Data updated successfully." + otp);
+        return res
+          .status(200)
+          .json({ message: "Data updated successfully.", email });
       } else {
         res.status(404);
       }
@@ -175,28 +181,35 @@ app.post("/forgotpassword/email", async (req, res) => {
   }
 });
 
-app.post("/forgotpassword/otp", async (req, res) => {
-  const email = req.session.email;
+app.post("/forgotpassword/otp/:email", async (req, res) => {
+  const email = req.params.email;
   const otp = req.body.otp;
-  const realtime = time.toDate();
+  // const realtime = time.toDate();
   try {
     const querySnapshot = await User.where("email", "==", email).get();
     if (!querySnapshot.empty) {
       const realotp = querySnapshot.docs[0].data().otp;
       const timestroge = querySnapshot.docs[0].data().timestamp;
-      const newtime = new Date(timestroge.toDate().getTime() + 5 * 60 * 1000);
+      // const newtime = new Date(timestroge.toDate().getTime() + 5 * 60 * 1000);
+      // console.log(email, otp, realotp, realtime, newtime);
 
-      if (otp === realotp && newtime >= realtime) {
+      if (otp == realotp) {
         const doc = querySnapshot.docs[0];
         await doc.ref.update({
           change: true,
           otp: del,
           timestamp: del,
         });
-        return res.status(200).send("Data updated successfully.");
+        return res
+          .status(200)
+          .json({ msg: "Data updated successfully.", email });
       } else {
-        return res.status(200).send("code OTP salah atau telah kadaluarsa.");
+        return res
+          .status(400)
+          .json({ error: "code OTP salah atau telah kadaluarsa." });
       }
+    } else {
+      return res.status(400).json({ error: "email tidak ada." });
     }
   } catch (error) {
     return res
@@ -205,9 +218,9 @@ app.post("/forgotpassword/otp", async (req, res) => {
   }
 });
 
-app.post("/forgotpassword/password", async (req, res) => {
+app.post("/forgotpassword/password/:email", async (req, res) => {
   const password = req.body.password;
-  const email = req.session.email;
+  const email = req.params.email;
   console.log(email);
   try {
     const querySnapshot = await User.where("email", "==", email).get();
@@ -247,7 +260,7 @@ app.post("/api/game/likedislike", async (req, res) => {
   }
 });
 
-app.get("/api/game/url", async (res) => {
+app.get("/api/game/url", async (req, res) => {
   const directoryName = "foto/";
   const options = {
     prefix: directoryName,
@@ -288,10 +301,11 @@ app.get("/api/game/url", async (res) => {
       });
     }
 
-    res.json({ images: imagesWithPath });
+    return res.json({ images: imagesWithPath });
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Failed to fetch image URLs." });
+    return res
+      .status(500)
+      .json({ error: "Failed to fetch image URLs.", details: error.message });
   }
 });
 
@@ -302,10 +316,10 @@ app.get("/kirim", async (req, res) => {
   email = "maulanajapar92@gmail.com";
   // const { email } = req.body;
   let otp = otpGenerator.generate(4, {
-    upperCase: false,
+    upperCase: true,
     specialChars: false,
   });
-  sendOTP(email, otp);
+  await sendOTP(email, otp);
   return res.json("Data updated successfully." + otp + email);
 });
 app.post("/upload", upload.single("file"), async (req, res) => {
@@ -328,9 +342,11 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         contentType: File.mimetype,
       };
       await Foto.add(fileData);
-      return res.status(200).send("File uploaded to Firebase Storage.");
+      return res.status(200).json({ p: "File uploaded to Firebase Storage." });
     } catch (error) {
-      return res.status(500).send("Error uploading file to Firebase Storage.");
+      return res
+        .status(500)
+        .json({ p: "Error uploading file to Firebase Storage.", e: error });
     }
   } catch (error) {
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });

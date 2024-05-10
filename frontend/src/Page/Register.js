@@ -1,12 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
-import "../Mobile.css";
+import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -22,13 +23,19 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/register", {
-        username,
-        email,
-        password,
-      });
-      navigate("/login");
-      console.log(response.data);
+      const response = await axios.post(
+        "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/register",
+        {
+          username,
+          email,
+          password,
+        }
+      );
+      if (response.status === 200) {
+        navigate(`/login`);
+      } else {
+        setError(response.data.error);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +74,7 @@ const Register = () => {
           <br />
           <div className="register-text">
             <p className="p-register">
-              Alredy have an Acount? 
+              Alredy have an Acount?
               <Link to="/Login" className="link-register">
                 Login
               </Link>
