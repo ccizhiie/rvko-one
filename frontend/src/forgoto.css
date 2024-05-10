@@ -19,6 +19,10 @@
   width: 180px;
   margin-left: 50px;
 }
+
+.pwhite {
+  color: #ffffff;
+}
   
   
   .back {
@@ -29,7 +33,7 @@
     top: 55px;
   }
   
-input[name="email-forgot"] {
+input[name="emailforgot"] {
     width: 286px;
     height: 26px;
     padding: 10px;
@@ -43,7 +47,7 @@ input[name="email-forgot"] {
     z-index: 2;
 }
   
-  input[name="email-forgot"]::placeholder {
+  input[name="emailforgot"]::placeholder {
     color: #626477;
     z-index: 2;
   }
@@ -72,7 +76,7 @@ input[name="email-forgot"] {
     color: #ffffff;
     margin-bottom: 55px;
   }
-input[name="pass-forgot"] {
+input[name="passforgot"] {
   width: 286px;
   height: 26px;
   padding: 10px;
@@ -86,7 +90,7 @@ input[name="pass-forgot"] {
   z-index: 2;
 }
 
-input[name="pass-forgot"]::placeholder {
+input[name="passforgot"]::placeholder {
   color: #626477;
   z-index: 2;
 }

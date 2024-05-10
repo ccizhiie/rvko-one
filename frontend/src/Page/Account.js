@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "../account.css";
 import axios from "axios";
 import Edit from "../Asset/edit.png";
@@ -9,16 +9,37 @@ import Profil from "../Asset/profil.png";
 import Wedit from "../Asset/wedit.png";
 
 const Account = () => {
-  const id = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
-    usernmae: "",
+    username: "",
     email: "",
     phone: "",
     password: "",
   });
-  const { email, usernmae, password, phone } = formData;
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/home/profil/${id}`
+        );
+        setFormData({
+          username: response.data.username,
+          email: response.data.email,
+          phone: response.data.phone,
+          password: response.data.password,
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const { email, username, password, phone } = formData;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,7 +50,7 @@ const Account = () => {
         `http://localhost:4000/home/profil/${id}`,
         {
           email,
-          usernmae,
+          username,
           password,
           phone,
         }
@@ -55,25 +76,50 @@ const Account = () => {
 
         <br />
         <div className="line"></div>
+        <form onSubmit={handleSubmit}>
+          <p className="p-account">Username</p>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={handleChange}
+            value={username}
+          />
+          <img src={Edit} alt="edit" className="edit" />
 
-        <p className="p-account">Username</p>
-        <input type="text" name="username" placeholder="Username" />
-        <img src={Edit} alt="edit" className="edit" />
+          <p className="p-account">Email Adress</p>
+          <input
+            type="text"
+            name="email"
+            placeholder="Email Adress"
+            onChange={handleChange}
+            value={email}
+          />
+          <img src={Edit} alt="edit" className="edit2" />
 
-        <p className="p-account">Email Adress</p>
-        <input type="text" name="email" placeholder="Email Adress" />
-        <img src={Edit} alt="edit" className="edit2" />
+          <p className="p-account">Phone</p>
+          <input
+            type="text"
+            name="phone"
+            placeholder="+62 590 ***"
+            onChange={handleChange}
+            value={phone}
+          />
+          <img src={Edit} alt="edit" className="edit3" />
 
-        <p className="p-account">Phone</p>
-        <input type="text" name="phone" placeholder="+62 590 ***" />
-        <img src={Edit} alt="edit" className="edit3" />
-
-        <p className="p-account">Password</p>
-        <input type="text" name="password" placeholder="*************" />
-        <img src={Edit} alt="edit" className="edit4" />
-        <br />
-        <button>Save Change</button>
-        <br />
+          <p className="p-account">Password</p>
+          <input
+            type="text"
+            name="password"
+            placeholder="*************"
+            onChange={handleChange}
+            value={password}
+          />
+          <img src={Edit} alt="edit" className="edit4" />
+          <br />
+          <button>Save Change</button>
+          <br />
+        </form>
       </div>
     </div>
   );

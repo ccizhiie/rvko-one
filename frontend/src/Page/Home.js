@@ -1,6 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import React from "react";
-import "../Home.css";
+import "../home.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";
@@ -9,12 +9,15 @@ import Game from "../Asset/game1.png";
 import Play from "../Asset/play.png";
 
 const Home = () => {
-  const id = useParams();
+  const { id } = useParams();
   return (
     <div className="container">
       <div className="cube-account">
         <img src={Logo} alt="logo" className="logo-account" />
-        <img src={Profil} alt="profil" className="profil-account2" />
+        <Link to={`/account/${id}`}>
+          {" "}
+          <img src={Profil} alt="profil" className="profil-account2" />
+        </Link>
         <img src={Back} alt="back" className="back-akun" />
         <img src={Home1} alt="home" className="home" />
 

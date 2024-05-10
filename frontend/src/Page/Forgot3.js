@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
 import "../forgoto.css";
@@ -8,12 +8,14 @@ import Arrow from "../Asset/arrow.png";
 
 const Forgot3 = () => {
   const navigate = useNavigate();
+  const { uniqueId } = useParams();
+  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    passforgot: "",
+    passforgot2: "",
   });
 
-  const { email, password } = formData;
+  const { passforgot, passforgot2 } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,14 +25,17 @@ const Forgot3 = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/register",
+        `http://localhost:4000/forgotpassword/password/${uniqueId}`,
         {
-          email,
-          password,
+          passforgot,
+          passforgot2,
         }
       );
-      navigate("/register");
-      console.log(response.data);
+      if (response.status === 200) {
+        navigate(`/login`);
+      } else {
+        setError(response.data.error);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -44,18 +49,18 @@ const Forgot3 = () => {
           <div className="cube2">
             <h2>Create New Passwoard</h2>
             <div className="cube-paragraf2">
-              <p>Enter and confirm your new passwoard</p>
+              <p className="pwhite">Enter and confirm your new passwoard</p>
             </div>
             <input
               type="text"
-              name="pass-forgot"
+              name="passforgot"
               onChange={handleChange}
               placeholder="New Password"
             />
             <br />
             <input
               type="text"
-              name="pass-forgot"
+              name="passforgot2"
               onChange={handleChange}
               placeholder="Confirm Password"
             />

@@ -25,8 +25,6 @@ const CodeOtp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const l = uniqueId;
-    console.log(l);
     try {
       const response = await axios.post(
         `http://localhost:4000/forgotpassword/otp/${uniqueId}`,
