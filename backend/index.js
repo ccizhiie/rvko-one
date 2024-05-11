@@ -1,4 +1,5 @@
 const express = require("express");
+const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -149,13 +150,13 @@ app.post("/home/profil/:id", async (req, res) => {
 });
 
 app.post("/forgotpassword/email", async (req, res) => {
-  const { email } = req.body;
+  const email = req.body.emailforgot;
   let otp = otpGenerator.generate(4, {
     upperCase: false,
     specialChars: false,
   });
+  const uniqueId = uuidv4();
   otp = otp.toUpperCase();
-  const timestamp = time;
   try {
     const querySnapshot = await User.where("email", "==", email).get();
     if (!querySnapshot.empty) {
@@ -164,15 +165,17 @@ app.post("/forgotpassword/email", async (req, res) => {
       if (doc.exists) {
         await doc.ref.update({
           otp: otp,
-          timestamp: timestamp,
+          uniqueId: uniqueId,
         });
         await sendOTP(email, otp);
         return res
           .status(200)
-          .json({ message: "Data updated successfully.", email });
+          .json({ message: "Data updated successfully.", uniqueId: uniqueId });
       } else {
-        res.status(404);
+        return res.status(404).json({ error: "doc empty." });
       }
+    } else {
+      return res.status(404).json({ error: "email empty." });
     }
   } catch (error) {
     return res
@@ -181,32 +184,26 @@ app.post("/forgotpassword/email", async (req, res) => {
   }
 });
 
-app.post("/forgotpassword/otp/:email", async (req, res) => {
-  const email = req.params.email;
-  const otp = req.body.otp;
-  // const realtime = time.toDate();
+app.post("/forgotpassword/otp/:uniqueId", async (req, res) => {
+  const uniqueId = req.params.uniqueId;
+  const { otp } = req.body;
+  console.log(uniqueId + otp);
+
   try {
-    const querySnapshot = await User.where("email", "==", email).get();
+    const querySnapshot = await User.where("uniqueId", "==", uniqueId).get();
     if (!querySnapshot.empty) {
       const realotp = querySnapshot.docs[0].data().otp;
-      const timestroge = querySnapshot.docs[0].data().timestamp;
-      // const newtime = new Date(timestroge.toDate().getTime() + 5 * 60 * 1000);
-      // console.log(email, otp, realotp, realtime, newtime);
-
       if (otp == realotp) {
         const doc = querySnapshot.docs[0];
         await doc.ref.update({
           change: true,
           otp: del,
-          timestamp: del,
         });
         return res
           .status(200)
-          .json({ msg: "Data updated successfully.", email });
+          .json({ msg: "Data updated successfully.", uniqueId: uniqueId });
       } else {
-        return res
-          .status(400)
-          .json({ error: "code OTP salah atau telah kadaluarsa." });
+        return res.status(400).json({ error: "code OTP salah." });
       }
     } else {
       return res.status(400).json({ error: "email tidak ada." });
@@ -218,12 +215,12 @@ app.post("/forgotpassword/otp/:email", async (req, res) => {
   }
 });
 
-app.post("/forgotpassword/password/:email", async (req, res) => {
+app.post("/forgotpassword/password/:uniqueId", async (req, res) => {
   const password = req.body.password;
-  const email = req.params.email;
-  console.log(email);
+  const uniqueId = req.params.uniqueId;
+  console.log(uniqueId);
   try {
-    const querySnapshot = await User.where("email", "==", email).get();
+    const querySnapshot = await User.where("uniqueId", "==", uniqueId).get();
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
       const change = doc.data().change;
@@ -231,6 +228,7 @@ app.post("/forgotpassword/password/:email", async (req, res) => {
         await doc.ref.update({
           change: false,
           password: password,
+          uniqueId: del,
         });
         return res.status(200).send("Data updated successfully.");
       } else {
@@ -248,15 +246,29 @@ app.post("/forgotpassword/password/:email", async (req, res) => {
 
 app.post("/api/game/likedislike", async (req, res) => {
   const { path, like, dislike } = req.body;
-  const querySnapshot = await Foto.where("filePath", "==", path).get();
-  const doc = querySnapshot.docs[0];
-  if (!doc.empty) {
-    await doc.ref.update({
-      like: like,
-      dislike: dislike,
-    });
 
-    return res.status(200).send("Data updated successfully.");
+  try {
+    const querySnapshot = await Foto.where("filePath", "==", path).get();
+    const doc = querySnapshot.docs[0];
+
+    if (!doc.empty) {
+      let currentLike = doc.data().like;
+      let currentDislike = doc.data().dislike;
+
+      currentLike += like;
+      currentDislike += dislike;
+
+      await doc.ref.update({
+        like: currentLike,
+        dislike: currentDislike,
+      });
+
+      return res.status(200).send("Data updated successfully.");
+    } else {
+      return res.status(404).send("Dokumen tidak ditemukan.");
+    }
+  } catch (error) {
+    return res.status(500).send("Terjadi kesalahan dalam server.");
   }
 });
 
@@ -313,8 +325,8 @@ app.get("/api/game/url", async (req, res) => {
 // COBA COBA
 // COBA COBA
 app.get("/kirim", async (req, res) => {
-  email = "maulanajapar92@gmail.com";
-  // const { email } = req.body;
+  // email = "maulanajapar92@gmail.com";
+  const { email } = req.body;
   let otp = otpGenerator.generate(4, {
     upperCase: true,
     specialChars: false,

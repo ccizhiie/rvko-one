@@ -8,11 +8,11 @@ import Arrow from "../Asset/arrow.png";
 
 const Forgot2 = () => {
   const navigate = useNavigate();
-  const [Error, setError] = useState();
+  const [Error, setError] = useState("");
   const [formData, setFormData] = useState({
-    email: "",
+    emailforgot: "",
   });
-  const { email } = formData;
+  const { emailforgot } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,15 +22,14 @@ const Forgot2 = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
+        `http://localhost:4000/forgotpassword/email`,
         {
-          email,
+          emailforgot,
         }
       );
+      const data = response.data;
       if (response.status === 200) {
-        navigate(`/CodeOtp/${response.data.email}`);
-      } else {
-        setError(response.data.error);
+        navigate(`/CodeOtp/${data.uniqueId}`);
       }
     } catch (error) {
       console.error(error);
@@ -45,21 +44,22 @@ const Forgot2 = () => {
           <div className="cube2">
             <h2>Forgot Passwoard</h2>
             <div className="cube-paragraf">
-              <p className="pwhite">Enter Your Email Address to Receive a Verification Code</p>
+              <p>Enter Your Email Address to Receive a Verification Code</p>
+              <p>{Error}</p>
             </div>
-            <span>{Error}</span>
-        <input
-            type="email"
-            name="emailforgot"
-            // onChange={handleChange}
-            placeholder="Email Adress"
-          />
-          <br />
-        <br />
-        <button type="submit">Send</button>
-        
-        <br />
-        </div></div>
+            <input
+              type="email"
+              name="emailforgot"
+              placeholder="Email Adress"
+              onChange={handleChange}
+            />
+            <br />
+            <br />
+            <button type="submit">Send</button>
+
+            <br />
+          </div>
+        </div>
       </form>
     </div>
   );
