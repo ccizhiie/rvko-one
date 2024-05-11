@@ -5,7 +5,7 @@ import Account from "./Page/Account";
 import Forgot2 from "./Page/Forgot2";
 import Forgot3 from "./Page/Forgot3";
 import CodeOtp from "./Page/CodeOtp";
-import Coba from "./Page/coba";
+import Coba from "./Page/selectlanguage";
 import Home from "./Page/Home";
 import Tinder from "./Page/Tinder";
 import Language from "./Page/Language";

@@ -4,9 +4,11 @@ import axios from "axios";
 import "../forgoto.css";
 import Back from "../Asset/star.png";
 import Arrow from "../Asset/arrow.png";
+import { useTranslation } from "react-i18next";
 // import Eye from "../Asset/eye.png"
 
 const Forgot3 = () => {
+  const { t } = useTranslation("global");
   const navigate = useNavigate();
   const { uniqueId } = useParams();
   const [Error, setError] = useState();
@@ -47,25 +49,25 @@ const Forgot3 = () => {
           <img src={Arrow} alt="arrow" className="arrow" />
           <img src={Back} alt="back" className="back" />
           <div className="cube2">
-            <h2>Create New Passwoard</h2>
+            <h2>{t("PASSWORD.p1")}</h2>
             <div className="cube-paragraf2">
-              <p className="pwhite">Enter and confirm your new passwoard</p>
+              <p className="pwhite">{t("PASSWORD.p2")}</p>
             </div>
             <input
               type="text"
               name="passforgot"
               onChange={handleChange}
-              placeholder="New Password"
+              placeholder={t("PASSWORD.p3")}
             />
             <br />
             <input
               type="text"
               name="passforgot2"
               onChange={handleChange}
-              placeholder="Confirm Password"
+              placeholder={t("PASSWORD.p4")}
             />
             <br />
-            <button type="submit">Save</button>
+            <button type="submit">{t("PASSWORD.p4")}</button>
 
             <br />
           </div>
