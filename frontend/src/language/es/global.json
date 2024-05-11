@@ -1,0 +1,60 @@
+{
+ "LANGUAGE":{
+    "p1":"Elegir idioma",
+    "p2":"Idioma",
+    "p3":"Inicio de sesión",
+    "p4":"Regístrese en",
+    "p5":"Jugar como invitado"
+ },
+ "LOGIN":{
+    "p1":"Nombre de usuario o dirección de correo electrónico",
+    "p2":"Contraseña",
+    "p3":"¿Ha olvidado su contraseña?",
+    "p4":"inicio de sesión",
+    "p5":"¿No tiene cuenta?",
+    "p6":"Inscribirse"
+ },
+ "REGISTER":{
+    "p1":"Nombre de usuario",
+    "p2":"Dirección de correo electrónico",
+    "p3":"Contraseña",
+    "p4":"¿Ha olvidado su contraseña?",
+    "p5":"Regístrese en",
+    "p6":"¿Ya tiene una cuenta?",
+    "p7":"inicio de sesión"
+ },
+ "FORGOT":{
+    "p1":"Contraseña olvidada",
+    "p2":"Introduzca su dirección de correo electrónico",
+    "p3":"Recibir un código de verificación",
+    "p4":"Dirección de correo electrónico",
+    "p5":"Enviar"
+ },
+ "OTP":{
+    "p1":"Código",
+    "p2":"Reenviar código",
+    "p3":"Verifique"
+ },
+ "PASSWORD":{
+    "p1":"Crear nueva contraseña",
+    "p2":"Introduzca y confirme su",
+    "p3":"nueva contraseña",
+    "p4":"contraseña",
+    "p5":"Confirmar contraseña",
+    "p6":"guardar"
+ },
+ "Home":{
+    "p1":"Juego Tranding",
+    "p2":"Ver todos",
+    "p3":"Juego Tinder",
+    "p4":"Es un juego battle royale, donde 100 personas juegan a la vez",
+    "p5":"Jugar"
+ },
+ "ACCOUNT":{
+    "p1":"Nombre de usuario",
+    "p2":"Dirección de correo electrónico",
+    "p3":"Teléfono",
+    "p4":"Contraseña",
+    "p5":"Guardar cambio"
+ }
+}

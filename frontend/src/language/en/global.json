@@ -1,0 +1,60 @@
+{
+    "LANGUAGE":{
+       "p1":"Choose Language",
+       "p2":"Language",
+       "p3":"Login",
+       "p4":"Register",
+       "p5":"Play as Guest"
+    },
+    "LOGIN":{
+       "p1":"Username or Email Adress",
+       "p2":"Password",
+       "p3":"Forgot Password?",
+       "p4":"login",
+       "p5":"Don't have an Account?",
+       "p6":"Sign Up"
+    },
+    "REGISTER":{
+       "p1":"Username",
+       "p2":"Email Adress",
+       "p3":"Password",
+       "p4":"Forgot Password?",
+       "p5":"Register",
+       "p6":"Alredy Have an Account?",
+       "p7":"Login"
+    },
+    "FORGOT":{
+       "p1":"Forgot Password",
+       "p2":"Enter Your Email Adress to",
+       "p3":"Recieve a Verivication Code",
+       "p4":"Email Adress",
+       "p5":"Send"
+    },
+    "OTP":{
+       "p1":"Code",
+       "p2":"Resend code",
+       "p3":"Verify"
+    },
+    "PASSWORD":{
+       "p1":"Create New Password",
+       "p2":"Enter and confirm your",
+       "p3":"new password",
+       "p4":"password",
+       "p5":"Confirm Password",
+       "p6":"save"
+    },
+    "Home":{
+       "p1":"Tranding Game",
+       "p2":"See all",
+       "p3":"Tinder Game",
+       "p4":"Is a battle royale game, where 100 people play at once",
+       "p5":"Play"
+    },
+    "ACCOUNT":{
+       "p1":"Username",
+       "p2":"Email Adress",
+       "p3":"Phone",
+       "p4":"Password",
+       "p5":"Save Change"
+    }
+   }
