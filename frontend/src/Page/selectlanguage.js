@@ -13,6 +13,7 @@ const Coba = () => {
       <div>
         <button onClick={() => changeLanguage("es")}>de</button>
         <button onClick={() => changeLanguage("en")}>en</button>
+        <button onClick={() => changeLanguage("nl")}>nl</button>
         <br></br>
         <h1>{t("FORGOT.p1")}</h1>
       </div>

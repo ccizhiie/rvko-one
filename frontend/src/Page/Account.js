@@ -7,8 +7,10 @@ import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";
 import Wedit from "../Asset/wedit.png";
+import { useTranslation } from "react-i18next";
 
 const Account = () => {
+  const { t } = useTranslation("global");
   const { id } = useParams();
   const navigate = useNavigate();
   const [Error, setError] = useState();
@@ -77,27 +79,27 @@ const Account = () => {
         <br />
         <div className="line"></div>
         <form onSubmit={handleSubmit}>
-          <p className="p-account">Username</p>
+          <p className="p-account">{t("ACCOUNT.p1")}</p>
           <input
             type="text"
             name="username"
-            placeholder="Username"
+            placeholder={t("ACCOUNT.p1")}
             onChange={handleChange}
             value={username}
           />
           <img src={Edit} alt="edit" className="edit" />
 
-          <p className="p-account">Email Adress</p>
+          <p className="p-account">{t("ACCOUNT.p2")}</p>
           <input
             type="text"
             name="email"
-            placeholder="Email Adress"
+            placeholder={t("ACCOUNT.p2")}
             onChange={handleChange}
             value={email}
           />
           <img src={Edit} alt="edit" className="edit2" />
 
-          <p className="p-account">Phone</p>
+          <p className="p-account">{t("ACCOUNT.p3")}</p>
           <input
             type="text"
             name="phone"
@@ -107,17 +109,17 @@ const Account = () => {
           />
           <img src={Edit} alt="edit" className="edit3" />
 
-          <p className="p-account">Password</p>
+          <p className="p-account">{t("ACCOUNT.p4")}</p>
           <input
             type="text"
             name="password"
-            placeholder="*************"
+            placeholder={t("ACCOUNT.p4")}
             onChange={handleChange}
             value={password}
           />
           <img src={Edit} alt="edit" className="edit4" />
           <br />
-          <button>Save Change</button>
+          <button>{t("ACCOUNT.p5")}</button>
           <br />
         </form>
       </div>

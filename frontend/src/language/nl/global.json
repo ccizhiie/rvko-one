@@ -1,0 +1,61 @@
+{
+   "LANGUAGE": {
+     "p1": "Kies Taal",
+     "p2": "Taal",
+     "p3": "Inloggen",
+     "p4": "Registreren",
+     "p5": "Spelen als Gast"
+   },
+   "LOGIN": {
+     "p1": "Gebruikersnaam of E-mailadres",
+     "p2": "Wachtwoord",
+     "p3": "Wachtwoord Vergeten?",
+     "p4": "Inloggen",
+     "p5": "Heb je geen Account?",
+     "p6": "Registreren"
+   },
+   "REGISTER": {
+     "p1": "Gebruikersnaam",
+     "p2": "E-mailadres",
+     "p3": "Wachtwoord",
+     "p4": "Wachtwoord Vergeten?",
+     "p5": "Registreren",
+     "p6": "Heb je al een Account?",
+     "p7": "Inloggen"
+   },
+   "FORGOT": {
+     "p1": "Wachtwoord Vergeten",
+     "p2": "Voer je E-mailadres in om",
+     "p3": "een Verificatiecode te Ontvangen",
+     "p4": "E-mailadres",
+     "p5": "Verstuur"
+   },
+   "OTP": {
+     "p1": "Code",
+     "p2": "Code Opnieuw Versturen",
+     "p3": "Verifiëren"
+   },
+   "PASSWORD": {
+     "p1": "Nieuw Wachtwoord Aanmaken",
+     "p2": "Voer en bevestig je",
+     "p3": "nieuwe wachtwoord",
+     "p4": "wachtwoord",
+     "p5": "Bevestig Wachtwoord",
+     "p6": "Opslaan"
+   },
+   "HOME": {
+     "p1": "Trending Spel",
+     "p2": "Bekijk alles",
+     "p3": "Tinder Spel",
+     "p4": "Is een tinder spel",
+     "p5": "Spelen"
+   },
+   "ACCOUNT": {
+     "p1": "Gebruikersnaam",
+     "p2": "E-mailadres",
+     "p3": "Telefoon",
+     "p4": "Wachtwoord",
+     "p5": "Wijzigingen Opslaan"
+   }
+ }
+ 

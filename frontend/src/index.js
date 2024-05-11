@@ -9,6 +9,7 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import en from "./language/en/global.json";
 import es from "./language/es/global.json";
+import nl from "./language/nl/global.json";
 
 i18next
   .use(LanguageDetector)
@@ -25,6 +26,9 @@ i18next
       },
       es: {
         global: es,
+      },
+      nl: {
+        global: nl,
       },
     },
   });
