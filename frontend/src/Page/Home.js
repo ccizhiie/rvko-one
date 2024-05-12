@@ -47,18 +47,24 @@ const Home = () => {
           <p className="title">{t("HOME.p3")}</p>
           {/* <p className="title">{t("HOME.p4")}</p>
           <p className="title">{t("HOME.p5")}</p> */}
+
+          
           <img
             src={Game}
             alt="game"
             className="game"
             onClick={handleChangegame}
           />
+
+
           <img
             src={Play}
             alt="play"
             className="play"
             onClick={handleChangegame}
           />
+          
+
         </div>
       </div>
     </div>

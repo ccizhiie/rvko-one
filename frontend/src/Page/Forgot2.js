@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
 import "../forgoto.css";
@@ -46,8 +46,8 @@ const Forgot2 = () => {
           <div className="cube2">
             <h2>{t("FORGOT.p1")}</h2>
             <div className="cube-paragraf">
-              <p>{t("FORGOT.p2", "FORGOT.p3")}</p>
-              <p>{Error}</p>
+              <p className="p-forgot">{t("FORGOT.p2", "FORGOT.p3")}</p>
+              <p className="p-forgot">{Error}</p>
             </div>
             <input
               type="email"
@@ -57,7 +57,9 @@ const Forgot2 = () => {
             />
             <br />
             <br />
+            <Link to="/forgot3/:uniqueId">
             <button type="submit">{t("FORGOT.p5")}</button>
+            </Link>
 
             <br />
           </div>

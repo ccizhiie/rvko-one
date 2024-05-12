@@ -110,9 +110,9 @@ button:hover {
   background-color: #a277ca;
 }
 
-p {
-  color: #ffffff;
-  margin-bottom: 40px;
+.p-forgot {
+  color: #ffffff !important;
+  margin-bottom: 40px !important;
 }
 
 h2 {
