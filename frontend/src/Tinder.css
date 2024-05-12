@@ -121,13 +121,7 @@ p {
   position: absolute;
   bottom: 50px;
   left: 105px;
-
-  .text-like {
-    color: #ffffff;
-    position: absolute;
-    bottom: 70px;
-    left: 100px;
-  }
+  
 }
 
 .image1 {
