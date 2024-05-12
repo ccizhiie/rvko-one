@@ -5,6 +5,7 @@ import Account from "./Page/Account";
 import Forgot2 from "./Page/Forgot2";
 import Forgot3 from "./Page/Forgot3";
 import CodeOtp from "./Page/CodeOtp";
+import Coba from "./Page/selectlanguage";
 import Home from "./Page/Home";
 import Tinder from "./Page/Tinder";
 import Tinderguest from "./Page/Tinderguest";
@@ -26,7 +27,10 @@ function App() {
         <Route path="/tinder" element={<Tinder />} />
         <Route path="/tinderguest" element={<Tinderguest />} />
         <Route path="bahasa" element={<Language/>} />
+        <Route path="/tinder/:id" element={<Tinder />} />
+        <Route path="/coba" element={<Coba />} />
       </Routes>
+    
     </Router>
   );
 }

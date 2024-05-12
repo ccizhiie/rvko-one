@@ -4,9 +4,11 @@ import axios from "axios";
 import "../forgoto.css";
 import Back from "../Asset/star.png";
 import Arrow from "../Asset/arrow.png";
+import { useTranslation } from "react-i18next";
 // import Eye from "../Asset/eye.png"
 
 const Forgot2 = () => {
+  const { t } = useTranslation("global");
   const navigate = useNavigate();
   const [Error, setError] = useState("");
   const [formData, setFormData] = useState({
@@ -42,20 +44,20 @@ const Forgot2 = () => {
           <img src={Arrow} alt="arrow" className="arrow" />
           <img src={Back} alt="back" className="back" />
           <div className="cube2">
-            <h2>Forgot Passwoard</h2>
+            <h2>{t("FORGOT.p1")}</h2>
             <div className="cube-paragraf">
-              <p>Enter Your Email Address to Receive a Verification Code</p>
+              <p>{t("FORGOT.p2", "FORGOT.p3")}</p>
               <p>{Error}</p>
             </div>
             <input
               type="email"
               name="emailforgot"
-              placeholder="Email Adress"
+              placeholder={t("FORGOT.p4")}
               onChange={handleChange}
             />
             <br />
             <br />
-            <button type="submit">Send</button>
+            <button type="submit">{t("FORGOT.p5")}</button>
 
             <br />
           </div>

@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "../account.css";
 import axios from "axios";
 import Edit from "../Asset/edit.png";
@@ -7,18 +7,41 @@ import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";
 import Wedit from "../Asset/wedit.png";
+import { useTranslation } from "react-i18next";
 
 const Account = () => {
-  const id = useParams();
+  const { t } = useTranslation("global");
+  const { id } = useParams();
   const navigate = useNavigate();
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
-    usernmae: "",
+    username: "",
     email: "",
     phone: "",
     password: "",
   });
-  const { email, usernmae, password, phone } = formData;
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/home/profil/${id}`
+        );
+        setFormData({
+          username: response.data.username,
+          email: response.data.email,
+          phone: response.data.phone,
+          password: response.data.password,
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const { email, username, password, phone } = formData;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,7 +52,7 @@ const Account = () => {
         `http://localhost:4000/home/profil/${id}`,
         {
           email,
-          usernmae,
+          username,
           password,
           phone,
         }
@@ -55,25 +78,54 @@ const Account = () => {
 
         <br />
         <div className="line"></div>
+        <form onSubmit={handleSubmit}>
+          <p className="p-account">{t("ACCOUNT.p1")}</p>
+          <input
+            className="input-account"
+            type="text"
+            name="username"
+            placeholder={t("ACCOUNT.p1")}
+            onChange={handleChange}
+            value={username}
+          />
+          <img src={Edit} alt="edit" className="edit" />
 
-        <p className="p-account">Username</p>
-        <input name="username" className="input-account" placeholder="Username" />
-        <img src={Edit} alt="edit" className="edit" />
+          <p className="p-account">{t("ACCOUNT.p2")}</p>
+          <input
+            className="input-account"
+            type="text"
+            name="email"
+            placeholder={t("ACCOUNT.p2")}
+            onChange={handleChange}
+            value={email}
+          />
+          <img src={Edit} alt="edit" className="edit2" />
 
-        <p className="p-account">Email Adress</p>
-        <input name="email" placeholder="Email Adress" className="input-account" />
-        <img src={Edit} alt="edit" className="edit2" />
+          <p className="p-account">{t("ACCOUNT.p3")}</p>
+          <input
+            className="input-account"
+            type="text"
+            name="phone"
+            placeholder="+62 590 ***"
+            onChange={handleChange}
+            value={phone}
+          />
+          <img src={Edit} alt="edit" className="edit3" />
 
-        <p className="p-account">Phone</p>
-        <input name="phone" placeholder="+62 590 ***" className="input-account" />
-        <img src={Edit} alt="edit" className="edit3" />
-
-        <p className="p-account">Password</p>
-        <input name="password" placeholder="*************" className="input-account" />
-        <img src={Edit} alt="edit" className="edit4" />
-        <br />
-        <button>Save Change</button>
-        <br />
+          <p className="p-account">{t("ACCOUNT.p4")}</p>
+          <input
+            className="input-account"
+            type="text"
+            name="password"
+            placeholder={t("ACCOUNT.p4")}
+            onChange={handleChange}
+            value={password}
+          />
+          <img src={Edit} alt="edit" className="edit4" />
+          <br />
+          <button>{t("ACCOUNT.p5")}</button>
+          <br />
+        </form>
       </div>
     </div>
   );

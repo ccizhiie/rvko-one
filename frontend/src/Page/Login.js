@@ -5,8 +5,10 @@ import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 // import Eye from "../Asset/eye.png"
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+  const { t } = useTranslation("global");
   const navigate = useNavigate();
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
@@ -57,26 +59,26 @@ const Login = () => {
             type="text"
             name="username"
             onChange={handleChange}
-            placeholder="Username or Email Adress"
+            placeholder={t("LOGIN.p1")}
           />
           <br />
           <input
             type="text"
             name="password"
             onChange={handleChange}
-            placeholder="Password"
+            placeholder={t("LOGIN.p2")}
           />
           <Link to="/Forgot2" className="forgot-password">
-            Forgot Password?
+            {t("LOGIN.p3")}
           </Link>
           <br />
-          <button type="submit">Login</button>
+          <button type="submit">{t("LOGIN.p4")}</button>
           <br />
           <div className="register-text">
             <p>
-              Don't have an Acount?{" "}
+              {t("LOGIN.p5")}{" "}
               <Link to="/Register" className="link-register">
-                Register
+                {t("LOGIN.p6")}
               </Link>
             </p>
           </div>

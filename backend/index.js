@@ -67,20 +67,21 @@ app.use(cors());
 
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
+  const phone = "";
   try {
     const emailExists = await User.where("email", "==", email).get();
     const usernameExists = await User.where("username", "==", username).get();
 
     if (!emailExists.empty) {
-      return res.status(400).json({ error: "Email sudah digunakan." });
+      return res.status(400).json({ error: "Email already used." });
     }
 
     if (!usernameExists.empty) {
-      return res.status(400).json({ error: "Username sudah digunakan." });
+      return res.status(400).json({ error: "Username already used." });
     }
 
-    await User.add({ email, username, password });
-    return res.status(200).json({ message: "Data berhasil di tambahkan." });
+    await User.add({ email, username, password, phone });
+    return res.status(200).json({ message: "data added successfully." });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
@@ -108,13 +109,28 @@ app.post("/login", async (req, res) => {
       id = userSnapshotByUsername.docs[0].id;
       storedPassword = userData.password;
     } else {
-      return res.status(404).json({ error: "Pengguna tidak ditemukan." });
+      return res.status(404).json({ error: "data not found." });
     }
     if (password !== storedPassword) {
-      return res.status(401).json({ error: "Password salah." });
+      return res.status(401).json({ error: "Password wrong." });
     }
     const ID = id;
-    return res.status(200).json({ message: "Autentikasi berhasil.", id: ID });
+    return res
+      .status(200)
+      .json({ message: "Authentication successful.", id: ID });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+  }
+});
+
+app.post("/home/:id", async (req, res) => {
+  const id = req.params.id;
+  const { tinder } = req.body;
+
+  try {
+    await User.doc(id).update({ tinder: tinder });
+    return res.status(200).json({ message: "data sucefull updated" });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
@@ -126,10 +142,15 @@ app.get("/home/profil/:id", async (req, res) => {
   try {
     const data = await User.doc(id).get();
     if (data.exists) {
-      const userData = data.data();
-      res.json(userData);
+      const userData = {
+        username: data.data().username,
+        password: data.data().password,
+        email: data.data().email,
+        phone: data.data().phone,
+      };
+      res.status(200).json(userData);
     } else {
-      res.status(404).json({ error: "Dokumen tidak ditemukan." });
+      res.status(404).json({ error: "data not found." });
     }
   } catch (error) {
     console.error("Error:", error);
@@ -142,7 +163,7 @@ app.post("/home/profil/:id", async (req, res) => {
   const newdata = req.body;
   try {
     await User.doc(id).set(newdata, { merge: true });
-    return res.send({ message: "data sucefull updated" });
+    return res.status(200).json({ message: "data sucefull updated" });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
@@ -172,10 +193,10 @@ app.post("/forgotpassword/email", async (req, res) => {
           .status(200)
           .json({ message: "Data updated successfully.", uniqueId: uniqueId });
       } else {
-        return res.status(404).json({ error: "doc empty." });
+        return res.status(404).json({ error: "doc not found." });
       }
     } else {
-      return res.status(404).json({ error: "email empty." });
+      return res.status(404).json({ error: "email not found." });
     }
   } catch (error) {
     return res
@@ -187,7 +208,6 @@ app.post("/forgotpassword/email", async (req, res) => {
 app.post("/forgotpassword/otp/:uniqueId", async (req, res) => {
   const uniqueId = req.params.uniqueId;
   const { otp } = req.body;
-  console.log(uniqueId + otp);
 
   try {
     const querySnapshot = await User.where("uniqueId", "==", uniqueId).get();
@@ -201,12 +221,12 @@ app.post("/forgotpassword/otp/:uniqueId", async (req, res) => {
         });
         return res
           .status(200)
-          .json({ msg: "Data updated successfully.", uniqueId: uniqueId });
+          .json({ message: "Data updated successfully.", uniqueId: uniqueId });
       } else {
-        return res.status(400).json({ error: "code OTP salah." });
+        return res.status(400).json({ error: "code OTP wrong." });
       }
     } else {
-      return res.status(400).json({ error: "email tidak ada." });
+      return res.status(400).json({ error: "email  not found." });
     }
   } catch (error) {
     return res
@@ -216,26 +236,32 @@ app.post("/forgotpassword/otp/:uniqueId", async (req, res) => {
 });
 
 app.post("/forgotpassword/password/:uniqueId", async (req, res) => {
-  const password = req.body.password;
+  const { passforgot, passforgot2 } = req.body;
   const uniqueId = req.params.uniqueId;
-  console.log(uniqueId);
+
   try {
-    const querySnapshot = await User.where("uniqueId", "==", uniqueId).get();
-    if (!querySnapshot.empty) {
-      const doc = querySnapshot.docs[0];
-      const change = doc.data().change;
-      if (change === true) {
-        await doc.ref.update({
-          change: false,
-          password: password,
-          uniqueId: del,
-        });
-        return res.status(200).send("Data updated successfully.");
+    if (passforgot == passforgot2) {
+      const querySnapshot = await User.where("uniqueId", "==", uniqueId).get();
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        const change = doc.data().change;
+        if (change == true) {
+          await doc.ref.update({
+            change: false,
+            password: passforgot,
+            uniqueId: del,
+          });
+          return res
+            .status(200)
+            .json({ message: "Data updated successfully." });
+        } else {
+          return res.status(400).json({ error: "cannot change password." });
+        }
       } else {
-        return res.status(400).send("Change flag is not true.");
+        return res.status(404).json({ error: "user not found." });
       }
     } else {
-      return res.status(404).send("User not found.");
+      return res.status(400).json({ error: "password  no same." });
     }
   } catch (error) {
     return res
@@ -244,7 +270,7 @@ app.post("/forgotpassword/password/:uniqueId", async (req, res) => {
   }
 });
 
-app.post("/api/game/likedislike", async (req, res) => {
+app.post("/tinder/:id", async (req, res) => {
   const { path, like, dislike } = req.body;
 
   try {
@@ -272,13 +298,17 @@ app.post("/api/game/likedislike", async (req, res) => {
   }
 });
 
-app.get("/api/game/url", async (req, res) => {
+app.get("/api/tinder/:id", async (req, res) => {
   const directoryName = "foto/";
+  const id = req.params.id;
+
   const options = {
     prefix: directoryName,
   };
 
   try {
+    const querySnapshot = await User.doc(id).get();
+    const tinder = querySnapshot.data().tinder;
     const [files] = await bucket.getFiles(options);
     const fileUrls = files.map((file) => {
       return file.getSignedUrl({
@@ -312,8 +342,7 @@ app.get("/api/game/url", async (req, res) => {
         dislike: dislike,
       });
     }
-
-    return res.json({ images: imagesWithPath });
+    return res.json({ images: imagesWithPath, tinder: tinder });
   } catch (error) {
     return res
       .status(500)

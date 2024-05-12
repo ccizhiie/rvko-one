@@ -4,8 +4,10 @@ import axios from "axios";
 import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation("global");
   const navigate = useNavigate();
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
@@ -50,33 +52,33 @@ const Register = () => {
             type="text"
             name="username"
             onChange={handleChange}
-            placeholder="Username"
+            placeholder={t("REGISTER.p1")}
           />
           <br />
           <input
             type="text"
             name="email"
             onChange={handleChange}
-            placeholder="Email Adress"
+            placeholder={t("REGISTER.p2")}
           />
           <br />
           <input
             type="text"
             name="password"
             onChange={handleChange}
-            placeholder="Password"
+            placeholder={t("REGISTER.p3")}
           />
           <Link to="/" className="forgot-password">
-            Forgot Password?
+            {t("REGISTER.p4")}
           </Link>
           <br />
-          <button type="submit">Register</button>
+          <button type="submit">{t("REGISTER.p5")}</button>
           <br />
           <div className="register-text">
             <p className="p-register">
-              Alredy have an Acount?
+              {t("REGISTER.p6")}
               <Link to="/Login" className="link-register">
-                Login
+                {t("REGISTER.p7")}
               </Link>
             </p>
           </div>

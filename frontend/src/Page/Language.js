@@ -4,8 +4,13 @@ import "../language.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Globe from "../Asset/globe.png";
+import { useTranslation } from "react-i18next";
 
 const Language = () => {
+  const { t, i18n } = useTranslation("global");
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   return (
     <div className="container">
       <form>
@@ -14,29 +19,24 @@ const Language = () => {
           <img src={Back} alt="back" className="back" />
 
           <br />
-          <p className="p-bahasa">Choose Language</p>
-          <div className="bahasa">
-            <img src={Globe} alt="globe" className="globe" />
-            <select className="option">
-              <option value="option1">English</option>
-              <option value="option2">Netherlands</option>
-            </select>
-          </div>
-
-          <div className="all-button">
-            <br />
-            <Link to="/login">
-            <button type="submit" className="purple-button">Login</button>
-            </Link>
-            <br/>
-            <Link to="/register">
-            <button type="submit" className="grey-button">Register</button>
-            </Link>
-            <br/>
-            <Link to="/Forgot2">
-            <button type="submit" className="grey-button">Play as Guest</button>
-            </Link>
-          </div>
+          <p>Choose Language</p>
+          <img src={Globe} alt="globe" className="globe" />
+          <select className="option">
+            <option value="option1">English</option>
+            <option value="option2">Netherlands</option>
+          </select>
+          <br />
+          <Link to="/Forgot2">
+            <button type="submit">Login</button>
+          </Link>
+          <br />
+          <Link to="/Forgot2">
+            <button type="submit">Register</button>
+          </Link>
+          <br />
+          <Link to="/Forgot2">
+            <button type="submit">Login</button>
+          </Link>
         </div>
       </form>
     </div>
