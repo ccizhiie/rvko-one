@@ -67,7 +67,7 @@ app.use(cors());
 
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
-  const no = "";
+  const phone = "";
   try {
     const emailExists = await User.where("email", "==", email).get();
     const usernameExists = await User.where("username", "==", username).get();
@@ -127,9 +127,10 @@ app.post("/login", async (req, res) => {
 app.post("/home/:id", async (req, res) => {
   const id = req.params.id;
   const { tinder } = req.body;
+
   try {
-    await User.doc(id).set(tinder, { merge: true });
-    return res.send({ message: "data sucefull updated" });
+    await User.doc(id).update({ tinder: tinder });
+    return res.status(200).json({ message: "data sucefull updated" });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
@@ -162,7 +163,7 @@ app.post("/home/profil/:id", async (req, res) => {
   const newdata = req.body;
   try {
     await User.doc(id).set(newdata, { merge: true });
-    return res.send({ message: "data sucefull updated" });
+    return res.status(200).json({ message: "data sucefull updated" });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
@@ -300,13 +301,14 @@ app.post("/tinder/:id", async (req, res) => {
 app.get("/api/tinder/:id", async (req, res) => {
   const directoryName = "foto/";
   const id = req.params.id;
-  const querySnapshot = await User.doc(id).get();
-  const tinder = querySnapshot.data().tinder;
+
   const options = {
     prefix: directoryName,
   };
 
   try {
+    const querySnapshot = await User.doc(id).get();
+    const tinder = querySnapshot.data().tinder;
     const [files] = await bucket.getFiles(options);
     const fileUrls = files.map((file) => {
       return file.getSignedUrl({
@@ -340,7 +342,6 @@ app.get("/api/tinder/:id", async (req, res) => {
         dislike: dislike,
       });
     }
-    console.log(tinder);
     return res.json({ images: imagesWithPath, tinder: tinder });
   } catch (error) {
     return res

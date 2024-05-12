@@ -81,6 +81,7 @@ const Account = () => {
         <form onSubmit={handleSubmit}>
           <p className="p-account">{t("ACCOUNT.p1")}</p>
           <input
+            className="input-account"
             type="text"
             name="username"
             placeholder={t("ACCOUNT.p1")}
@@ -91,6 +92,7 @@ const Account = () => {
 
           <p className="p-account">{t("ACCOUNT.p2")}</p>
           <input
+            className="input-account"
             type="text"
             name="email"
             placeholder={t("ACCOUNT.p2")}
@@ -101,6 +103,7 @@ const Account = () => {
 
           <p className="p-account">{t("ACCOUNT.p3")}</p>
           <input
+            className="input-account"
             type="text"
             name="phone"
             placeholder="+62 590 ***"
@@ -111,6 +114,7 @@ const Account = () => {
 
           <p className="p-account">{t("ACCOUNT.p4")}</p>
           <input
+            className="input-account"
             type="text"
             name="password"
             placeholder={t("ACCOUNT.p4")}
