@@ -88,7 +88,7 @@ const CodeOtp = () => {
           <div className="cube2">
             <h2>{t("FORGOT.p1")}</h2>
             <div className="cube-paragraf">
-              <p>{t("Forgot.p2", "FORGOT.p3")}</p>
+              <p>{t("FORGOT.p2", "FORGOT.p3")}</p>
             </div>
             <input
               type="text"
