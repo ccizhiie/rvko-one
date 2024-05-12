@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import React from "react";
 import "../home.css";
 import Logo from "../Asset/logo.png";
@@ -14,6 +14,9 @@ const Home = () => {
     <div className="container">
       <div className="cube-account">
         <img src={Logo} alt="logo" className="logo-account" />
+        <Link to="/account/:id">
+        <img src={Profil} alt="profil" className="profil-tinder" />
+        </Link>
         <img src={Profil} alt="profil" className="profil-account2" />
         <img src={Back} alt="back" className="back-akun" />
         <img src={Home1} alt="home" className="home" />

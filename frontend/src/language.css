@@ -5,10 +5,9 @@
     height: 100vh;
   }
   
-  .cube {
+  .cube-bahasa {
     background-color: #1a1b2d;
     display: flex;
-   
     align-items: center;
     position: relative;
     flex-direction: column;
@@ -17,7 +16,7 @@
     text-align: center;
   }
   
-  .logo {
+  .logo-bahasa {
     width: 220px;
     height: auto;
     position: absolute;
@@ -32,22 +31,7 @@
     top: 50px;
   }
   
-  button {
-    padding: 10px 40px;
-    border: none;
-    border-radius: 50px;
-    background-color: #9c69fc93;
-    color: #ffffff;
-    z-index: 2;
-    cursor: pointer;
-    transition: background-color 0.6s ease;
-  }
-  
-  button:hover {
-    background-color: #a277ca;
-  }
-  
-  p {
+  .p-bahasa {
     color: #ffffff;
     margin: 25px 0;
     font-weight: 500;
@@ -66,8 +50,6 @@
     font-size: 20px;
     text-align: center;
     border-color: #35374B;
-    margin-left: 60px;
-    margin-bottom: 100;
   }
 
   .option option:hover {
@@ -82,10 +64,46 @@
   }
 
   .globe {
-    position: absolute;
-    top: 473px;
-    left: 96px;
-    width: 38px;
-  }  
-
+    width: 40px;
+    margin-right: 11px;
+  } 
   
+  
+
+  .bahasa {
+    display: flex;
+  }
+  
+  .all-button {
+    position: absolute;
+    top: 570px;
+    align-items: center;
+    
+  }
+
+  .grey-button {
+    background-color: #e3d4ff23;
+    color: #ffffff;
+    z-index: 2;
+    cursor: pointer;
+    transition: background-color 0.6s ease;
+    margin-bottom: 20px;
+    width: 230px;
+    height: 44px;
+    font-size: 17px;
+    border: 2px solid #ffffff;
+  }
+
+
+  .purple-button {
+    
+    background-color: #5b31aa93;
+    color: #ffffff;
+    z-index: 2;
+    cursor: pointer;
+    transition: background-color 0.6s ease;
+    margin-bottom: 20px;
+    width: 230px;
+    height: 44px;
+    font-size: 17px;
+  }

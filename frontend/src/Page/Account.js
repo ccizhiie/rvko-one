@@ -57,19 +57,19 @@ const Account = () => {
         <div className="line"></div>
 
         <p className="p-account">Username</p>
-        <input type="text" name="username" placeholder="Username" />
+        <input name="username" className="input-account" placeholder="Username" />
         <img src={Edit} alt="edit" className="edit" />
 
         <p className="p-account">Email Adress</p>
-        <input type="text" name="email" placeholder="Email Adress" />
+        <input name="email" placeholder="Email Adress" className="input-account" />
         <img src={Edit} alt="edit" className="edit2" />
 
         <p className="p-account">Phone</p>
-        <input type="text" name="phone" placeholder="+62 590 ***" />
+        <input name="phone" placeholder="+62 590 ***" className="input-account" />
         <img src={Edit} alt="edit" className="edit3" />
 
         <p className="p-account">Password</p>
-        <input type="text" name="password" placeholder="*************" />
+        <input name="password" placeholder="*************" className="input-account" />
         <img src={Edit} alt="edit" className="edit4" />
         <br />
         <button>Save Change</button>

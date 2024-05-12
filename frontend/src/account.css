@@ -36,7 +36,8 @@
     
 }
 
-input[name="input"] {
+
+.input-account {
   width: 300px;
   height: 25px;
   padding: 10px;
@@ -48,6 +49,7 @@ input[name="input"] {
   border-radius: 6px;
   z-index: 2;
 }
+
 
 input[name="input"]::placeholder {
   color: #ffffff;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import '../tinder.css';
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
@@ -14,44 +15,73 @@ const Tinder = () => {
     { imageUrl: "https://storage.googleapis.com/rvko-11.appspot.com/foto/gambar3.jpeg?GoogleAccessId=firebase-adminsdk-e35xz%40rvko-11.iam.gserviceaccount.com&Expires=16730298000&Signature=Qdd8KiKEaFoG14VQ%2B2jFyEJeuan9%2FlMvko9QQhSiqOh9lEt8ngNEjWoAcwzGSLXXRsOsBHdbU5%2B5iNEFbIr7QPz0PXDH6ub1nj5GJASFKi3Mu79z86iHC5HS%2BmxXEn8%2Ftsfw1Mf5rrnLXC5BsCJA4fxXvRg8%2F9K%2Fg5t7nNV2sY5v0omrtysl8A8PAU0vTn%2FVBi283BpzA7kwTer%2Fdgvs%2BN2G9DKcHqdhdTPdgsODdoRQydg2VevMqDZIwJO9AkRe0fixhL%2BLisLO8ibFUUn%2FZ%2FFvGiFYK83OvRtMvGJKRBeAGQ5%2B%2BLJIO6TKcwhr%2Bqtx3eRLZTCZ0zLbDvFs8827NA%3D%3D", like: 0, dislike: 0 }
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [popupType, setPopupType] = useState(1);
+  const [showPopup, setShowPopup] = useState(true);
 
   const handleSwipeRight = () => {
-    setImages(prevImages => {
-      const updatedImages = [...prevImages];
-      if (updatedImages[currentIndex].like === 0 && updatedImages[currentIndex].dislike === 0) {
+    if (!showPopup && images[currentIndex].like === 0 && images[currentIndex].dislike === 0) {
+      setImages(prevImages => {
+        const updatedImages = [...prevImages];
         updatedImages[currentIndex].like = 1;
-      }
-      return updatedImages;
-    });
+        return updatedImages;
+      });
+    }
   };
+
   
   const handleSwipeLeft = () => {
-    setImages(prevImages => {
-      const updatedImages = [...prevImages];
-      if (updatedImages[currentIndex].like === 0 && updatedImages[currentIndex].dislike === 0) {
+    if (!showPopup && images[currentIndex].like === 0 && images[currentIndex].dislike === 0) {
+      setImages(prevImages => {
+        const updatedImages = [...prevImages];
         updatedImages[currentIndex].dislike = 1;
-      }
-      return updatedImages;
-    });
+        return updatedImages;
+      });
+    }
   };
+
   
 
   const handleSwipeRefresh = () => {
-    
+    if (!showPopup) {
+      // Refresh logic
+    }
   };
 
   const handleSwipeUp = () => {
-    setCurrentIndex((prevIndex) => {
-      const nextIndex = prevIndex < images.length - 1 ? prevIndex + 1 : 0;
-      return nextIndex;
-    });
+    if (!showPopup) {
+      setCurrentIndex(prevIndex => (prevIndex < images.length - 1 ? prevIndex + 1 : 0));
+    }
+  };
+
+  const handleSkipPopup = () => {
+    if (popupType === 1) {
+      setPopupType(2); // Move to the second popup
+    } else {
+      setShowPopup(false); // Close popups after skipping the second one
+    }
   };
 
   return (
     <div className="container">
+      {showPopup && (
+        <div className="popup-background">
+          {popupType === 1 ? (
+            <div className="popup">
+              <p>Swipe left to like</p>
+              <p className="skip" onClick={handleSkipPopup}>Skip</p>
+            </div>
+          ) : (
+            <div className="popup2">
+              <p>Swipe right to dilike</p>
+              <p className="skip" onClick={handleSkipPopup}>Skip</p>
+            </div>
+          )}
+          
+        </div>
+      )}
       <div className="cube-tinder">
-        <div className="swipe-left" onClick={handleSwipeRight} ></div>
-        <div className="swipe-right" onClick={handleSwipeLeft} ></div>
+        <div className="swipe-left" onClick={handleSwipeRight}></div>
+        <div className="swipe-right" onClick={handleSwipeLeft}></div>
         <img src={Logo} alt="logo" className="logo-account" />
         <img src={Profil} alt="profil" className="profil-tinder" /> 
         <img src={Back} alt="back" className="back-tinder" />
