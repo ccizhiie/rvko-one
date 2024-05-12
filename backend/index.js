@@ -124,6 +124,18 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.post("/home/:id", async (req, res) => {
+  const id = req.params.id;
+  const { tinder } = req.body;
+  try {
+    await User.doc(id).set(tinder, { merge: true });
+    return res.send({ message: "data sucefull updated" });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+  }
+});
+
 app.get("/home/profil/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -257,7 +269,7 @@ app.post("/forgotpassword/password/:uniqueId", async (req, res) => {
   }
 });
 
-app.post("/api/game/likedislike", async (req, res) => {
+app.post("/tinder/:id", async (req, res) => {
   const { path, like, dislike } = req.body;
 
   try {
@@ -285,8 +297,11 @@ app.post("/api/game/likedislike", async (req, res) => {
   }
 });
 
-app.get("/api/game/url", async (req, res) => {
+app.get("/api/tinder/:id", async (req, res) => {
   const directoryName = "foto/";
+  const id = req.params.id;
+  const querySnapshot = await User.doc(id).get();
+  const tinder = querySnapshot.data().tinder;
   const options = {
     prefix: directoryName,
   };
@@ -325,8 +340,8 @@ app.get("/api/game/url", async (req, res) => {
         dislike: dislike,
       });
     }
-
-    return res.json({ images: imagesWithPath });
+    console.log(tinder);
+    return res.json({ images: imagesWithPath, tinder: tinder });
   } catch (error) {
     return res
       .status(500)
