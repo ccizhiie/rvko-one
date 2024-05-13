@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Register />} />
+        <Route path="/" element={<Language />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/account/:id" element={<Account />} />
@@ -26,11 +26,10 @@ function App() {
         <Route path="/home/:id" element={<Home />} />
         <Route path="/tinder" element={<Tinder />} />
         <Route path="/tinderguest" element={<Tinderguest />} />
-        <Route path="bahasa" element={<Language/>} />
+        <Route path="bahasa" element={<Language />} />
         <Route path="/tinder/:id" element={<Tinder />} />
         <Route path="/coba" element={<Coba />} />
       </Routes>
-    
     </Router>
   );
 }

@@ -54,6 +54,7 @@ const Register = () => {
             onChange={handleChange}
             placeholder={t("REGISTER.p1")}
           />
+          <p>`${Error}`</p>
           <br />
           <input
             type="text"
