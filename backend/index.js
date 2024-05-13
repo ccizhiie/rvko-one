@@ -271,28 +271,37 @@ app.post("/forgotpassword/password/:uniqueId", async (req, res) => {
 });
 
 app.post("/tinder/:id", async (req, res) => {
-  const { path, like, dislike } = req.body;
-
+  const id = req.params.id;
+  const { images } = req.body;
+  console.log(images.length);
   try {
-    const querySnapshot = await Foto.where("filePath", "==", path).get();
-    const doc = querySnapshot.docs[0];
+    for (let i = 0; i < images.length; i++) {
+      const item = images[i];
+      const { like, dislike, path } = item;
+      console.log(like, dislike, path);
+      const querySnapshot = await Foto.where("filePath", "==", path).get();
+      const doc = querySnapshot.docs[0];
 
-    if (!doc.empty) {
-      let currentLike = doc.data().like;
-      let currentDislike = doc.data().dislike;
+      if (!doc.empty) {
+        let currentLike = doc.data().like;
+        let currentDislike = doc.data().dislike;
 
-      currentLike += like;
-      currentDislike += dislike;
+        currentLike += like;
+        currentDislike += dislike;
 
-      await doc.ref.update({
-        like: currentLike,
-        dislike: currentDislike,
-      });
-
-      return res.status(200).send("Data updated successfully.");
-    } else {
-      return res.status(404).send("Dokumen tidak ditemukan.");
+        await doc.ref.update({
+          like: currentLike,
+          dislike: currentDislike,
+        });
+      } else {
+        return res.status(404).send("Dokumen tidak ditemukan.");
+      }
     }
+    await User.doc(id).update({
+      tinder: "close",
+    });
+
+    return res.status(200).send("Data updated successfully.");
   } catch (error) {
     return res.status(500).send("Terjadi kesalahan dalam server.");
   }
@@ -321,28 +330,23 @@ app.get("/api/tinder/:id", async (req, res) => {
     const imageUrls = signedUrls.map((url) => url[0]);
 
     const imagesWithPath = [];
+    const data = [];
     for (const imageUrl of imageUrls) {
       const questionMarkIndex = imageUrl.indexOf("?");
       const urlBeforeQuestionMark = imageUrl.substring(0, questionMarkIndex);
       const splitUrl = urlBeforeQuestionMark.split("/");
       const dataAfterDomain = splitUrl.slice(4).join("/");
 
-      const querySnapshot = await Foto.where(
-        "filePath",
-        "==",
-        dataAfterDomain
-      ).get();
-      const doc = querySnapshot.docs[0];
-      const { like, dislike } = doc.data();
-
       imagesWithPath.push({
         imageUrl,
+      });
+      data.push({
         path: dataAfterDomain,
-        like: like,
-        dislike: dislike,
+        like: 0,
+        dislike: 0,
       });
     }
-    return res.json({ images: imagesWithPath, tinder: tinder });
+    return res.json({ images: imagesWithPath, tinder: tinder, data: data });
   } catch (error) {
     return res
       .status(500)

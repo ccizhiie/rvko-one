@@ -68,7 +68,7 @@ const Register = () => {
             onChange={handleChange}
             placeholder={t("REGISTER.p3")}
           />
-          <Link to="/" className="forgot-password">
+          <Link to="/forgot2" className="forgot-password">
             {t("REGISTER.p4")}
           </Link>
           <br />

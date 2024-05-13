@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
 import "../forgoto.css";
@@ -24,7 +24,7 @@ const Forgot2 = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:4000/forgotpassword/email`,
+        `https://rvko-3-knpn5w7av-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
         {
           emailforgot,
         }
@@ -57,9 +57,8 @@ const Forgot2 = () => {
             />
             <br />
             <br />
-            <Link to="/forgot3/:uniqueId">
+
             <button type="submit">{t("FORGOT.p5")}</button>
-            </Link>
 
             <br />
           </div>
