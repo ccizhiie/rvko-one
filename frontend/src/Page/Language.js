@@ -19,27 +19,40 @@ const Language = () => {
           <img src={Back} alt="back" className="back" />
 
           <br />
-          <p className="p-bahasa">Choose Language</p>
+          <p className="p-bahasa">{t("LANGUAGE.p1")}</p>
           <div className="bahasa">
           <img src={Globe} alt="globe" className="globe" />
-          <select className="option">
-            <option value="option1">English</option>
-            <option value="option2">Netherlands</option>
-          </select>
+          <select
+              className="option"
+              onChange={(e) => changeLanguage(e.target.value)}
+            >
+              <option value="en">English</option>
+              <option value="nl">Netherlands</option>
+              <option value="es">Spanyol</option>
+            </select>
+
           </div>
 
           <div className="all-button">
           <br />
           <Link to="/login">
-            <button type="submit" className="purple-button">Login</button>
+          <button type="submit" className="purple-button">
+                {t("LANGUAGE.p2")}
+              </button>
+
             </Link>
             <br/>
             <Link to="/register">
-            <button type="submit" className="grey-button">Register</button>
+            <button type="submit" className="grey-button">
+                {t("LANGUAGE.p3")}
+              </button>
+
             </Link>
             <br/>
             <Link to="/Forgot2">
-            <button type="submit" className="grey-button">Play as Guest</button>
+            <button type="submit" className="grey-button">
+                {t("LANGUAGE.p4")}
+              </button>
             </Link>
           </div>
         </div>
