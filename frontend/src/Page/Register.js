@@ -2,8 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
 import "../mobile.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import { useTranslation } from "react-i18next";
@@ -11,6 +10,7 @@ import { useTranslation } from "react-i18next";
 const Register = () => {
   const { t } = useTranslation("global");
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [E, setE] = useState();
   const [formData, setFormData] = useState({
     username: "",
@@ -25,6 +25,9 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
 
     try {
       const response = await axios.post("http://localhost:4000/register", {
@@ -33,7 +36,7 @@ const Register = () => {
         password,
       });
       if (response.status === 200) {
-        toast.info(response.data.message, {
+        toast.success(response.data.message, {
           autoClose: 2000,
           onClose: () => navigate(`/login`),
         });
@@ -41,6 +44,8 @@ const Register = () => {
     } catch (error) {
       console.error(error);
       setE(error.response.data.error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (
