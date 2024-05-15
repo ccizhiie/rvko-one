@@ -164,30 +164,19 @@ p {
   margin-left: 305px;
 }
 
-.popup-background {
-  position: fixed;
-  width: 410px;
-  height: 900px;
-  background-color: rgba(0, 1, 19, 0.678);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.popup {
+.popup2 {
   background-color: rgb(255, 255, 255);
   padding: 10px;
   border-radius: 20px;
-  margin-right: 120px;
+  margin-left: 120px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
   position: relative;
-  width: 200px;
   z-index: 2001;
+  width: 200px;
 }
 
-.popup::before {
+.popup2::before {
   content: "";
   position: absolute;
   top: 50px;
@@ -195,6 +184,7 @@ p {
   border-width: 15px;
   border-style: solid;
   border-color: transparent #ffffff transparent transparent;
+  transform: rotateY(180deg);
 }
 
 .popup p {
