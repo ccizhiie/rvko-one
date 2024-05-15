@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import "../forgoto.css";
 import Back from "../Asset/star.png";
 import Arrow from "../Asset/arrow.png";
 import { useTranslation } from "react-i18next";
-// import Eye from "../Asset/eye.png"
 
 const Forgot2 = () => {
   const { t } = useTranslation("global");
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [Error, setError] = useState("");
   const [formData, setFormData] = useState({
     emailforgot: "",
@@ -22,6 +23,9 @@ const Forgot2 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
       const response = await axios.post(
         `https://rvko-3-knpn5w7av-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
@@ -31,11 +35,15 @@ const Forgot2 = () => {
       );
       const data = response.data;
       if (response.status === 200) {
-        navigate(`/CodeOtp/${data.uniqueId}`);
+        toast.success(response.data.message, {
+          autoClose: 2000,
+          onClose: () => navigate(`/CodeOtp/${data.uniqueId}`),
+        });
       }
     } catch (error) {
-      console.error(error);
       setError(error.response.data.error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (
@@ -54,6 +62,7 @@ const Forgot2 = () => {
               name="emailforgot"
               placeholder={t("FORGOT.p4")}
               onChange={handleChange}
+              required
             />
             {<span style={{ color: `red` }}>{Error}</span>}
             <br />

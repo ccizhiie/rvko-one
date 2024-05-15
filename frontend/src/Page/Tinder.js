@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../tinder.css";
 import axios from "axios";
+import { toast } from "react-toastify";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";
@@ -18,7 +19,7 @@ const Tinder = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [popupType, setPopupType] = useState(1);
   const [showPopup, setShowPopup] = useState(true);
-  const [Error, setError] = useState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSwipeRight = () => {
     if (!showPopup) {
@@ -38,6 +39,9 @@ const Tinder = () => {
       setSend((prevIndex) => {
         const nextIndex = prevIndex + 1;
         return nextIndex;
+      });
+      toast.success("like added successfully", {
+        autoClose: 1000,
       });
     }
   };
@@ -60,6 +64,9 @@ const Tinder = () => {
         const nextIndex = prevIndex + 1;
         return nextIndex;
       });
+      toast.success("dislike added successfully", {
+        autoClose: 1000,
+      });
     }
   };
 
@@ -68,6 +75,9 @@ const Tinder = () => {
       setCurrentIndex(0);
       setImages(null);
       setSend(0);
+      toast.success("refreshing success", {
+        autoClose: 1000,
+      });
     }
   };
 
@@ -97,11 +107,15 @@ const Tinder = () => {
         setImages(data.images);
         setImgdata(data.data);
         if (data.tinder !== "open") {
-          navigate(`/home/${id}/true`);
+          navigate(`/home/${id}/false`);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Data tidak dapat di load");
+        toast.error("data cannot be loaded", {
+          autoClose: 1000,
+        });
+        toast.info("refresh this page", {
+          autoClose: 2000,
+        });
       }
     };
 
@@ -109,13 +123,14 @@ const Tinder = () => {
     return (
       <div align="center">
         <h1>Loading.....</h1>
-        <br />
-        <h1>{`${Error}`}</h1>
       </div>
     );
   }
   if (images && Imgdata && send === images.length) {
     const Send = async () => {
+      if (isSubmitting) return;
+
+      setIsSubmitting(true);
       try {
         const response = await axios.post(
           `http://localhost:4000/tinder/${id}`,
@@ -124,11 +139,14 @@ const Tinder = () => {
           }
         );
         if (response.status === 200) {
-          navigate(`/home/${id}/false`);
+          navigate(`/home/${id}/true`);
         }
       } catch (error) {
-        console.error("Error send data:", error);
-        alert(error.response.data.error);
+        toast.error(error.response.data.error, {
+          autoClose: 2000,
+        });
+      } finally {
+        setIsSubmitting(false);
       }
     };
     Send();

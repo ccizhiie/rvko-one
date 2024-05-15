@@ -3,14 +3,15 @@ import { React, useState } from "react";
 import axios from "axios";
 import "../forgoto.css";
 import Back from "../Asset/star.png";
+import { toast } from "react-toastify";
 import Arrow from "../Asset/arrow.png";
 import { useTranslation } from "react-i18next";
-// import Eye from "../Asset/eye.png"
 
 const Forgot3 = () => {
   const { t } = useTranslation("global");
   const navigate = useNavigate();
   const { uniqueId } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
     passforgot: "",
@@ -25,6 +26,9 @@ const Forgot3 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
       const response = await axios.post(
         `http://localhost:4000/forgotpassword/password/${uniqueId}`,
@@ -34,13 +38,15 @@ const Forgot3 = () => {
         }
       );
       if (response.status === 200) {
-        navigate(`/login`);
-      } else {
-        setError(response.data.error);
+        toast.success(response.data.message, {
+          autoClose: 2000,
+          onClose: () => navigate(`/login`),
+        });
       }
     } catch (error) {
-      console.error(error);
       setError(error.response.data.error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (
@@ -59,6 +65,7 @@ const Forgot3 = () => {
               name="passforgot"
               onChange={handleChange}
               placeholder={t("PASSWORD.p3")}
+              required
             />
             {<span style={{ color: `red` }}>{Error}</span>}
             <br />
@@ -67,6 +74,7 @@ const Forgot3 = () => {
               name="passforgot2"
               onChange={handleChange}
               placeholder={t("PASSWORD.p4")}
+              required
             />
             {<span style={{ color: `red` }}>{Error}</span>}
             <br />

@@ -29,8 +29,8 @@ async function sendOTP(email, otp) {
     const mailOptions = {
       from: "teamdua2222@gmail.com",
       to: email,
-      subject: "Kode OTP Anda",
-      html: `<p style="text-align: center; font-size: 24px;">Kode OTP Anda adalah:</p>
+      subject: "Your OTP Code",
+      html: `<p style="text-align: center; font-size: 24px;">Your OTP code:</p>
       <p style="text-align: center; font-size: 36px; font-weight: bold;">${otp}</p>
      
     `,
@@ -84,7 +84,7 @@ app.post("/register", async (req, res) => {
     return res.status(200).json({ message: "data added successfully." });
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+    return res.status(500).json({ error: "Internal server error." });
   }
 });
 
@@ -120,20 +120,35 @@ app.post("/login", async (req, res) => {
       .json({ message: "Authentication successful.", id: ID });
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+    return res.status(500).json({ error: "Internal server error." });
   }
 });
 
 app.post("/home/:id", async (req, res) => {
   const id = req.params.id;
-  const { tinder } = req.body;
+  let { tinder } = req.body;
 
   try {
-    await User.doc(id).update({ tinder: tinder });
-    return res.status(200).json({ message: "data sucefull updated" });
+    const docRef = User.doc(id);
+    const data = await docRef.get();
+
+    if (existingDoc.exists) {
+      const open = data.data().tinder;
+
+      if (open !== "close") {
+        await docRef.update({ tinder: tinder });
+        return res.status(200).json({ message: "Data added successfully" });
+      } else {
+        tinder = "close";
+        await docRef.update({ tinder: tinder });
+        return res.status(200).json({ message: "Data added successfully" });
+      }
+    } else {
+      return res.status(404).json({ error: "Document not found." });
+    }
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+    return res.status(500).json({ error: "Internal server error." });
   }
 });
 
@@ -154,7 +169,7 @@ app.get("/home/profil/:id", async (req, res) => {
     }
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+    return res.status(500).json({ error: "Internal server error." });
   }
 });
 
@@ -166,7 +181,7 @@ app.post("/home/profil/:id", async (req, res) => {
     return res.status(200).json({ message: "data sucefull updated" });
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+    return res.status(500).json({ error: "Internal server error." });
   }
 });
 
@@ -191,7 +206,7 @@ app.post("/forgotpassword/email", async (req, res) => {
         await sendOTP(email, otp);
         return res
           .status(200)
-          .json({ message: "Data updated successfully.", uniqueId: uniqueId });
+          .json({ message: "email sent successfully.", uniqueId: uniqueId });
       } else {
         return res.status(404).json({ error: "doc not found." });
       }
@@ -199,9 +214,7 @@ app.post("/forgotpassword/email", async (req, res) => {
       return res.status(404).json({ error: "email not found." });
     }
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Terjadi kesalahan dalam server." } + error);
+    return res.status(500).json({ error: "Internal server error." } + error);
   }
 });
 
@@ -229,9 +242,7 @@ app.post("/forgotpassword/otp/:uniqueId", async (req, res) => {
       return res.status(400).json({ error: "email  not found." });
     }
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Terjadi kesalahan dalam server." } + error);
+    return res.status(500).json({ error: "Internal server error." } + error);
   }
 });
 
@@ -266,7 +277,7 @@ app.post("/forgotpassword/password/:uniqueId", async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: "Terjadi kesalahan dalam server.", detail: error });
+      .json({ error: "Internal server error.", detail: error });
   }
 });
 
@@ -294,16 +305,15 @@ app.post("/tinder/:id", async (req, res) => {
           dislike: currentDislike,
         });
       } else {
-        return res.status(404).send("Dokumen tidak ditemukan.");
+        return res
+          .status(404)
+          .json({ error: "cannot save data to the server" });
       }
     }
-    await User.doc(id).update({
-      tinder: "close",
-    });
 
-    return res.status(200).send("Data updated successfully.");
+    return res.status(200).json({ massage: "addend data successfully" });
   } catch (error) {
-    return res.status(500).send("Terjadi kesalahan dalam server.");
+    return res.status(500).send("Internal server error.");
   }
 });
 
@@ -394,7 +404,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         .json({ p: "Error uploading file to Firebase Storage.", e: error });
     }
   } catch (error) {
-    return res.status(500).json({ error: "Terjadi kesalahan dalam server." });
+    return res.status(500).json({ error: "Internal server error." });
   }
 });
 

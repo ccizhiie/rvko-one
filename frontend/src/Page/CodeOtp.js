@@ -1,17 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import "../codeotp.css";
 import Back from "../Asset/star.png";
 import Arrow from "../Asset/arrow.png";
 import { useTranslation } from "react-i18next";
-// import Eye from "../Asset/eye.png"
 
 const CodeOtp = () => {
   const { t } = useTranslation("global");
   const { uniqueId } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
     digit1: "",
     digit2: "",
@@ -27,6 +27,9 @@ const CodeOtp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
       const response = await axios.post(
         `http://localhost:4000/forgotpassword/otp/${uniqueId}`,
@@ -35,11 +38,17 @@ const CodeOtp = () => {
         }
       );
       if (response.status === 200) {
-        navigate(`/forgot3/${uniqueId}`);
+        toast.success(response.data.message, {
+          autoClose: 2000,
+          onClose: () => navigate(`/forgot3/${uniqueId}`),
+        });
       }
     } catch (error) {
-      console.error(error);
-      alert(error.response.data.error);
+      toast.error(error.response.data.error, {
+        autoClose: 2000,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (

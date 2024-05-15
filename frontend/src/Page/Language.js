@@ -49,11 +49,11 @@ const Language = () => {
               </button>
             </Link>
             <br />
-            <Link to="/Forgot2">
+            {/* <Link to="/Forgot2">
               <button type="submit" className="grey-button">
                 {t("LANGUAGE.p5")}
               </button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </form>

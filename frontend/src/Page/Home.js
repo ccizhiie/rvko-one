@@ -1,5 +1,5 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import "../home.css";
 import axios from "axios";
 import Logo from "../Asset/logo.png";
@@ -7,25 +7,32 @@ import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";
 import Home1 from "../Asset/home1.png";
 import Game from "../Asset/game1.png";
+import { toast } from "react-toastify";
 import Play from "../Asset/play.png";
 import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const { t } = useTranslation("global");
   const { id } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { open } = useParams();
   const navigate = useNavigate();
-  // const [Error, setError] = useState();
   useEffect(() => {
     async function opentinder() {
       try {
         if (open === "true" || open === true) {
-          alert("data berhasil di simpan");
+          toast.info("the opportunity to play has run out", {
+            autoClose: 2000,
+          });
         } else if (open === "false" || open === false) {
-          alert("anda hanya bisa bermain sekali");
+          toast.error("you can only play once", {
+            autoClose: 2000,
+          });
         }
       } catch (error) {
-        console.error("Error :", error);
+        toast.error("Cannot display notifications", {
+          autoClose: 2000,
+        });
       }
     }
 
@@ -33,8 +40,12 @@ const Home = () => {
   });
 
   const handleChangegame = async () => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
       const tinder = "open";
+
       const response = await axios.post(`http://localhost:4000/home/${id}`, {
         tinder,
       });
@@ -42,7 +53,11 @@ const Home = () => {
         navigate(`/tinder/${id}`);
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error.response.data.error, {
+        autoClose: 2000,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (

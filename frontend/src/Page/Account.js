@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { React, useState, useEffect } from "react";
 import "../account.css";
+import { toast } from "react-toastify";
 import axios from "axios";
 import Edit from "../Asset/edit.png";
 import Logo from "../Asset/logo.png";
@@ -11,9 +12,9 @@ import { useTranslation } from "react-i18next";
 
 const Account = () => {
   const { t } = useTranslation("global");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [Error, setError] = useState();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -33,12 +34,14 @@ const Account = () => {
           password: response.data.password,
         });
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast.error(error.response.data.error, {
+          autoClose: 2000,
+        });
       }
     }
 
     fetchData();
-  }, []);
+  }, [id]);
 
   const { email, username, password, phone } = formData;
 
@@ -47,6 +50,9 @@ const Account = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
       const response = await axios.post(
         `http://localhost:4000/home/profil/${id}`,
@@ -58,13 +64,17 @@ const Account = () => {
         }
       );
       if (response.status === 200) {
-        navigate(`/Account/${id}`);
-      } else {
-        setError(response.data.error);
+        toast.success(response.data.message, {
+          autoClose: 2000,
+          onClose: () => navigate(`/Account/${id}`),
+        });
       }
     } catch (error) {
-      console.error(error);
-      alert(error.response.data.error);
+      toast.error(error.response.data.error, {
+        autoClose: 2000,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -88,6 +98,8 @@ const Account = () => {
             placeholder={t("ACCOUNT.p1")}
             onChange={handleChange}
             value={username}
+            readOnly
+            required
           />
           <img src={Edit} alt="edit" className="edit" />
 
@@ -99,6 +111,8 @@ const Account = () => {
             placeholder={t("ACCOUNT.p2")}
             onChange={handleChange}
             value={email}
+            readOnly
+            required
           />
           <img src={Edit} alt="edit" className="edit2" />
 
@@ -110,6 +124,7 @@ const Account = () => {
             placeholder="+62 590 ***"
             onChange={handleChange}
             value={phone}
+            required
           />
           <img src={Edit} alt="edit" className="edit3" />
 
@@ -121,6 +136,7 @@ const Account = () => {
             placeholder={t("ACCOUNT.p4")}
             onChange={handleChange}
             value={password}
+            required
           />
           <img src={Edit} alt="edit" className="edit4" />
           <br />

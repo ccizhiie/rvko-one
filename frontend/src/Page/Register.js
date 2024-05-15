@@ -42,7 +42,6 @@ const Register = () => {
         });
       }
     } catch (error) {
-      console.error(error);
       setE(error.response.data.error);
     } finally {
       setIsSubmitting(false);
@@ -59,6 +58,7 @@ const Register = () => {
             name="username"
             onChange={handleChange}
             placeholder={t("REGISTER.p1")}
+            required
           />
           {<span style={{ color: `red` }}>{E}</span>}
           <br />
@@ -67,6 +67,7 @@ const Register = () => {
             name="email"
             onChange={handleChange}
             placeholder={t("REGISTER.p2")}
+            required
           />
           {<span style={{ color: `red` }}>{E}</span>}
           <br />
@@ -75,6 +76,7 @@ const Register = () => {
             name="password"
             onChange={handleChange}
             placeholder={t("REGISTER.p3")}
+            required
           />
           <Link to="/forgot2" className="forgot-password">
             {t("REGISTER.p4")}

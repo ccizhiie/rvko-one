@@ -44,13 +44,12 @@ const Login = () => {
         }
       );
       if (response.status === 200) {
-        toast.info(response.data.message, {
+        toast.success(response.data.message, {
           autoClose: 2000,
           onClose: () => navigate(`/Home/${response.data.id}`),
         });
       }
     } catch (error) {
-      console.error(error);
       setError(error.response.data.error);
     } finally {
       setIsSubmitting(false);
@@ -67,6 +66,7 @@ const Login = () => {
             name="username"
             onChange={handleChange}
             placeholder={t("LOGIN.p1")}
+            required
           />{" "}
           {<span style={{ color: `red` }}>{Error}</span>}
           <br />
@@ -75,6 +75,7 @@ const Login = () => {
             name="password"
             onChange={handleChange}
             placeholder={t("LOGIN.p2")}
+            required
           />{" "}
           {<span style={{ color: `red` }}>{Error}</span>}
           <Link to="/Forgot2" className="forgot-password">
