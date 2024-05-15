@@ -40,6 +40,7 @@ const Forgot3 = () => {
       }
     } catch (error) {
       console.error(error);
+      setError(error.response.data.error);
     }
   };
   return (
@@ -59,6 +60,7 @@ const Forgot3 = () => {
               onChange={handleChange}
               placeholder={t("PASSWORD.p3")}
             />
+            {<span style={{ color: `red` }}>{Error}</span>}
             <br />
             <input
               type="text"
@@ -66,6 +68,7 @@ const Forgot3 = () => {
               onChange={handleChange}
               placeholder={t("PASSWORD.p4")}
             />
+            {<span style={{ color: `red` }}>{Error}</span>}
             <br />
             <button type="submit">{t("PASSWORD.p4")}</button>
 

@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
 import "../mobile.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import { useTranslation } from "react-i18next";
@@ -9,13 +11,12 @@ import { useTranslation } from "react-i18next";
 const Register = () => {
   const { t } = useTranslation("global");
   const navigate = useNavigate();
-  const [Error, setError] = useState();
+  const [E, setE] = useState();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-
   const { username, email, password } = formData;
 
   const handleChange = (e) => {
@@ -24,22 +25,22 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post(
-        "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/register",
-        {
-          username,
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:4000/register", {
+        username,
+        email,
+        password,
+      });
       if (response.status === 200) {
-        navigate(`/login`);
-      } else {
-        setError(response.data.error);
+        toast.info(response.data.message, {
+          autoClose: 2000,
+          onClose: () => navigate(`/login`),
+        });
       }
     } catch (error) {
       console.error(error);
+      setE(error.response.data.error);
     }
   };
   return (
@@ -54,7 +55,7 @@ const Register = () => {
             onChange={handleChange}
             placeholder={t("REGISTER.p1")}
           />
-          <p>`${Error}`</p>
+          {<span style={{ color: `red` }}>{E}</span>}
           <br />
           <input
             type="text"
@@ -62,6 +63,7 @@ const Register = () => {
             onChange={handleChange}
             placeholder={t("REGISTER.p2")}
           />
+          {<span style={{ color: `red` }}>{E}</span>}
           <br />
           <input
             type="text"

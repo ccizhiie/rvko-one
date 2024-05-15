@@ -18,6 +18,7 @@ const Tinder = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [popupType, setPopupType] = useState(1);
   const [showPopup, setShowPopup] = useState(true);
+  const [Error, setError] = useState();
 
   const handleSwipeRight = () => {
     if (!showPopup) {
@@ -96,17 +97,20 @@ const Tinder = () => {
         setImages(data.images);
         setImgdata(data.data);
         if (data.tinder !== "open") {
-          navigate(`/home/${id}`);
+          navigate(`/home/${id}/true`);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("Data tidak dapat di load");
       }
     };
 
     fetchData();
     return (
-      <div>
+      <div align="center">
         <h1>Loading.....</h1>
+        <br />
+        <h1>{`${Error}`}</h1>
       </div>
     );
   }
@@ -120,10 +124,11 @@ const Tinder = () => {
           }
         );
         if (response.status === 200) {
-          navigate(`/home/${id}`);
+          navigate(`/home/${id}/false`);
         }
       } catch (error) {
         console.error("Error send data:", error);
+        alert(error.response.data.error);
       }
     };
     Send();

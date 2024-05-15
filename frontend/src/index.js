@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-// import i18n from "./i18n";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import i18next from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
@@ -38,6 +39,7 @@ root.render(
   <React.StrictMode>
     <I18nextProvider i18n={i18next}>
       <App />
+      <ToastContainer />
     </I18nextProvider>
   </React.StrictMode>
 );

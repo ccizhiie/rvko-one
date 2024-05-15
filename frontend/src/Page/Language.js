@@ -26,6 +26,9 @@ const Language = () => {
               className="option"
               onChange={(e) => changeLanguage(e.target.value)}
             >
+              <option value="" disabled selected>
+                {t("LANGUAGE.p2")}
+              </option>
               <option value="en">English</option>
               <option value="nl">Netherlands</option>
               <option value="es">Spanyol</option>

@@ -40,12 +40,12 @@ const Login = () => {
         }
       );
       if (response.status === 200) {
+        alert(response.data.message);
         navigate(`/Home/${response.data.id}`);
-      } else {
-        setError(response.data.error);
       }
     } catch (error) {
       console.error(error);
+      setError(error.response.data.error);
     }
   };
   return (
@@ -54,20 +54,21 @@ const Login = () => {
         <div className="cube">
           <img src={Logo} alt="Logo" className="logo" />
           <img src={Back} alt="back" className="back" />
-
           <input
             type="text"
             name="username"
             onChange={handleChange}
             placeholder={t("LOGIN.p1")}
-          />
+          />{" "}
+          {<span style={{ color: `red` }}>{Error}</span>}
           <br />
           <input
             type="text"
             name="password"
             onChange={handleChange}
             placeholder={t("LOGIN.p2")}
-          />
+          />{" "}
+          {<span style={{ color: `red` }}>{Error}</span>}
           <Link to="/Forgot2" className="forgot-password">
             {t("LOGIN.p3")}
           </Link>

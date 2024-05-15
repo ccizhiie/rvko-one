@@ -64,6 +64,7 @@ const Account = () => {
       }
     } catch (error) {
       console.error(error);
+      alert(error.response.data.error);
     }
   };
 

@@ -36,11 +36,10 @@ const CodeOtp = () => {
       );
       if (response.status === 200) {
         navigate(`/forgot3/${uniqueId}`);
-      } else {
-        setError(response.data.error);
       }
     } catch (error) {
       console.error(error);
+      alert(error.response.data.error);
     }
   };
   return (

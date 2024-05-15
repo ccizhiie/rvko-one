@@ -1,5 +1,5 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "../home.css";
 import axios from "axios";
 import Logo from "../Asset/logo.png";
@@ -13,8 +13,25 @@ import { useTranslation } from "react-i18next";
 const Home = () => {
   const { t } = useTranslation("global");
   const { id } = useParams();
+  const { open } = useParams();
   const navigate = useNavigate();
-  const [Error, setError] = useState();
+  // const [Error, setError] = useState();
+  useEffect(() => {
+    async function opentinder() {
+      try {
+        if (open === "true" || open === true) {
+          alert("data berhasil di simpan");
+        } else if (open === "false" || open === false) {
+          alert("anda hanya bisa bermain sekali");
+        }
+      } catch (error) {
+        console.error("Error :", error);
+      }
+    }
+
+    opentinder();
+  });
+
   const handleChangegame = async () => {
     try {
       const tinder = "open";
@@ -23,8 +40,6 @@ const Home = () => {
       });
       if (response.status === 200) {
         navigate(`/tinder/${id}`);
-      } else {
-        setError(response.data.error);
       }
     } catch (error) {
       console.error(error);
@@ -48,7 +63,6 @@ const Home = () => {
           {/* <p className="title">{t("HOME.p4")}</p>
           <p className="title">{t("HOME.p5")}</p> */}
 
-          
           <img
             src={Game}
             alt="game"
@@ -56,15 +70,12 @@ const Home = () => {
             onClick={handleChangegame}
           />
 
-
           <img
             src={Play}
             alt="play"
             className="play"
             onClick={handleChangegame}
           />
-          
-
         </div>
       </div>
     </div>

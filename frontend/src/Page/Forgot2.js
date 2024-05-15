@@ -35,6 +35,7 @@ const Forgot2 = () => {
       }
     } catch (error) {
       console.error(error);
+      setError(error.response.data.error);
     }
   };
   return (
@@ -47,7 +48,6 @@ const Forgot2 = () => {
             <h2>{t("FORGOT.p1")}</h2>
             <div className="cube-paragraf">
               <p className="p-forgot">{t("FORGOT.p2", "FORGOT.p3")}</p>
-              <p className="p-forgot">{Error}</p>
             </div>
             <input
               type="email"
@@ -55,6 +55,7 @@ const Forgot2 = () => {
               placeholder={t("FORGOT.p4")}
               onChange={handleChange}
             />
+            {<span style={{ color: `red` }}>{Error}</span>}
             <br />
             <br />
 
