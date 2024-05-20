@@ -59,7 +59,7 @@ const Login = () => {
     <div className="Register-container">
       <form onSubmit={handleSubmit}>
         <div className="cube">
-          <img src={Logo} alt="Logo" className="logo" />
+          <img src={Logo} alt="Logo" className="logo-register" />
           <img src={Back} alt="back" className="back" />
           <input
             type="text"

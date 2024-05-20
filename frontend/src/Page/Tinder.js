@@ -185,14 +185,24 @@ const Tinder = () => {
           onClick={handleSwipeUp}
         ></div>
         <div className="response">
-          <img src={Like} alt="like" className="like" />
+          <img
+            src={Like}
+            alt="like"
+            className="like"
+            onClick={handleSwipeRight}
+          />
           <img
             src={Refresh}
             alt="fresh"
             className="fresh"
             onClick={handleSwipeRefresh}
           />
-          <img src={Dislike} alt="dislike" className="dislike" />
+          <img
+            src={Dislike}
+            alt="dislike"
+            className="dislike"
+            onClick={handleSwipeLeft}
+          />
         </div>
         {/* <p className="text-like">{images[currentIndex].like}</p>
         <p className="text-dislike">{images[currentIndex].dislike}</p> */}

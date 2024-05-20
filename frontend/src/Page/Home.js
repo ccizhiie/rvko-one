@@ -61,13 +61,13 @@ const Home = () => {
     }
   };
   return (
-    <div className="container">
-      <div className="cube-account">
-        <img src={Logo} alt="logo" className="logo-account" />
+    <div className="container-home">
+      <div className="cube-home">
+        <img src={Logo} alt="logo" className="logo-home" />
         <Link to={`/account/${id}`}>
-          <img src={Profil} alt="profil" className="profil-account2" />
+          <img src={Profil} alt="profil" className="profil-home" />
         </Link>
-        <img src={Back} alt="back" className="back-akun" />
+        <img src={Back} alt="back" className="back-home" />
         <img src={Home1} alt="home" className="home" />
 
         <p className="pwhite-home">{t("HOME.p1")}</p>

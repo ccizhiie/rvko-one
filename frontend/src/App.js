@@ -8,6 +8,7 @@ import CodeOtp from "./Page/CodeOtp";
 import Home from "./Page/Home";
 import Tinder from "./Page/Tinder";
 import Language from "./Page/Language";
+import Belajartailwind from "./Page/Belajartailwind";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {

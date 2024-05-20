@@ -1,4 +1,4 @@
-.Register-container {
+.forgot-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,3 +131,4 @@ h2 {
   top: 128px;
   margin-right: 73px;
 }
+

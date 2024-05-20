@@ -52,9 +52,9 @@ const CodeOtp = () => {
     }
   };
   return (
-    <div className="Register-container">
+    <div className="CodeOtp-container">
       <form onSubmit={handleSubmit}>
-        <div className="cube">
+        <div className="cube-codeotp">
           <div class="black-box"></div>
           <div class="white-box">
             <p className="white-pbox">{t("OTP.p1")}</p>

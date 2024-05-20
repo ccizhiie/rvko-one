@@ -12,8 +12,8 @@ const Language = () => {
     i18n.changeLanguage(lng);
   };
   return (
-    <div className="container">
-      <form>
+    <div className="container-bahasa">
+
         <div className="cube-bahasa">
           <img src={Logo} alt="Logo" className="logo-bahasa" />
           <img src={Back} alt="back" className="back" />
@@ -56,7 +56,7 @@ const Language = () => {
             </Link> */}
           </div>
         </div>
-      </form>
+
     </div>
   );
 };

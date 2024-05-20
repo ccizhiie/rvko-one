@@ -50,7 +50,7 @@ const Forgot3 = () => {
     }
   };
   return (
-    <div className="Register-container">
+    <div className="forgot-container">
       <form onSubmit={handleSubmit}>
         <div className="cube">
           <img src={Arrow} alt="arrow" className="arrow" />

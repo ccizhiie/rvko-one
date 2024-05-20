@@ -1,110 +1,139 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
+.container-bahasa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+.cube-bahasa {
+  background-color: #1a1b2d;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  max-width: 410px;
+  height: 100%;
+  max-height: 900px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.logo-bahasa {
+  width: 50%;
+  height: auto;
+  margin-top: 30px;
+}
+
+.back {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  position: absolute;
+  z-index: 0;
+  top: 50px;
+}
+
+.p-bahasa {
+  color: #ffffff;
+  margin: 25px 0;
+  font-weight: 500;
+  font-size: 23px;
+}
+
+.option {
+  z-index: 2;
+  width: 100%;
+  max-width: 180px;
+  height: 41px;
+  background-color: #23253a;
+  color: white;
+  border-radius: 10px;
+  outline: none;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  border-color: #35374b;
+}
+
+.option option:hover {
+  background-color: #35374b;
+}
+
+.option option:checked {
+  background-color: #35374b;
+  color: rgb(223, 223, 223);
+  border: none;
+}
+
+.globe {
+  width: 40px;
+  margin-right: 11px;
+}
+
+.bahasa {
+  display: flex;
+  justify-content: center;
+}
+
+.all-button {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  z-index: 100;
+}
+
+.grey-button, .purple-button {
+  background-color: #e3d4ff23;
+  color: #ffffff; 
+  cursor: pointer;
+  transition: background-color 0.6s ease;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 230px;
+  height: 44px;
+  font-size: 17px;
+
+  border: 2px solid #ffffff;
+ 
+}
+
+.purple-button {
+  background-color: #5b31aa93;
+}
+
+@media (max-width: 490px) {
   .cube-bahasa {
-    background-color: #1a1b2d;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    position: relative;
-    flex-direction: column;
-    width: 410px;
-    height: 900px;
-    text-align: center;
+    max-width: 100%;
+    max-height: 100%;
   }
-  
+
   .logo-bahasa {
-    width: 220px;
-    height: auto;
-    position: absolute;
-    top: 275px;
-  }
-  
-  .back {
-    width: 400px;
-    height: auto;
-    position: absolute;
-    z-index: 0;
-    top: 50px;
-  }
-  
-  .p-bahasa {
-    color: #ffffff;
-    margin: 25px 0;
-    font-weight: 500;
-    font-size: 23px;
-  }
-  
-  .option {
-    z-index: 2;  
-    width: 180px;
-    height: 41px;
-    background-color: #23253A; 
-    color: white; 
-    border-radius: 10px; 
-    outline: none;
-    font-weight: 500;
-    font-size: 20px;
-    text-align: center;
-    border-color: #35374B;
+    width: 60%;
   }
 
-  .option option:hover {
-    background-color: #35374B; 
-  }
-  
-
-  .option option:checked {
-    background-color: #35374B; 
-    color: rgb(223, 223, 223); 
-    border: none; 
-  }
-
-  .globe {
-    width: 40px;
-    margin-right: 11px;
-  } 
-  
-  
-
-  .bahasa {
-    display: flex;
-  }
-  
   .all-button {
-    position: absolute;
-    top: 570px;
-    align-items: center;
-    
+    margin-top: 40px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .p-bahasa {
+    font-size: 18px;
   }
 
-  .grey-button {
-    background-color: #e3d4ff23;
-    color: #ffffff;
-    z-index: 2;
-    cursor: pointer;
-    transition: background-color 0.6s ease;
-    margin-bottom: 20px;
-    width: 230px;
-    height: 44px;
-    font-size: 17px;
-    border: 2px solid #ffffff;
+  .option {
+    font-size: 16px;
   }
 
-
-  .purple-button {
-    
-    background-color: #5b31aa93;
-    color: #ffffff;
-    z-index: 2;
-    cursor: pointer;
-    transition: background-color 0.6s ease;
-    margin-bottom: 20px;
-    width: 230px;
-    height: 44px;
-    font-size: 17px;
+  .grey-button, .purple-button {
+    font-size: 15px;
+    width: 90%;
   }
+}

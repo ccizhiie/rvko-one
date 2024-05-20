@@ -1,5 +1,9 @@
+
 import { useNavigate, useParams } from "react-router-dom";
-import { React, useState, useEffect } from "react";
+import { React, 
+  useState, useEffect
+ } from "react";
+
 import "../account.css";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -78,69 +82,80 @@ const Account = () => {
     }
   };
 
+
   return (
-    <div className="container">
+    <div className="container-akun">
       <div className="cube-account">
-        <img src={Logo} alt="logo" className="logo-account" />
-        <img src={Profil} alt="profil" className="profil-account" />
-        <img src={Profil} alt="profil" className="profil-account2" />
         <img src={Back} alt="back" className="back-akun" />
-        <img src={Wedit} alt="wedit" className="wedit" />
-
-        <br />
-        <div className="line"></div>
-        <form onSubmit={handleSubmit}>
-          <p className="p-account">{t("ACCOUNT.p1")}</p>
-          <input
-            className="input-account"
-            type="text"
-            name="username"
-            placeholder={t("ACCOUNT.p1")}
-            onChange={handleChange}
-            value={username}
-            readOnly
-            required
-          />
-          <img src={Edit} alt="edit" className="edit" />
-
-          <p className="p-account">{t("ACCOUNT.p2")}</p>
-          <input
-            className="input-account"
-            type="text"
-            name="email"
-            placeholder={t("ACCOUNT.p2")}
-            onChange={handleChange}
-            value={email}
-            readOnly
-            required
-          />
-          <img src={Edit} alt="edit" className="edit2" />
-
-          <p className="p-account">{t("ACCOUNT.p3")}</p>
-          <input
-            className="input-account"
-            type="text"
-            name="phone"
-            placeholder="+62 590 ***"
-            onChange={handleChange}
-            value={phone}
-            required
-          />
-          <img src={Edit} alt="edit" className="edit3" />
-
-          <p className="p-account">{t("ACCOUNT.p4")}</p>
-          <input
-            className="input-account"
-            type="text"
-            name="password"
-            placeholder={t("ACCOUNT.p4")}
-            onChange={handleChange}
-            value={password}
-            required
-          />
-          <img src={Edit} alt="edit" className="edit4" />
+        <form className="form-akun">
+          <img src={Logo} alt="logo" className="logo-account" />
+          <img src={Profil} alt="profil" className="profil-account2" />
+          <div className="line-akun"></div>
+          <img src={Profil} alt="profil" className="profil-account" />
+          <img src={Wedit} alt="wedit" className="wedit" />
           <br />
-          <button>{t("ACCOUNT.p5")}</button>
+          <div className="form-group" onSubmit={handleSubmit}>
+            <p className="p-account">{t("ACCOUNT.p1")}</p>
+            <div className="input-container">
+              <input
+                className="input-account"
+                type="text"
+                name="username"
+                placeholder={t("ACCOUNT.p1")}
+                onChange={handleChange}
+            value={username}
+                required
+              />
+              <img src={Edit} alt="edit" className="edit-icon" />
+            </div>
+          </div>
+          <div className="form-group">
+            <p className="p-account">{t("ACCOUNT.p2")}</p>
+            <div className="input-container">
+              <input
+                className="input-account"
+                type="text"
+                name="email"
+                placeholder={t("ACCOUNT.p2")}
+                onChange={handleChange}
+            value={email}
+                required
+              />
+              <img src={Edit} alt="edit" className="edit-icon" />
+            </div>
+          </div>
+          <div className="form-group">
+            <p className="p-account">{t("ACCOUNT.p3")}</p>
+            <div className="input-container">
+              <input
+                className="input-account"
+                type="text"
+                name="phone"
+                placeholder="+62 590 ***"
+                onChange={handleChange}
+            value={phone}
+                required
+              />
+              <img src={Edit} alt="edit" className="edit-icon" />
+            </div>
+          </div>
+          <div className="form-group">
+            <p className="p-account">{t("ACCOUNT.p4")}</p>
+            <div className="input-container">
+              <input
+                className="input-account"
+                type="text"
+                name="password"
+                placeholder={t("ACCOUNT.p4")}
+                onChange={handleChange}
+            value={password}
+                required
+              />
+              <img src={Edit} alt="edit" className="edit-icon" />
+            </div>
+          </div>
+          <br />
+          <button className="save-button">{t("ACCOUNT.p5")}</button>
           <br />
         </form>
       </div>
