@@ -28,7 +28,7 @@ const Forgot2 = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `https://rvko-3-knpn5w7av-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
+        `https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
         {
           emailforgot,
         }

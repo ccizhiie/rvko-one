@@ -30,7 +30,7 @@ const Register = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("http://localhost:4000/register", {
+      const response = await axios.post("https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/register", {
         username,
         email,
         password,

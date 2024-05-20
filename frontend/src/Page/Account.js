@@ -59,7 +59,7 @@ const Account = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `http://localhost:4000/home/profil/${id}`,
+        `https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/home/profil/${id}`,
         {
           email,
           username,

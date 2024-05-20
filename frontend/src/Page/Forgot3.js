@@ -31,7 +31,7 @@ const Forgot3 = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `http://localhost:4000/forgotpassword/password/${uniqueId}`,
+        `https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/forgotpassword/password/${uniqueId}`,
         {
           passforgot,
           passforgot2,

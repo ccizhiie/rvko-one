@@ -36,7 +36,7 @@ const Login = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/login",
+        "https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/login",
         {
           username,
           email,
