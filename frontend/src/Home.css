@@ -1,11 +1,11 @@
-.container {
+.container-home {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.cube-account {
+.cube-home {
   background-color: #1a1b2d;
   display: flex;
   justify-content: center;
@@ -18,14 +18,8 @@
   z-index: 2;
 }
 
-.logo {
-  width: 200px;
-  height: auto;
-  position: absolute;
-  top: 160px;
-}
 
-.back-akun {
+.back-home {
   width: 400px;
   height: auto;
   position: absolute;
@@ -72,7 +66,7 @@ p {
   margin-top: 30px;
 }
 
-.logo-account {
+.logo-home {
   width: 90px;
   height: auto;
   position: absolute;
@@ -80,13 +74,13 @@ p {
   right: 280px;
 }
 
-.p-account {
+.p-home {
   color: #ffffff;
   right: 280px;
   margin-bottom: 10px;
 }
 
-.profil-account2 {
+.profil-home {
   width: 35px;
   height: auto;
   position: absolute;
@@ -166,3 +160,4 @@ p {
   margin-right: 33px;
   margin-bottom: 10px;
 }
+

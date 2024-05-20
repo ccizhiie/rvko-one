@@ -3,29 +3,48 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .cube {
   background-color: #1a1b2d;
-  display: flex;
   justify-content: center;
+  display: flex;
   align-items: center;
   position: relative;
   flex-direction: column;
-  width: 410px;
-  height: 900px;
+  width: 100%;
+  max-width: 410px;
+  height: 100%;
+  max-height: 900px;
   text-align: center;
+  box-sizing: border-box;
 }
 
-.logo {
-  width: 200px;
+form {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  max-width: 410px;
+  height: 100%;
+  max-height: 900px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.logo-register {
+  width: 50%;
   height: auto;
-  position: absolute;
-  top: 160px;
+  margin-bottom: 70px;
 }
 
 .back {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: auto;
   position: absolute;
   z-index: 1;
@@ -33,10 +52,9 @@
 }
 
 input[type="text"] {
-  width: 300px;
-  height: 25px;
+  width: 80%;
+  max-width: 300px;
   padding: 10px;
-  top: 300px;
   margin-bottom: 6px;
   border: 1px solid #626477;
   background-color: rgba(255, 255, 255, 0.1);
@@ -45,7 +63,6 @@ input[type="text"] {
   border-radius: 6px;
   z-index: 2;
 }
-
 
 input[type="text"]::placeholder {
   color: #626477;
@@ -75,7 +92,8 @@ p {
 .forgot-password {
   color: #595263;
   text-decoration: none;
-  margin-left: 190px;
+  margin-left: auto;
+  margin-right: 10%;
   z-index: 2;
 }
 
@@ -86,4 +104,54 @@ p {
 
 .register-text {
   margin-top: 30px;
+}
+
+@media (max-width: 490px) {
+  .cube {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  form {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .logo {
+    width: 60%;
+    top: 140px;
+  }
+
+  .back {
+    width: 90%;
+    max-width: none;
+    top: 45px;
+  }
+
+  input[type="text"] {
+    width: 90%;
+  }
+
+  .forgot-password {
+    margin-left: auto;
+    margin-right: 5%;
+  }
+}
+
+@media (max-width: 480px) {
+  input[type="text"] {
+    font-size: 14px;
+  }
+
+  button {
+    padding: 8px 30px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .forgot-password {
+    margin-right: 5%;
+  }
 }

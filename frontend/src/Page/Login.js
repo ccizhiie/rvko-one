@@ -4,11 +4,12 @@ import axios from "axios";
 import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
-// import Eye from "../Asset/eye.png"
+import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const { t } = useTranslation("global");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const [Error, setError] = useState();
   const [formData, setFormData] = useState({
@@ -30,6 +31,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
       const response = await axios.post(
         "https://rvko-3-eo4hv0zxc-maulanas-projects-3821647d.vercel.app/login",
@@ -40,34 +44,40 @@ const Login = () => {
         }
       );
       if (response.status === 200) {
-        navigate(`/Home/${response.data.id}`);
-      } else {
-        setError(response.data.error);
+        toast.success(response.data.message, {
+          autoClose: 2000,
+          onClose: () => navigate(`/Home/${response.data.id}`),
+        });
       }
     } catch (error) {
-      console.error(error);
+      setError(error.response.data.error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (
     <div className="Register-container">
       <form onSubmit={handleSubmit}>
         <div className="cube">
-          <img src={Logo} alt="Logo" className="logo" />
+          <img src={Logo} alt="Logo" className="logo-register" />
           <img src={Back} alt="back" className="back" />
-
           <input
             type="text"
             name="username"
             onChange={handleChange}
             placeholder={t("LOGIN.p1")}
-          />
+            required
+          />{" "}
+          {<span style={{ color: `red` }}>{Error}</span>}
           <br />
           <input
             type="text"
             name="password"
             onChange={handleChange}
             placeholder={t("LOGIN.p2")}
-          />
+            required
+          />{" "}
+          {<span style={{ color: `red` }}>{Error}</span>}
           <Link to="/Forgot2" className="forgot-password">
             {t("LOGIN.p3")}
           </Link>
