@@ -1,7 +1,7 @@
 
-// import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { React, 
-  // useState, useEffect
+  useState, useEffect
  } from "react";
 
 import "../account.css";
@@ -14,71 +14,71 @@ import { useTranslation } from "react-i18next";
 
 const Account = () => {
   const { t } = useTranslation("global");
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  // const { id } = useParams();
-  // const navigate = useNavigate();
-  // const [formData, setFormData] = useState({
-  //   username: "",
-  //   email: "",
-  //   phone: "",
-  //   password: "",
-  // });
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://localhost:4000/home/profil/${id}`
-  //       );
-  //       setFormData({
-  //         username: response.data.username,
-  //         email: response.data.email,
-  //         phone: response.data.phone,
-  //         password: response.data.password,
-  //       });
-  //     } catch (error) {
-  //       toast.error(error.response.data.error, {
-  //         autoClose: 2000,
-  //       });
-  //     }
-  //   }
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/home/profil/${id}`
+        );
+        setFormData({
+          username: response.data.username,
+          email: response.data.email,
+          phone: response.data.phone,
+          password: response.data.password,
+        });
+      } catch (error) {
+        toast.error(error.response.data.error, {
+          autoClose: 2000,
+        });
+      }
+    }
 
-  //   fetchData();
-  // }, [id]);
+    fetchData();
+  }, [id]);
 
-  // const { email, username, password, phone } = formData;
+  const { email, username, password, phone } = formData;
 
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (isSubmitting) return;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
 
-  //   setIsSubmitting(true);
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:4000/home/profil/${id}`,
-  //       {
-  //         email,
-  //         username,
-  //         password,
-  //         phone,
-  //       }
-  //     );
-  //     if (response.status === 200) {
-  //       toast.success(response.data.message, {
-  //         autoClose: 2000,
-  //         onClose: () => navigate(`/Account/${id}`),
-  //       });
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.response.data.error, {
-  //       autoClose: 2000,
-  //     });
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/home/profil/${id}`,
+        {
+          email,
+          username,
+          password,
+          phone,
+        }
+      );
+      if (response.status === 200) {
+        toast.success(response.data.message, {
+          autoClose: 2000,
+          onClose: () => navigate(`/Account/${id}`),
+        });
+      }
+    } catch (error) {
+      toast.error(error.response.data.error, {
+        autoClose: 2000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
 
   return (
