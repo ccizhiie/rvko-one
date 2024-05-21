@@ -18,7 +18,6 @@
   z-index: 2;
 }
 
-
 .back-home {
   width: 400px;
   height: auto;
@@ -55,15 +54,6 @@ p {
   color: #595263;
   text-decoration: none;
   margin-left: 190px;
-}
-
-.link-register {
-  color: #763aca;
-  text-decoration: none;
-}
-
-.register-text {
-  margin-top: 30px;
 }
 
 .logo-home {
@@ -160,6 +150,3 @@ p {
   margin-right: 33px;
   margin-bottom: 10px;
 }
-
-
-
