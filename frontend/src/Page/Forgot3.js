@@ -53,10 +53,13 @@ const Forgot3 = () => {
     <div className="forgot-container">
       <form onSubmit={handleSubmit}>
         <div className="cube">
-          <img src={Arrow} alt="arrow" className="arrow" />
           <img src={Back} alt="back" className="back" />
           <div className="cube2">
-            <h2>{t("PASSWORD.p1")}</h2>
+
+          <div className="arrow-forgot">
+              <img src={Arrow} alt="arrow" className="arrow" />
+              <h2>{t("PASSWORD.p1")}</h2>
+            </div>
             <div className="cube-paragraf2">
               <p className="pwhite">{t("PASSWORD.p2")}</p>
             </div>

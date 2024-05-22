@@ -56,6 +56,7 @@ const Register = () => {
           <input
             type="text"
             name="username"
+            className="input-loreg"
             onChange={handleChange}
             placeholder={t("REGISTER.p1")}
             required
@@ -65,6 +66,7 @@ const Register = () => {
           <input
             type="text"
             name="email"
+            className="input-loreg"
             onChange={handleChange}
             placeholder={t("REGISTER.p2")}
             required
@@ -74,6 +76,7 @@ const Register = () => {
           <input
             type="text"
             name="password"
+            className="input-loreg"
             onChange={handleChange}
             placeholder={t("REGISTER.p3")}
             required

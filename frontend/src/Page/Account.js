@@ -116,6 +116,7 @@ const Account = () => {
                 required
               />
               <img src={Edit} alt="edit" className="edit-icon" />
+              
             </div>
           </div>
           <div className="form-group">

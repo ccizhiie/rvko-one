@@ -30,6 +30,7 @@ function App() {
         <Route path="/coba" element={<Coba />} />
         <Route path="/belajar" element={<Belajartailwind/>} />
         <Route path="/account" element={<Account />} />
+        
       </Routes>
     
     </Router>

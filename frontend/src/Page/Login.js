@@ -65,6 +65,7 @@ const Login = () => {
             type="text"
             name="username"
             onChange={handleChange}
+            className="input-loreg"
             placeholder={t("LOGIN.p1")}
             required
           />{" "}
@@ -73,6 +74,7 @@ const Login = () => {
           <input
             type="text"
             name="password"
+            className="input-loreg"
             onChange={handleChange}
             placeholder={t("LOGIN.p2")}
             required

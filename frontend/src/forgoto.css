@@ -35,7 +35,7 @@
   
 input[name="emailforgot"] {
     width: 286px;
-    height: 45px;
+    height: 30px;
     padding: 10px;
     margin-bottom: 30px;
     border: 1px solid #626477;
@@ -77,7 +77,7 @@ input[name="emailforgot"] {
   }
 input[name="passforgot"] {
   width: 286px;
-  height: 45px;
+  height: 30px;
   padding: 10px;
   margin-bottom: 30px;
   border: 1px solid #626477;
@@ -95,7 +95,7 @@ input[name="passforgot"]::placeholder {
 
 input[name="passforgot2"] {
   width: 286px;
-  height: 45px;
+  height: 30px;
   padding: 10px;
   margin-bottom: 30px;
   border: 1px solid #626477;
@@ -143,8 +143,15 @@ h2 {
 .arrow {
   width: 25px;
   height: auto;
-  position: absolute;
-  top: 128px;
-  margin-right: 73px;
+  margin-right: 30px;
+  margin-top: 23px;
+  margin-bottom: 75px;
+  margin-left: 20px;
+
+
+}
+
+.arrow-forgot {
+  display: flex;
 }
 
