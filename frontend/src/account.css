@@ -22,6 +22,8 @@
   box-sizing: border-box;
 }
 
+
+
 .form-akun {
   justify-content: center;
   display: flex;
@@ -51,22 +53,37 @@
   max-width: 400px;
   height: auto;
   position: absolute; 
-  z-index: 1; 
+  z-index: 0; 
   top: 55px;
 }
 
 .input-account {
-  width: 100%;
-  max-width: 300px;
-  height: 50px !important;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #626477; 
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border-radius: 6px;
-  z-index: 2;
-  box-sizing: border-box;
+  width: 80% !important;
+  max-width: 300px !important;
+  height: 40px !important;
+  background-color: rgba(57, 57, 57, 0.1) !important;
+  border: none !important;
+  z-index: 2 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  color: #626477 !important;
+  font-size: 16px !important;
+}
+
+.input-container {
+  width: 100% !important;
+  width: 250px !important;
+  max-width: 400px !important;
+  height: 55px !important;
+  padding: 10px !important;
+  margin-bottom: 10px !important;
+  border: 1px solid #626477 !important; 
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  z-index: 2 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
 }
 
 input[name="input"]::placeholder {
@@ -120,36 +137,18 @@ button:hover {
               linear-gradient(to left, transparent 20%, #bdbcbc 50%, #bdbcbc 50%, transparent 90%);
 }
 
-.edit {
-  position: absolute;
-  top: 333px;
-  right: 60px;
-}
-
-.edit2 {
-  position: absolute;
-  top: 432px;
-  right: 60px;
-}
-
-.edit3 {
-  position: absolute;
-  top: 532px;
-  right: 60px;
-}
-
-.edit4 {
-  position: absolute;
-  top: 631px;
-  right: 60px;
+.edit-icon {
+  z-index: 2000;
 }
 
 .wedit {
   width: 20px;
   position: absolute;
-  top: 242px;
+  top: 220px;
   right: 148px;
 }
+
+
 
 @media (max-width: 600px) {
   .cube-account {
@@ -168,8 +167,8 @@ button:hover {
       max-width: 250px;
   }
 
-  .edit, .edit2, .edit3, .edit4 {
-      z-index: 1000;
+  .edit-icon {
+    z-index: 2000;
   }
 
   .profil-account {

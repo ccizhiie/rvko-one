@@ -122,6 +122,7 @@ const Account = () => {
                 required
               />
               <img src={Edit} alt="edit" className="edit-icon" />
+              
             </div>
           </div>
           <div className="form-group">
@@ -139,8 +140,9 @@ const Account = () => {
               <img src={Edit} alt="edit" className="edit-icon" />
             </div>
           </div>
+          <p className="p-account">{t("ACCOUNT.p4")}</p>
           <div className="form-group">
-            <p className="p-account">{t("ACCOUNT.p4")}</p>
+            
             <div className="input-container">
               <input
                 className="input-account"

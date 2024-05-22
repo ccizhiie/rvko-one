@@ -51,17 +51,18 @@ form {
   top: 55px;
 }
 
-input[type="text"] {
-  width: 80%;
-  max-width: 300px;
-  padding: 10px;
-  margin-bottom: 6px;
-  border: 1px solid #626477;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #626477;
-  outline: none;
-  border-radius: 6px;
-  z-index: 2;
+.input-loreg {
+  width: 80% !important;
+  max-width: 300px !important;
+  height: 35px !important;
+  padding: 10px !important;
+  margin-bottom: 6px !important;
+  border: 1px solid #626477 !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #626477 !important;
+  outline: none !important;
+  border-radius: 6px !important;
+  z-index: 2 !important;
 }
 
 input[type="text"]::placeholder {
@@ -100,10 +101,12 @@ p {
 .link-register {
   color: #763aca;
   text-decoration: none;
+  z-index: 10000;
 }
 
 .register-text {
   margin-top: 30px;
+  z-index: 10000;
 }
 
 @media (max-width: 490px) {
