@@ -1,9 +1,4 @@
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
 body {
   font-family: Arial, sans-serif;
@@ -136,8 +131,8 @@ h2 {
 }
 
 .otp-input-container input {
-  width: 40px;
-  height: 55px;
+  width: 50px;
+  height: 60px;
   padding: 10px;
   margin: 0 5px;
   margin-bottom: 10px;
@@ -147,14 +142,14 @@ h2 {
   color: #000000;
   outline: none;
   border-radius: 10px;
-  font-size: 40px;
+  font-size: 35px;
 }
 
 .otp-input-container input:focus {
   border-color: #9c69fc;
 }
 
-/* Media Queries for Responsiveness */
+
 @media (max-width: 768px) {
   .cube-codeotp {
     width: 100%;

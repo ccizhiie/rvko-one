@@ -213,4 +213,4 @@ const Tinder = () => {
   );
 };
 
-export default Tinder;
+// export default Tinder;

@@ -35,9 +35,8 @@
   
 input[name="emailforgot"] {
     width: 286px;
-    height: 26px;
+    height: 45px;
     padding: 10px;
-    top: 300px;
     margin-bottom: 30px;
     border: 1px solid #626477;
     background-color: rgba(255, 255, 255, 0.1);
@@ -78,19 +77,36 @@ input[name="emailforgot"] {
   }
 input[name="passforgot"] {
   width: 286px;
-  height: 26px;
+  height: 45px;
   padding: 10px;
-  top: 300px;
   margin-bottom: 30px;
   border: 1px solid #626477;
   background-color: rgba(255, 255, 255, 0.1);
   color: #626477;
   outline: none;
   border-radius: 6px;
-  z-index: 2;
+  z-index: 2000;
 }
 
 input[name="passforgot"]::placeholder {
+  color: #626477;
+  z-index: 2;
+}
+
+input[name="passforgot2"] {
+  width: 286px;
+  height: 45px;
+  padding: 10px;
+  margin-bottom: 30px;
+  border: 1px solid #626477;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #626477;
+  outline: none;
+  border-radius: 6px;
+  z-index: 2000;
+}
+
+input[name="passforgot2"]::placeholder {
   color: #626477;
   z-index: 2;
 }

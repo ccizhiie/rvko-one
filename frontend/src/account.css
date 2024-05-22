@@ -123,25 +123,21 @@ button:hover {
 .edit {
   position: absolute;
   top: 333px;
-  right: 60px;
 }
 
 .edit2 {
   position: absolute;
   top: 432px;
-  right: 60px;
 }
 
 .edit3 {
   position: absolute;
   top: 532px;
-  right: 60px;
 }
 
 .edit4 {
   position: absolute;
   top: 631px;
-  right: 60px;
 }
 
 .wedit {
@@ -150,6 +146,8 @@ button:hover {
   top: 242px;
   right: 148px;
 }
+
+
 
 @media (max-width: 600px) {
   .cube-account {
@@ -170,6 +168,7 @@ button:hover {
 
   .edit, .edit2, .edit3, .edit4 {
       z-index: 1000;
+      position: absolute;
   }
 
   .profil-account {
