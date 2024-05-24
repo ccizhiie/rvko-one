@@ -101,7 +101,7 @@ const Tinder = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/tinder/${id}`
+          `https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/tinder/${id}`
         );
         const data = response.data;
         setImages(data.images);
@@ -133,7 +133,7 @@ const Tinder = () => {
       setIsSubmitting(true);
       try {
         const response = await axios.post(
-          `https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/tinder/${id}`,
+          `https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/tinder/${id}`,
           {
             images: Imgdata,
           }

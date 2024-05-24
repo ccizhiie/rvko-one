@@ -1,14 +1,17 @@
-const firebase = require("firebase");
-require("firebase/storage");
+const firebase = require("firebase/app");
+require("firebase/firestore");
 const admin = require("firebase-admin");
-const service = require("./service.json");
-require("dotenv").config();
+const dotenv = require("dotenv");
+const service = require("../service.json");
+
+dotenv.config();
+
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,
   storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGINGSENDER_ID,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,
 };
 
@@ -24,5 +27,5 @@ const db = firebase.firestore();
 const User = db.collection("Users");
 const Foto = db.collection("Foto");
 const del = firebase.firestore.FieldValue.delete();
-const time = firebase.firestore.Timestamp.now();
-module.exports = { del, User, Foto, time, bucket };
+
+module.exports = { bucket, db, User, Foto, del };

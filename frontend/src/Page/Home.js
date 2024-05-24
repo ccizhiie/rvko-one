@@ -46,7 +46,7 @@ const Home = () => {
     try {
       const tinder = "open";
 
-      const response = await axios.post(`https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/home/${id}`, {
+      const response = await axios.post(`https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/home/${id}`, {
         tinder,
       });
       if (response.status === 200) {
