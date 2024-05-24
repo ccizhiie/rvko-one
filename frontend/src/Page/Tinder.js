@@ -92,8 +92,6 @@ const Tinder = () => {
   const handleSkipPopup = () => {
     if (popupType === 1) {
       setPopupType(2);
-    } else if (popupType === 2) {
-      setShowPopup(false);
     } else {
       setShowPopup(false);
     }
@@ -213,4 +211,4 @@ const Tinder = () => {
   );
 };
 
-// export default Tinder;
+export default Tinder;

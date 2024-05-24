@@ -91,10 +91,14 @@ const CodeOtp = () => {
             </button>
           </div>
 
-          <img src={Arrow} alt="arrow" className="arrow" />
           <img src={Back} alt="back" className="back" />
           <div className="cube2">
-            <h2>{t("FORGOT.p1")}</h2>
+
+          <div className="arrow-forgot">
+              <img src={Arrow} alt="arrow" className="arrow" />
+              <h2>{t("FORGOT.p1")}</h2>
+            </div>
+            
             <div className="cube-paragraf">
               <p>{t("FORGOT.p2", "FORGOT.p3")}</p>
             </div>
