@@ -5,11 +5,9 @@ import Account from "./Page/Account";
 import Forgot2 from "./Page/Forgot2";
 import Forgot3 from "./Page/Forgot3";
 import CodeOtp from "./Page/CodeOtp";
-import Coba from "./Page/selectlanguage";
 import Home from "./Page/Home";
 import Tinder from "./Page/Tinder";
 import Language from "./Page/Language";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -24,11 +22,10 @@ function App() {
         <Route path="/forgot3/:uniqueId" element={<Forgot3 />} />
         <Route path="/codeotp/:uniqueId" element={<CodeOtp />} />
         <Route path="/home/:id" element={<Home />} />
+        <Route path="/home/:id/:open" element={<Home />} />
         <Route path="/tinder" element={<Tinder />} />
-        <Route path="bahasa" element={<Language/>} />
+        <Route path="bahasa" element={<Language />} />
         <Route path="/tinder/:id" element={<Tinder />} />
-        <Route path="/coba" element={<Coba />} />
-        <Route path="/account" element={<Account />} />
       </Routes>
     </Router>
   );

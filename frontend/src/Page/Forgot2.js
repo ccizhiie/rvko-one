@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -28,7 +28,7 @@ const Forgot2 = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `https://rvko-3-knpn5w7av-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
+        `https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/forgotpassword/email`,
         {
           emailforgot,
         }
@@ -51,15 +51,11 @@ const Forgot2 = () => {
       <form onSubmit={handleSubmit}>
         <div className="cube">
 
-          
-          
-          
-          
           <img src={Back} alt="back" className="back" />
           <div className="cube2">
 
             <div className="arrow-forgot">
-              <img src={Arrow} alt="arrow" className="arrow" />
+             <Link to="/Login" > <img src={Arrow} alt="arrow" className="arrow" /></Link>
               <h2>{t("FORGOT.p1")}</h2>
             </div>
             <div className="cube-paragraf">

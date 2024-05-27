@@ -1,10 +1,9 @@
-
-import { useNavigate, useParams } from "react-router-dom";
-import { React, 
-  useState, useEffect
- } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { React, useState, useEffect } from "react";
 
 import "../account.css";
+import { toast } from "react-toastify";
+import axios from "axios";
 import Edit from "../Asset/edit.png";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
@@ -27,7 +26,7 @@ const Account = () => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `http://localhost:4000/home/profil/${id}`
+          `https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/home/profil/${id}`
         );
         setFormData({
           username: response.data.username,
@@ -57,7 +56,7 @@ const Account = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `http://localhost:4000/home/profil/${id}`,
+        `https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/home/profil/${id}`,
         {
           email,
           username,
@@ -80,13 +79,14 @@ const Account = () => {
     }
   };
 
-
   return (
     <div className="container-akun">
       <div className="cube-account">
         <img src={Back} alt="back" className="back-akun" />
-        <form className="form-akun">
-          <img src={Logo} alt="logo" className="logo-account" />
+        <form className="form-akun" onSubmit={handleSubmit}>
+          <Link to={`/home/${id}`}>
+            <img src={Logo} alt="logo" className="logo-account" />
+          </Link>
           <img src={Profil} alt="profil" className="profil-account2" />
           <div className="line-akun"></div>
           <img src={Profil} alt="profil" className="profil-account" />
@@ -100,6 +100,8 @@ const Account = () => {
                 type="text"
                 name="username"
                 placeholder={t("ACCOUNT.p1")}
+                onChange={handleChange}
+                value={username}
                 required
               />
               <img src={Edit} alt="edit" className="edit-icon" />
@@ -113,10 +115,11 @@ const Account = () => {
                 type="text"
                 name="email"
                 placeholder={t("ACCOUNT.p2")}
+                onChange={handleChange}
+                value={email}
                 required
               />
               <img src={Edit} alt="edit" className="edit-icon" />
-              
             </div>
           </div>
           <div className="form-group">
@@ -127,6 +130,8 @@ const Account = () => {
                 type="text"
                 name="phone"
                 placeholder="+62 590 ***"
+                onChange={handleChange}
+                value={phone}
                 required
               />
               <img src={Edit} alt="edit" className="edit-icon" />
@@ -134,13 +139,14 @@ const Account = () => {
           </div>
           <p className="p-account">{t("ACCOUNT.p4")}</p>
           <div className="form-group">
-            
             <div className="input-container">
               <input
                 className="input-account"
                 type="text"
                 name="password"
                 placeholder={t("ACCOUNT.p4")}
+                onChange={handleChange}
+                value={password}
                 required
               />
               <img src={Edit} alt="edit" className="edit-icon" />

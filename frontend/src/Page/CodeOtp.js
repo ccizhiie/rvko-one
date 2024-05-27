@@ -32,7 +32,7 @@ const CodeOtp = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `http://localhost:4000/forgotpassword/otp/${uniqueId}`,
+        `https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/forgotpassword/otp/${uniqueId}`,
         {
           otp,
         }
