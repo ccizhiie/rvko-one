@@ -9,7 +9,7 @@ import Coba from "./Page/selectlanguage";
 import Home from "./Page/Home";
 import Tinder from "./Page/Tinder";
 import Language from "./Page/Language";
-import Belajartailwind from "./Page/Belajartailwind";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -28,11 +28,8 @@ function App() {
         <Route path="bahasa" element={<Language/>} />
         <Route path="/tinder/:id" element={<Tinder />} />
         <Route path="/coba" element={<Coba />} />
-        <Route path="/belajar" element={<Belajartailwind/>} />
         <Route path="/account" element={<Account />} />
-        
       </Routes>
-    
     </Router>
   );
 }

@@ -57,7 +57,7 @@ const Forgot3 = () => {
           <div className="cube2">
 
           <div className="arrow-forgot">
-              <img src={Arrow} alt="arrow" className="arrow" />
+             
               <h2>{t("PASSWORD.p1")}</h2>
             </div>
             <div className="cube-paragraf2">
