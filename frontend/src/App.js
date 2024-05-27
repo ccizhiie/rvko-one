@@ -26,10 +26,6 @@ function App() {
         <Route path="/tinder" element={<Tinder />} />
         <Route path="bahasa" element={<Language />} />
         <Route path="/tinder/:id" element={<Tinder />} />
-        <Route path="/coba" element={<Coba />} />
-        <Route path="/belajar" element={<Belajartailwind/>} />
-        <Route path="/account" element={<Account />} />
-        
       </Routes>
     </Router>
   );

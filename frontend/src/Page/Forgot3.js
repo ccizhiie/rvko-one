@@ -31,7 +31,7 @@ const Forgot3 = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `https://rvko-3-m912d4asa-maulanas-projects-3821647d.vercel.app/forgotpassword/password/${uniqueId}`,
+        `https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/forgotpassword/password/${uniqueId}`,
         {
           passforgot,
           passforgot2,
@@ -55,9 +55,7 @@ const Forgot3 = () => {
         <div className="cube">
           <img src={Back} alt="back" className="back" />
           <div className="cube2">
-
-          <div className="arrow-forgot">
-              <img src={Arrow} alt="arrow" className="arrow" />
+            <div className="arrow-forgot">
               <h2>{t("PASSWORD.p1")}</h2>
             </div>
             <div className="cube-paragraf2">
