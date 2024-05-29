@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import Language from '../Language';
-import Login from "../Login";
-import Register from "../Register";
+import Language from '../Page/Language';
+import Login from "../Page/Login";
+import Register from "../Page/Register";
 import { click } from '@testing-library/user-event/dist/click';
 
-describe('ngetes tolol', () => {
+describe('melakukan testing apa saja kemungkinan interaksi user di halaman language', () => {
   it('menguji apakah tombol login mengarahkan kita ke halaman login', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
@@ -23,7 +23,7 @@ describe('ngetes tolol', () => {
     console.log(textada)
   });
 
-  it('ngetes goblok', async () => {
+  it('menguji apakah tombol register mengarahkan kita ke halaman register', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
@@ -38,5 +38,19 @@ describe('ngetes tolol', () => {
     const text = await screen.findByText(/REGISTER.p5/i);
     console.log(text)
   })
-})
+
+  it('memeriksa apakah fitur translate bahasa belanda berjalan dengan baik', () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<Language />} />
+        </Routes>
+      </MemoryRouter>
+    )
+
+    const translatebtn = screen.getByRole('select', { name: /select-language/i });
+      userEvent.click(translatebtn);
+    const nlbtn = screen.getByRole('option', { name: /netherlands/i})
+  })
+}) 
 
