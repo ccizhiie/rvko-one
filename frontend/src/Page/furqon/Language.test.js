@@ -6,6 +6,7 @@ import Language from '../Language';
 import Login from "../Login";
 import Register from "../Register";
 import { click } from '@testing-library/user-event/dist/click';
+import '@testing-library/jest-dom';
 import i18next from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
@@ -51,9 +52,9 @@ describe('melakukan testing apa saja kemungkinan interaksi user di halaman langu
       </I18nextProvider >
     );
   
-    const button = screen.getByRole('button', { name: /LANGUAGE.p3/i });
+    const button = screen.getByRole('button', { name: /login/i });
       userEvent.click(button);
-    const textada = await screen.findByText(/LOGIN.p5/i);
+    const textada = await screen.findByText(/login/i);
   });
 
   it('menguji apakah tombol register mengarahkan kita ke halaman register', async () => {
@@ -68,9 +69,9 @@ describe('melakukan testing apa saja kemungkinan interaksi user di halaman langu
       </I18nextProvider>
     );
 
-    const button = screen.getByRole('button', { name: /LANGUAGE.p4/i });
+    const button = screen.getByRole('button', { name: /register/i });
       userEvent,click(button);
-    const text = await screen.findByText(/REGISTER.p5/i);
+    const text = await screen.findByText(/register/i);
   })
 
   it('memeriksa apakah fitur translate bahasa belanda berjalan dengan baik', async () => {
@@ -87,8 +88,8 @@ describe('melakukan testing apa saja kemungkinan interaksi user di halaman langu
     const translatebtn = screen.getByRole('combobox', { name: /Language selection/i });
     userEvent.selectOptions(translatebtn, 'nl');
     expect(translatebtn.value).toBe('nl');
-    // const translatedText = await screen.findByText(/Inloggen/i);
-    // expect(translatedText).toBeInTheDocument();
+   const translatedText = await screen.findByText(/Inloggen/i);
+  expect(translatedText).toBeInTheDocument();
   }, 5000)
 
   it('memeriksa apakah fitur translate bahasa spanyol berjalan dengan baik', async () => {
@@ -105,8 +106,8 @@ describe('melakukan testing apa saja kemungkinan interaksi user di halaman langu
     const translatebtn = screen.getByRole('combobox', { name: /Language selection/i });
     userEvent.selectOptions(translatebtn, 'es');
     expect(translatebtn.value).toBe('es');
-    // const translatedText = await screen.findByText(/Inicio de sesión/i);
-    // expect(translatedText).toBeInTheDocument();
+   const translatedText = await screen.findByText(/Inicio de sesión/i);
+ expect(translatedText).toBeInTheDocument();
   }, 5000)
 }) 
 
