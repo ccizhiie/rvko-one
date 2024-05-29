@@ -3,7 +3,7 @@ import { React, useState, useEffect } from "react";
 
 import "../account.css";
 import { toast } from "react-toastify";
-import axios from "axios";
+//import axios from "axios";
 import Edit from "../Asset/edit.png";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
