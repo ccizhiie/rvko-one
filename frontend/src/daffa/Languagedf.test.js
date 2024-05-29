@@ -38,5 +38,5 @@ describe('melakukan testing apa saja kemungkinan interaksi user di halaman langu
     const text = await screen.findByText(/REGISTER.p5/i);
     console.log(text)
   })
-})
+}) 
 
