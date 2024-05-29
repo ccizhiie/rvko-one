@@ -23,7 +23,7 @@ const Language = () => {
         <div className="bahasa">
           <img src={Globe} alt="globe" className="globe" />
           <select
-            aria-label="select-language"
+            aria-label="Language selection"
             className="option"
             onChange={(e) => changeLanguage(e.target.value)}
           >

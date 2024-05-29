@@ -1,9 +1,10 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import Language from '../Page/Language';
-import Login from "../Page/Login";
-import Register from "../Page/Register";
+import Language from '../Language';
+import Login from "../Login";
+import Register from "../Register";
 import { click } from '@testing-library/user-event/dist/click';
 
 describe('melakukan testing apa saja kemungkinan interaksi user di halaman language', () => {
@@ -39,7 +40,7 @@ describe('melakukan testing apa saja kemungkinan interaksi user di halaman langu
     console.log(text)
   })
 
-  it('memeriksa apakah fitur translate bahasa belanda berjalan dengan baik', () => {
+  it('memeriksa apakah fitur translate bahasa belanda berjalan dengan baik', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
@@ -48,9 +49,12 @@ describe('melakukan testing apa saja kemungkinan interaksi user di halaman langu
       </MemoryRouter>
     )
 
-    const translatebtn = screen.getByRole('select', { name: /select-language/i });
+    const translatebtn = screen.getByRole('combobox', { name: /Language selection/i });
       userEvent.click(translatebtn);
-    const nlbtn = screen.getByRole('option', { name: /netherlands/i})
+    const nlbtn = screen.getByRole('option', { name: /Netherlands/i})
+      userEvent.click(nlbtn);
+    const text = await screen.findByText(/LANGUAGE.p3/i);
+    console.log(text.textContent)
   })
 }) 
 
