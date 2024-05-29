@@ -33,7 +33,7 @@ describe("Forgot function", () => {
     expect(res2.json.mock.calls[0][0].error).toContain("email not found");
   });
   it("send OTP", async () => {
-    const email = req2.body.emailforgot;
+    const email = "test@example.com";
     try {
       const response = await axios.post(
         "https://rvko-3-ip3erjcyk-maulanas-projects-3821647d.vercel.app/forgotpassword/email",
@@ -48,7 +48,6 @@ describe("Forgot function", () => {
       id = response.data.uniqueId;
       expect(id).toBeDefined();
     } catch (error) {
-      console.error("error:", error);
       throw error;
     }
   }, 15000);

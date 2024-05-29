@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link , useLocation} from "react-router-dom";
 import React from "react";
 import "../language.css";
 import Logo from "../Asset/logo.png";
@@ -7,6 +7,7 @@ import Globe from "../Asset/globe.png";
 import { useTranslation } from "react-i18next";
 
 const Language = () => {
+  const location = useLocation();
   const { t, i18n } = useTranslation("global");
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
