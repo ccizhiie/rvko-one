@@ -50,7 +50,6 @@ exports.GetTinder = async (req, res) => {
 exports.PostTinder = async (req, res) => {
   const id = req.params.id;
   const { images } = req.body;
-  console.log(images.length);
   try {
     for (let i = 0; i < images.length; i++) {
       const item = images[i];
@@ -77,7 +76,7 @@ exports.PostTinder = async (req, res) => {
       }
     }
 
-    return res.status(200).json({ massage: "addend data successfully" });
+    return res.status(200).json({ message: "addend data successfully" });
   } catch (error) {
     return res.status(500).send("Internal server error.");
   }
