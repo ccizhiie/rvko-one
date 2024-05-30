@@ -61,15 +61,18 @@ describe("Home function", () => {
 
     expect(response).toHaveProperty("username");
     expect(response.username).not.toBeNull();
+    expect(response.phone).not.toBeUndefined();
 
     expect(response).toHaveProperty("email");
     expect(response.email).not.toBeNull();
+    expect(response.phone).not.toBeUndefined();
 
     expect(response).toHaveProperty("phone");
-    expect(response.phone).not.toBeNull();
+    expect(response.phone).not.toBeUndefined();
 
     expect(response).toHaveProperty("password");
     expect(response.password).not.toBeNull();
+    expect(response.phone).not.toBeUndefined();
   });
 
   it("get profil data from firebase if data not found", async () => {

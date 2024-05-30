@@ -14,6 +14,7 @@ import en from "../../language/en/global.json";
 import es from "../../language/es/global.json";
 import nl from "../../language/nl/global.json";
 
+
 i18next
   .use(LanguageDetector)
   .use(initReactI18next)
