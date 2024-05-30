@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
-//import axios from "axios";
+import axios from "axios";
 import "../mobile.css";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
