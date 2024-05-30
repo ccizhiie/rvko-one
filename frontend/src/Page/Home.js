@@ -1,7 +1,7 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { React, useEffect, useState } from "react";
 import "../home.css";
-import axios from "axios";
+// import axios from "axios";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
 import Profil from "../Asset/profil.png";

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { toast } from "react-toastify";
 import "../forgoto.css";
 import Back from "../Asset/star.png";

@@ -64,9 +64,10 @@ describe("menguji tampilan forgot password ", () => {
         </MemoryRouter>
       </I18nextProvider>
     );
-
-    const button = screen.getByRole("button", { name: /Send/i });
+   
+    const button = screen.getByRole("button", { name: /send/i });
     expect(button).toBeInTheDocument();
+
   });
 
   it("memeriksa apakah input ada", async () => {

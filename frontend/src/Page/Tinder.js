@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../tinder.css";
-import axios from "axios";
+// import axios from "axios";
 import { toast } from "react-toastify";
 import Logo from "../Asset/logo.png";
 import Back from "../Asset/star.png";
