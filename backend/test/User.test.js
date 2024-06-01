@@ -50,7 +50,7 @@ describe('Register function', () => {
       expect(res.status.mock.calls[0][0]).toBe(200)
       expect(res.json).toHaveBeenCalled();
       expect(res.json.mock.calls[0][0]).toHaveProperty("message");
-      expect(res.json.mock.calls[0][0].error).toContain("data added successfully");
+      expect(res.json.mock.calls[0][0].message).toContain("data added successfully");
   });
  
 });
@@ -79,7 +79,7 @@ describe('Login function', () => {
     expect(res.status.mock.calls[0][0]).toBe(200);
     expect(res.json).toHaveBeenCalled();
     expect(res.json.mock.calls[0][0]).toHaveProperty("message");
-    expect(res.json.mock.calls[0][0].error).toContain("Authentication successful");
+    expect(res.json.mock.calls[0][0].message).toContain("Authentication successful");
   });
   it('login prosses with username password', async () => {
    
@@ -89,7 +89,7 @@ describe('Login function', () => {
     expect(res.status.mock.calls[0][0]).toBe(200)
     expect(res.json).toHaveBeenCalled();
     expect(res.json.mock.calls[0][0]).toHaveProperty("message");
-    expect(res.json.mock.calls[0][0].error).toContain("Authentication successful");
+    expect(res.json.mock.calls[0][0].message).toContain("Authentication successful");
   });
   it('login prosses if wrong password', async () => {
      req.body.password = 'coba';

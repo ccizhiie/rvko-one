@@ -47,7 +47,7 @@ describe("menguji tampilan forgot password ", () => {
       </I18nextProvider>
     );
    
-    const button = screen.getByRole("button", { name: /password/i });
+    const button = screen.getByRole("button", { name: /mpassword/i });
     expect(button).toBeInTheDocument();
 
   });
