@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jest Test Files</title>
+</head>
+<body>
+    <h1>Jest Test Files</h1>
+    <ul id="test-files">
+        <!-- List of test files will be populated here -->
+    </ul>
+    <script>
+        fetch('/files')
+            .then(response => response.json())
+            .then(files => {
+                const ul = document.getElementById('test-files');
+                files.forEach(file => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.textContent = file;
+                    a.href = `/test.html?file=${encodeURIComponent(file)}`;
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+            });
+    </script>
+</body>
+</html>

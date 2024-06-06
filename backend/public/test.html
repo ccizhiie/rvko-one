@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jest Test Runner</title>
+</head>
+<body>
+    <h1>Run Jest Test</h1>
+    <h2 id="file-name"></h2>
+    <ul id="test-functions">
+        <!-- List of test functions will be populated here -->
+    </ul>
+    <input type="number" id="inputNumber" value="3">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const file = urlParams.get('file');
+
+        document.getElementById('file-name').textContent = file;
+
+        fetch(`/test-functions?file=${encodeURIComponent(file)}`)
+            .then(response => response.json())
+            .then(testFunctions => {
+                const ul = document.getElementById('test-functions');
+                testFunctions.forEach(func => {
+                    const li = document.createElement('li');
+                    const button = document.createElement('button');
+                    button.textContent = func;
+                    button.onclick = () => runTest(file, func);
+                    li.appendChild(button);
+                    ul.appendChild(li);
+                });
+            });
+
+        function runTest(file, func) {
+            fetch(`/run-test?file=${encodeURIComponent(file)}&func=${encodeURIComponent(func)}`)
+                .then(response => response.json())
+                .then(result => {
+                    alert(result.message);
+                })
+                .catch(err => {
+                    alert('Test failed: ' + err.message);
+                });
+        }
+    </script>
+</body>
+</html>
