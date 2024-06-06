@@ -2,9 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-
-import Login from "../Login";
-import Forgot2 from "../Forgot2";
+import Forgot3 from "../Forgot3";
 import { click } from "@testing-library/user-event/dist/click";
 import "@testing-library/jest-dom";
 import i18next from "i18next";
@@ -37,52 +35,37 @@ i18next
   });
 
 describe("menguji tampilan forgot password ", () => {
-  it("menguji apakah panah mengarakan kita kembali", async () => {
-    render(
-      <I18nextProvider i18n={i18next}>
-        <MemoryRouter initialEntries={["/"]}>
-          <Routes>
-            <Route path="/" element={<Forgot2 />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </MemoryRouter>
-      </I18nextProvider>
-    );
-    const imageElement = document.querySelector("img.arrow");
-    userEvent.click(imageElement);
-    const textada = await screen.findByText(/login/i);
-  });
 
   it("mengecek apakah button tampil", async () => {
     render(
       <I18nextProvider i18n={i18next}>
         <MemoryRouter initialEntries={["/"]}>
           <Routes>
-            <Route path="/" element={<Forgot2 />} />
-            <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Forgot3 />} />
           </Routes>
         </MemoryRouter>
       </I18nextProvider>
     );
    
-    const button = screen.getByRole("button", { name: /send/i });
+    const button = screen.getByRole("button", { name: /password/i });
     expect(button).toBeInTheDocument();
 
   });
 
-  it("memeriksa apakah input ada", async () => {
+  it("memeriksa apakah 2 input ada", async () => {
     render(
       <I18nextProvider i18n={i18next}>
         <MemoryRouter initialEntries={["/"]}>
           <Routes>
-            <Route path="/" element={<Forgot2 />} />
-            <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Forgot3 />} />
           </Routes>
         </MemoryRouter>
       </I18nextProvider>
     );
 
-    const inputElement =  screen.getByRole("textbox");
-    expect(inputElement).toBeInTheDocument();
+    const myElement1 = document.querySelector('[name="passforgot"]');
+    expect(myElement1).toBeInTheDocument();
+    const myElement2 = document.querySelector('[name="passforgot2"]');
+    expect(myElement2).toBeInTheDocument();
   }, 5000);
 });
