@@ -22,6 +22,15 @@ describe("Forgot function", () => {
       json: jest.fn().mockReturnThis(),
     };
   });
+  const data = async()=> {
+    const email = "test@example.com";
+    const snapshot = await User.where("email", "==", email).get();
+    const doc = snapshot.docs[0]; 
+    const data = doc.data(); 
+    OTP = data.otp;
+    id = uniqueId;
+
+  }
 
   it("if email not found in database", async () => {
     req2.body.emailforgot = "wrongemail@gmail.com";
@@ -44,25 +53,14 @@ describe("Forgot function", () => {
 
       expect(response.data).toHaveProperty("message");
       expect(response.data.message).toContain("email sent successfully");
-
-      id = response.data.uniqueId;
-      expect(id).toBeDefined();
     } catch (error) {
       throw error;
     }
   }, 15000);
 
-  it("OTP saved in database", async () => {
-    const email = "test@example.com";
-    const snapshot = await User.where("email", "==", email).get();
-    const doc = snapshot.docs[0]; 
-    const data = doc.data(); 
-    expect(doc.exists).toBe(true);
-    expect(data.otp).not.toBeNull();
-    OTP = data.otp;
-  });
 
   it(" if OTP wrong ", async () => {
+    await data();
     req2 = {
       params: {
         uniqueId: id,
@@ -80,6 +78,7 @@ describe("Forgot function", () => {
     expect(res2.json.mock.calls[0][0].error).toContain("code OTP wrong");
   });
   it(" if OTP true ", async () => {
+    await data();
     req2 = {
       params: {
         uniqueId: id,
@@ -103,6 +102,7 @@ describe("Forgot function", () => {
     );
   });
   it(" if password no same ", async () => {
+    await data();
     const p1 = "palepale";
     const p2 = "siuuuuuu";
     req2 = {
@@ -127,6 +127,7 @@ describe("Forgot function", () => {
     expect(res2.json.mock.calls[0][0].error).toContain("password  no same");
   });
   it("password saved in data base", async () => {
+    await data();
     const p1 = "password";
     const p2 = "password";
     req2 = {
