@@ -17,25 +17,31 @@
             padding: 1em 0;
             margin-bottom: 20px;
         }
-        h2 {
-            text-align: center;
-        }
         h1 {
             color: #ffffff; 
             margin-left: 50px;
             margin-bottom: 0px;
             margin-top: 0px;
+            text-align: left;
         }
         h2 {
             color: #00796b; 
             margin-top: 20px;
             margin-bottom: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .test-functions, .forms {
+            width: 48%;
         }
         #test-functions {
             list-style-type: none;
             padding: 0;
-            max-width: 600px;
-            margin-left: 20px;
+            margin: 0;
         }
         #test-functions li {
             background-color: #ffffff; 
@@ -52,16 +58,13 @@
             cursor: pointer;
             font-size: 25px;
         }
-        #test-functions li button:hover {
-            background-color: #ffffff; 
-        }
+
         form {
-            max-width: 600px;
-            margin: 20px auto;
             background-color: #ffffff; 
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+            margin-bottom: 20px;
         }
         form div {
             margin-bottom: 15px;
@@ -96,44 +99,46 @@
         <h1>Run Jest Test</h1>
     </header>
     <h2 id="file-name"></h2>
-    <ul id="test-functions">
-        <!-- Daftar fungsi tes akan dimuat di sini -->
-    </ul>
-    <form id="inputForm">
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+    <div class="container">
+        <div class="test-functions">
+            <ul id="test-functions">
+                <!-- Daftar fungsi tes akan dimuat di sini -->
+            </ul>
         </div>
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+        <div class="forms">
+            <form id="inputForm">
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Simpan</button>
+            </form>
+            <form id="inputForm2">
+                <div>
+                    <label for="password1">Password:</label>
+                    <input type="text" id="password1" name="password1" required>
+                </div>
+                <div>
+                    <label for="password2">Password:</label>
+                    <input type="password" id="password2" name="password2" required>
+                </div>
+                <button type="submit">Simpan</button>
+            </form>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Simpan</button>
-    </form>
-    <form id="inputForm2">
-        <div>
-            <label for="password1">Password:</label>
-            <input type="text" id="password1" name="password1" required>
-        </div>
-        <div>
-            <label for="password2">Password:</label>
-            <input type="password" id="password2" name="password2" required>
-        </div>
-        <button type="submit">Simpan</button>
-    </form>
+    </div>
     <script>
-        // Mengambil parameter file dari URL
         const urlParams = new URLSearchParams(window.location.search);
         const file = urlParams.get('file');
-
-        // Menampilkan nama file di elemen h2
         document.getElementById('file-name').textContent = file;
 
-        // Mengambil fungsi tes dari server
         fetch(`/test-functions?file=${encodeURIComponent(file)}`)
             .then(response => response.json())
             .then(testFunctions => {
@@ -148,7 +153,6 @@
                 });
             });
 
-        // Fungsi untuk menjalankan tes
         function runTest(file, func) {
             fetch(`/run-test?file=${encodeURIComponent(file)}&func=${encodeURIComponent(func)}`)
                 .then(response => response.json())
@@ -160,10 +164,9 @@
                 });
         }
 
-        // Event listener untuk formulir pertama
         document.getElementById('inputForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Menghentikan pengiriman formulir
-            const formData = new FormData(this); // Mendapatkan data formulir
+            event.preventDefault();
+            const formData = new FormData(this);
             const userData = Object.fromEntries(formData);
             const { email, username, password } = userData;
             fetch(`/save-input?username=${username}&email=${email}&password=${password}`)
@@ -176,10 +179,9 @@
                 });
         });
 
-        // Event listener untuk formulir kedua
         document.getElementById('inputForm2').addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            const formData = new FormData(this); 
+            event.preventDefault();
+            const formData = new FormData(this);
             const userData = Object.fromEntries(formData);
             const { password1, password2 } = userData;
             fetch(`/save-input-pw?password1=${password1}&password2=${password2}`)
