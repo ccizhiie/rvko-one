@@ -4,12 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jest Test Runner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa; 
+        }
+        header {
+            background-color: #00796b;
+            color: #ffffff; 
+            padding: 1em 0;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        h1 {
+            color: #ffffff; 
+            margin-left: 50px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+        h2 {
+            color: #00796b; 
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #test-functions {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin-left: 20px;
+        }
+        #test-functions li {
+            background-color: #ffffff; 
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+        }
+        #test-functions li button {
+            background-color: #ffffff; 
+            color: #00796b; 
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 25px;
+        }
+        #test-functions li button:hover {
+            background-color: #ffffff; 
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff; 
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00796b; 
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #00796b; 
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            background-color: #00796b; 
+            color: #ffffff; 
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #004d40; 
+        }
+    </style>
 </head>
 <body>
-    <h1>Run Jest Test</h1>
+    <header>
+        <h1>Run Jest Test</h1>
+    </header>
     <h2 id="file-name"></h2>
     <ul id="test-functions">
-        <!-- List of test functions will be populated here -->
+        <!-- Daftar fungsi tes akan dimuat di sini -->
     </ul>
     <form id="inputForm">
         <div>
@@ -26,25 +114,26 @@
         </div>
         <button type="submit">Simpan</button>
     </form>
-</ul>
-<form id="inputForm2">
-
-    <div>
-        <label for="password">password:</label>
-        <input type="text" id="password1" name="password1" required>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password2" name="password2" required>
-    </div>
-    <button type="submit">Simpan</button>
-</form>
+    <form id="inputForm2">
+        <div>
+            <label for="password1">Password:</label>
+            <input type="text" id="password1" name="password1" required>
+        </div>
+        <div>
+            <label for="password2">Password:</label>
+            <input type="password" id="password2" name="password2" required>
+        </div>
+        <button type="submit">Simpan</button>
+    </form>
     <script>
+        // Mengambil parameter file dari URL
         const urlParams = new URLSearchParams(window.location.search);
         const file = urlParams.get('file');
 
+        // Menampilkan nama file di elemen h2
         document.getElementById('file-name').textContent = file;
 
+        // Mengambil fungsi tes dari server
         fetch(`/test-functions?file=${encodeURIComponent(file)}`)
             .then(response => response.json())
             .then(testFunctions => {
@@ -59,6 +148,7 @@
                 });
             });
 
+        // Fungsi untuk menjalankan tes
         function runTest(file, func) {
             fetch(`/run-test?file=${encodeURIComponent(file)}&func=${encodeURIComponent(func)}`)
                 .then(response => response.json())
@@ -69,33 +159,38 @@
                     alert('Test failed: ' + err.message);
                 });
         }
+
+        // Event listener untuk formulir pertama
         document.getElementById('inputForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Menghentikan pengiriman formulir
             const formData = new FormData(this); // Mendapatkan data formulir
             const userData = Object.fromEntries(formData);
-            const {email,username,password} = userData
+            const { email, username, password } = userData;
             fetch(`/save-input?username=${username}&email=${email}&password=${password}`)
                 .then(response => response.json())
                 .then(result => {
-                    alert("data succes update:\n"+"email:"+email+"\nusername:"+username+"\npassword:"+password);
+                    alert("Data berhasil diperbarui:\n" + "Email: " + email + "\nUsername: " + username + "\nPassword: " + password);
                 })
                 .catch(err => {
                     alert('Test failed: ' + err.message);
-                });;})
-        
-                document.getElementById('inputForm2').addEventListener('submit', function(event) {
-            event.preventDefault(); // Menghentikan pengiriman formulir
-            const formData = new FormData(this); // Mendapatkan data formulir
+                });
+        });
+
+        // Event listener untuk formulir kedua
+        document.getElementById('inputForm2').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(this); 
             const userData = Object.fromEntries(formData);
-            const {password2,password1} = userData
+            const { password1, password2 } = userData;
             fetch(`/save-input-pw?password1=${password1}&password2=${password2}`)
                 .then(response => response.json())
                 .then(result => {
-                    alert("data succes update:\n"+"password:"+password1+"\npassword:"+password2);
+                    alert("Data berhasil diperbarui:\n" + "Password1: " + password1 + "\nPassword2: " + password2);
                 })
                 .catch(err => {
                     alert('Test failed: ' + err.message);
-                });;})
+                });
+        });
     </script>
 </body>
 </html>
