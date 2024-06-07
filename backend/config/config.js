@@ -28,4 +28,4 @@ const User = db.collection("Users");
 const Foto = db.collection("Foto");
 const del = firebase.firestore.FieldValue.delete();
 
-module.exports = { bucket, db, User, Foto, del};
+module.exports = { bucket, db, User, Foto, del };

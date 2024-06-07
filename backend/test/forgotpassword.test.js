@@ -4,16 +4,26 @@ const {
   ChangePassword,
 } = require("../controllers/ForgotPassword");
 const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
+const dataPath = path.join(__dirname, "..", "data.json");
+const newDataPath = path.join(__dirname, "..", "newData.json");
 
 const { User } = require("../config/config");
 
 describe("Forgot function", () => {
-  let id, OTP, req2, res2;
+  let id, OTP, req2, res2, jsonData, jsonData2;
+  beforeAll(() => {
+    const rawData = fs.readFileSync(dataPath);
+    jsonData = JSON.parse(rawData);
+    const rawData2 = fs.readFileSync(newDataPath);
+    jsonData2 = JSON.parse(rawData2);
+  });
 
   beforeEach(() => {
     req2 = {
       body: {
-        emailforgot: "test@example.com",
+        emailforgot: jsonData2.email || "test@example.com",
       },
     };
 
@@ -22,15 +32,25 @@ describe("Forgot function", () => {
       json: jest.fn().mockReturnThis(),
     };
   });
-  const data = async()=> {
-    const email = "test@example.com";
+
+  afterAll(() => {
+    const resetData = {};
+    for (const key in jsonData) {
+      if (jsonData.hasOwnProperty(key)) {
+        resetData[key] = "";
+      }
+    }
+    fs.writeFileSync(dataPath, JSON.stringify(resetData, null, 2));
+  });
+
+  const data = async () => {
+    const email = req2.body.emailforgot;
     const snapshot = await User.where("email", "==", email).get();
-    const doc = snapshot.docs[0]; 
-    const data = doc.data(); 
+    const doc = snapshot.docs[0];
+    const data = doc.data();
     OTP = data.otp;
     id = uniqueId;
-
-  }
+  };
 
   it("if email not found in database", async () => {
     req2.body.emailforgot = "wrongemail@gmail.com";
@@ -58,7 +78,6 @@ describe("Forgot function", () => {
     }
   }, 15000);
 
-
   it(" if OTP wrong ", async () => {
     await data();
     req2 = {
@@ -70,7 +89,7 @@ describe("Forgot function", () => {
       },
     };
 
-   await OTPcode(req2, res2);
+    await OTPcode(req2, res2);
     expect(res2.status).toHaveBeenCalledWith(400);
     expect(res2.status.mock.calls[0][0]).toBe(400);
     expect(res2.json).toHaveBeenCalled();
@@ -92,7 +111,7 @@ describe("Forgot function", () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
-   await OTPcode(req2, res2);
+    await OTPcode(req2, res2);
     expect(res2.status).toHaveBeenCalledWith(200);
     expect(res2.status.mock.calls[0][0]).toBe(200);
     expect(res2.json).toHaveBeenCalled();
@@ -104,7 +123,7 @@ describe("Forgot function", () => {
   it(" if password no same ", async () => {
     await data();
     const p1 = "palepale";
-    const p2 = "siuuuuuu";
+    const p2 = "siuuuu";
     req2 = {
       params: {
         uniqueId: id,
@@ -119,7 +138,7 @@ describe("Forgot function", () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
-   await ChangePassword(req2, res2);
+    await ChangePassword(req2, res2);
     expect(res2.status).toHaveBeenCalledWith(400);
     expect(res2.status.mock.calls[0][0]).toBe(400);
     expect(res2.json).toHaveBeenCalled();
@@ -128,8 +147,8 @@ describe("Forgot function", () => {
   });
   it("password saved in data base", async () => {
     await data();
-    const p1 = "password";
-    const p2 = "password";
+    const p1 = jsonData.password1 || "password";
+    const p2 = jsonData.password2 || "password";
     req2 = {
       params: {
         uniqueId: id,
@@ -144,7 +163,7 @@ describe("Forgot function", () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
-   await ChangePassword(req2, res2);
+    await ChangePassword(req2, res2);
     expect(res2.status).toHaveBeenCalledWith(200);
     expect(res2.status.mock.calls[0][0]).toBe(200);
     expect(res2.json).toHaveBeenCalled();

@@ -51,10 +51,17 @@ app.get("/run-test", (req, res) => {
   console.log(`Running command: ${command}`);
   const jestProcess = exec(command, { shell: true });
 
+  let stdout = "";
   let stderr = "";
+
+  jestProcess.stdout.on("data", (data) => {
+    stdout += data;
+  });
+
   jestProcess.stderr.on("data", (data) => {
     stderr += data;
   });
+
 
   jestProcess.on("close", (code) => {
     console.log(`Child process exited with code ${code}`);
@@ -77,6 +84,24 @@ app.get("/save-input", (req, res) => {
   if (email !== undefined) data.email = email;
   if (password !== undefined) data.password = password;
   if (username !== undefined) data.username = username;
+
+  // Tulis kembali objek JSON yang diperbarui ke file
+  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+
+  res.json({ message: "Data create succes", data });
+});
+
+app.get("/save-input-pw", (req, res) => {
+  const { password1,password2 } = req.query; // Ambil nilai baru untuk a dan b dari body permintaan
+  // Baca file JSON yang ada
+  let rawData = fs.readFileSync(dataPath);
+  let data = JSON.parse(rawData);
+
+  // Perbarui nilai yang diperlukan tanpa menghapus properti lain
+  
+  if (password1 !== undefined) data.password1 = password1;
+  if (password2 !== undefined) data.password2 = password2;
+
 
   // Tulis kembali objek JSON yang diperbarui ke file
   fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));

@@ -26,6 +26,19 @@
         </div>
         <button type="submit">Simpan</button>
     </form>
+</ul>
+<form id="inputForm2">
+
+    <div>
+        <label for="password">password:</label>
+        <input type="text" id="password1" name="password1" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password2" name="password2" required>
+    </div>
+    <button type="submit">Simpan</button>
+</form>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const file = urlParams.get('file');
@@ -65,6 +78,20 @@
                 .then(response => response.json())
                 .then(result => {
                     alert("data succes update:\n"+"email:"+email+"\nusername:"+username+"\npassword:"+password);
+                })
+                .catch(err => {
+                    alert('Test failed: ' + err.message);
+                });;})
+        
+                document.getElementById('inputForm2').addEventListener('submit', function(event) {
+            event.preventDefault(); // Menghentikan pengiriman formulir
+            const formData = new FormData(this); // Mendapatkan data formulir
+            const userData = Object.fromEntries(formData);
+            const {password2,password1} = userData
+            fetch(`/save-input-pw?password1=${password1}&password2=${password2}`)
+                .then(response => response.json())
+                .then(result => {
+                    alert("data succes update:\n"+"password:"+password1+"\npassword:"+password2);
                 })
                 .catch(err => {
                     alert('Test failed: ' + err.message);
