@@ -49,7 +49,7 @@ describe("Forgot function", () => {
     const doc = snapshot.docs[0];
     const data = doc.data();
     OTP = data.otp;
-    id = uniqueId;
+    id = data.uniqueId;
   };
 
   it("if email not found in database", async () => {

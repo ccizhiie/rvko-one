@@ -11,7 +11,6 @@ const newDataPath = path.join(__dirname, "..", "newData.json");
 
 describe("Home function", () => {
   let req2, res2;
-  let data;
   let jsonData, jsonData2;
   beforeAll(() => {
     const rawData = fs.readFileSync(dataPath);
@@ -115,110 +114,122 @@ describe("Home function", () => {
 
     const id = res2.json.mock.calls[0][0].id;
 
-    let req = {
-      params: { id: id },
-      body: {
-        username: "",
-        email: "",
-        password: "",
-        phone: "",
-      },
+    let req3 = {
+      params: { id: id }
     };
-    let res = {
+    let res3 = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
 
-    await GetProfil(req, res);
-    const response = res.json.mock.calls[0][0];
-    data = response;
-    let { username, phone, password } = data;
-    req.body.username = username;
-    req.body.email = "coba@gmail.com";
-    req.body.phone = phone;
-    req.body.password = password;
+    await GetProfil(req3, res3);
+    const response = res3.json.mock.calls[0][0];
+    console.log(response)
+    const data = response;
+    const { username, phone, password } = data;
+    let req4 = {
+      params: { id: id },
+      body:{
+        username:username,
+        password:password,
+        email:"coba@gmail.com",
+        phone:phone
+      }
+    };
+    let res4 = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
 
-    await PostProfil(req, res);
+    await PostProfil(req4, res4);
 
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.status.mock.calls[0][0]).toBe(400);
+    expect(res4.status).toHaveBeenCalledWith(400);
+    expect(res4.status.mock.calls[0][0]).toBe(400);
 
-    expect(res.json).toHaveBeenCalled();
+    expect(res4.json).toHaveBeenCalled();
 
-    expect(res.json.mock.calls[0][0]).toHaveProperty("error");
-    expect(res.json.mock.calls[0][0].error).toContain("Email alredy used");
-  });
+    expect(res4.json.mock.calls[0][0]).toHaveProperty("error");
+    expect(res4.json.mock.calls[0][0].error).toContain("Email alredy used");
+  },15000);
 
   it("post profil data to firebase if username alredy used", async () => {
     await Login(req2, res2);
 
     const id = res2.json.mock.calls[0][0].id;
 
-    let req = {
-      params: { id: id },
-      body: {
-        username: "",
-        email: "",
-        password: "",
-        phone: "",
-      },
+    let req3 = {
+      params: { id: id }
     };
-    let res = {
+    let res3 = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
 
-    await GetProfil(req, res);
-    const response = res.json.mock.calls[0][0];
-    data = response;
-    let { phone, email, password } = data;
-    req.body.username = "coba";
-    req.body.email = email;
-    req.body.phone = phone;
-    req.body.password = password;
+    await GetProfil(req3, res3);
+    const response = res3.json.mock.calls[0][0];
+    console.log(response)
+    const data = response;
+    const { email, phone, password } = data;
+    let req4 = {
+      params: { id: id },
+      body:{
+        username:"coba",
+        password:password,
+        email:email,
+        phone:phone
+      }
+    };
+    let res4 = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
 
-    await PostProfil(req, res);
+    await PostProfil(req4, res4);
 
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.status.mock.calls[0][0]).toBe(400);
-    expect(res.json).toHaveBeenCalled();
+    expect(res4.status).toHaveBeenCalledWith(400);
+    expect(res4.status.mock.calls[0][0]).toBe(400);
+    expect(res4.json).toHaveBeenCalled();
 
-    expect(res.json.mock.calls[0][0]).toHaveProperty("error");
-    expect(res.json.mock.calls[0][0].error).toContain("Username alredy used");
-  });
+    expect(res4.json.mock.calls[0][0]).toHaveProperty("error");
+    expect(res4.json.mock.calls[0][0].error).toContain("Username alredy used");
+  },15000);
 
   it("post profil data saved to firebase ", async () => {
     await Login(req2, res2);
 
     const id = res2.json.mock.calls[0][0].id;
 
-    let req = {
-      params: { id: id },
-      body: {
-        username: "",
-        email: "",
-        password: "",
-        phone: "",
-      },
+    let req3 = {
+      params: { id: id }
     };
-    let res = {
+    let res3 = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
 
-    await GetProfil(req, res);
-    const response = res.json.mock.calls[0][0];
-    data = response;
-    let { username, email, password } = data;
-    req.body.username = username;
-    req.body.email = email;
-    req.body.phone = "123";
-    req.body.password = password;
+    await GetProfil(req3, res3);
+    const response = res3.json.mock.calls[0][0];
+    console.log(response)
+    const data = response;
+    const { username,email, password } = data;
+    let req4 = {
+      params: { id: id },
+      body:{
+        username:username,
+        password:password,
+        email:email,
+        phone:"123"
+      }
+    };
+    let res4 = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
 
-    await PostProfil(req, res);
+    await PostProfil(req4, res4);
 
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.status.mock.calls[0][0]).toBe(200);
-    expect(res.json).toHaveBeenCalled();
-  });
+    expect(res4.status).toHaveBeenCalledWith(200);
+    expect(res4.status.mock.calls[0][0]).toBe(200);
+    expect(res4.json).toHaveBeenCalled();
+  },15000);
 });

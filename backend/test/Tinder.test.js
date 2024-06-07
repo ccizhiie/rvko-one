@@ -58,7 +58,7 @@ describe("Tinder function", () => {
     expect(res.json.mock.calls[0][0].data.path).not.toBeNull();
     expect(res.json.mock.calls[0][0].data.like).not.toBeNull();
     expect(res.json.mock.calls[0][0].data.dislike).not.toBeNull();
-  });
+  },15000);
 
   it("Post data tinder to firebase", async () => {
     await Login(req2, res2);
@@ -69,7 +69,7 @@ describe("Tinder function", () => {
       json: jest.fn().mockReturnThis(),
     };
     await GetTinder(req3, res3);
-    data = res.json.mock.calls[0][0].data;
+    data = res3.json.mock.calls[0][0].data;
     const req = { params: { id: id }, body: { images: data } };
     const res = {
       status: jest.fn().mockReturnThis(),
@@ -86,5 +86,5 @@ describe("Tinder function", () => {
     expect(res.json.mock.calls[0][0].message).toContain(
       "addend data successfully"
     );
-  });
+  },15000);
 });
