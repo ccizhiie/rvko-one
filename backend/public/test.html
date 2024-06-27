@@ -1,198 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jest Test Runner</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #e0f7fa; 
-        }
-        header {
-            background-color: #00796b;
-            color: #ffffff; 
-            padding: 1em 0;
-            margin-bottom: 20px;
-        }
-        h1 {
-            color: #ffffff; 
-            margin-left: 50px;
-            margin-bottom: 0px;
-            margin-top: 0px;
-            text-align: left;
-        }
-        h2 {
-            color: #00796b; 
-            margin-top: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-        }
-        .test-functions, .forms {
-            width: 48%;
-        }
-        #test-functions {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        #test-functions li {
-            background-color: #ffffff; 
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
-        }
-        #test-functions li button {
-            background-color: #ffffff; 
-            color: #00796b; 
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 25px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e0f7fa;
+      }
+      header {
+        background-color: #00796b;
+        color: #ffffff;
+        padding: 1em 0;
+        margin-bottom: 20px;
+      }
+      p {
+        text-align: center;
+      }
+      h1 {
+        color: #ffffff;
+        margin-left: 50px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+        text-align: center;
+      }
+      h2 {
+        color: #00796b;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+      }
+      .test-functions,
+      .forms {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+      }
+      #test-functions {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+      #test-functions li {
+        background-color: #ffffff;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+      #test-functions li button {
+        background-color: #ffffff;
+        color: #00796b;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 25px;
+      }
 
-        form {
-            background-color: #ffffff; 
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
-            margin-bottom: 20px;
-        }
-        form div {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #00796b; 
-        }
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            border: 1px solid #00796b; 
-            border-radius: 5px;
-        }
-        button[type="submit"] {
-            background-color: #00796b; 
-            color: #ffffff; 
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button[type="submit"]:hover {
-            background-color: #004d40; 
-        }
+      form {
+        background-color: #ffffff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 40vw;
+        text-align: center;
+      }
+      form div {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #00796b;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #00796b;
+        border-radius: 5px;
+      }
+      button[type="submit"] {
+        background-color: #00796b;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button[type="submit"]:hover {
+        background-color: #004d40;
+      }
+
+      .hidden {
+        display: none;
+      }
+      .hasil-test {
+        width: 100%;
+        height: 100px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        color: white;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Run Jest Test</h1>
+      <h1>Run Jest Test</h1>
     </header>
     <h2 id="file-name"></h2>
     <div class="container">
-        <div class="test-functions">
-            <ul id="test-functions">
-                <!-- Daftar fungsi tes akan dimuat di sini -->
-            </ul>
-        </div>
-        <div class="forms">
-            <form id="inputForm">
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div>
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit">Simpan</button>
-            </form>
-            <form id="inputForm2">
-                <div>
-                    <label for="password1">Password:</label>
-                    <input type="text" id="password1" name="password1" required>
-                </div>
-                <div>
-                    <label for="password2">Password:</label>
-                    <input type="password" id="password2" name="password2" required>
-                </div>
-                <button type="submit">Simpan</button>
-            </form>
-        </div>
+      <div class="forms">
+        <form id="inputForm" class="hidden">
+          <h2>valid data</h2>
+          <p>Click "run" to see what happens if the correct data is entered</p>
+          <br />
+          <div>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" readonly />
+          </div>
+          <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" readonly />
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" readonly />
+          </div>
+          <button type="submit">RUN</button>
+        </form>
+        <form id="inputFormfalse" class="hidden">
+          <h2>User data</h2>
+          <p>
+            Input your data and run it to see what happens if your data is input
+          </p>
+          <div>
+            <label for="emailfalse">Email:</label>
+            <input type="text" id="emailfalse" name="emailfalse" />
+          </div>
+          <div>
+            <label for="usernamefalse">Username:</label>
+            <input type="text" id="usernamefalse" name="usernamefalse" />
+          </div>
+          <div>
+            <label for="passwordfalse">Password:</label>
+            <input type="text" id="passwordfalse" name="passwordfalse" />
+          </div>
+          <button type="submit">RUN</button>
+        </form>
+        <form id="inputForm2" class="hidden">
+          <h2>valid data</h2>
+          <p>Click "run" to see what happens if the correct data is entered</p>
+          <br />
+          <div>
+            <label for="password1">Password:</label>
+            <input type="text" id="password1" name="password1" readonly />
+          </div>
+          <div>
+            <label for="password2">Password:</label>
+            <input type="text" id="password2" name="password2" readonly />
+          </div>
+          <button type="submit">RUN</button>
+        </form>
+        <form id="inputFormfalse2" class="hidden">
+          <h2>User data</h2>
+          <p>
+            Input your data and run it to see what happens if your data is input
+          </p>
+          <div>
+            <label for="passwordfalse1">Password:</label>
+            <input type="text" id="passwordfalse1" name="passwordfalse1" />
+          </div>
+          <div>
+            <label for="passwordfalse2">Password:</label>
+            <input type="text" id="passwordfalse2" name="passwordfalse2" />
+          </div>
+          <button type="submit">RUN</button>
+        </form>
+        <form id="inputForm3" class="hidden">
+          <h2>valid data</h2>
+          <p>Click "run" to see what happens if the correct data is entered</p>
+          <br />
+          <div>
+            <label for="email3">Email:</label>
+            <input type="text" id="email3" name="email3" readonly />
+          </div>
+          <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username3" name="username3" readonly />
+          </div>
+          <div>
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone3" name="phone3" readonly />
+          </div>
+          <div>
+            <label for="password3">Password:</label>
+            <input type="text" id="password3" name="password3" readonly />
+          </div>
+          <button type="submit">RUN</button>
+        </form>
+        <form id="inputFormfalse3" class="hidden">
+          <h2>User data</h2>
+          <p>
+            Input your data and run it to see what happens if your data is input
+          </p>
+          <div>
+            <label for="emailfalse3">Email:</label>
+            <input type="text" id="emailfalse3" name="emailfalse3" />
+          </div>
+          <div>
+            <label for="usernamefalse3">Username:</label>
+            <input type="text" id="usernamefalse3" name="usernamefalse3" />
+          </div>
+          <div>
+            <label for="phonefalse3">Phone:</label>
+            <input type="text" id="phonefalse3" name="phonefalse3" />
+          </div>
+          <div>
+            <label for="passwordfalse3">Password:</label>
+            <input type="text" id="passwordfalse3" name="passwordfalse3" />
+          </div>
+          <button type="submit">RUN</button>
+        </form>
+      </div>
     </div>
+    <div id="hasil-test" class="hasil-test"><h1></h1></div>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const file = urlParams.get('file');
-        document.getElementById('file-name').textContent = file;
+      const urlParams = new URLSearchParams(window.location.search);
+      const file = urlParams.get("file");
+      let data = [];
+      document.getElementById("file-name").textContent = file;
 
-        fetch(`/test-functions?file=${encodeURIComponent(file)}`)
-            .then(response => response.json())
-            .then(testFunctions => {
-                const ul = document.getElementById('test-functions');
-                testFunctions.forEach(func => {
-                    const li = document.createElement('li');
-                    const button = document.createElement('button');
-                    button.textContent = func;
-                    button.onclick = () => runTest(file, func);
-                    li.appendChild(button);
-                    ul.appendChild(li);
-                });
+      const hasil = document.getElementById("hasil-test");
+
+      const inputForm = document.getElementById("inputForm");
+      const inputForm2 = document.getElementById("inputForm2");
+      const inputForm3 = document.getElementById("inputForm3");
+      const inputFormfalse = document.getElementById("inputFormfalse");
+      const inputFormfalse2 = document.getElementById("inputFormfalse2");
+      const inputFormfalse3 = document.getElementById("inputFormfalse3");
+
+      switch (file) {
+        case "register.test.js":
+          fetch("/data-input-rg")
+            .then((response) => response.json())
+            .then((data) => {
+              $("#email").val(data.email);
+              $("#username").val(data.username);
+              $("#password").val(data.password);
             });
 
-        function runTest(file, func) {
-            fetch(`/run-test?file=${encodeURIComponent(file)}&func=${encodeURIComponent(func)}`)
-                .then(response => response.json())
-                .then(result => {
-                    alert(result.message);
-                })
-                .catch(err => {
-                    alert('Test failed: ' + err.message);
-                });
-        }
+          inputForm.classList.remove("hidden");
+          inputFormfalse.classList.remove("hidden");
+          break;
+        case "login.test.js":
+          fetch("/data-input")
+            .then((response) => response.json())
+            .then((data) => {
+              $("#email").val(data.email);
+              $("#username").val(data.username);
+              $("#password").val(data.password);
+            });
 
-        document.getElementById('inputForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const userData = Object.fromEntries(formData);
-            const { email, username, password } = userData;
-            fetch(`/save-input?username=${username}&email=${email}&password=${password}`)
-                .then(response => response.json())
-                .then(result => {
-                    alert("Data berhasil diperbarui:\n" + "Email: " + email + "\nUsername: " + username + "\nPassword: " + password);
-                })
-                .catch(err => {
-                    alert('Test failed: ' + err.message);
-                });
+          inputForm.classList.remove("hidden");
+          inputFormfalse.classList.remove("hidden");
+          break;
+
+        case "changepassword.test.js":
+          fetch("/data-input")
+            .then((response) => response.json())
+            .then((data) => {
+              $("#password1").val(data.password1);
+              $("#password2").val(data.password2);
+            });
+          inputForm2.classList.remove("hidden");
+          inputFormfalse2.classList.remove("hidden");
+          break;
+
+        case "account.test.js":
+          fetch("/data-input")
+            .then((response) => response.json())
+            .then((data) => {
+              $("#email3").val(data.email);
+              $("#username3").val(data.username);
+              $("#password3").val(data.password);
+              $("#phone3").val(data.phone);
+            });
+          inputForm3.classList.remove("hidden");
+          inputFormfalse3.classList.remove("hidden");
+          break;
+      }
+
+      document
+        .getElementById("inputForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const userData = Object.fromEntries(formData);
+          const { email, username, password } = userData;
+          fetch(`/save-input`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              email: email,
+              password: password,
+            }),
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                fetch(`/run-test?file=${encodeURIComponent(file)}`)
+                  .then((response) => response.json())
+                  .then((result) => {
+                    console.log(result.message);
+                    if (result.message == "success") {
+                      hasil.style.backgroundColor = "green";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "The test executed succesfully";
+                    } else {
+                      hasil.style.backgroundColor = "red";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "the test failed to be implemented,please contact the developer";
+                    }
+                  })
+                  .catch((err) => {
+                    alert("Test failed: " + err.message);
+                  });
+              } else {
+                response
+                  .json()
+                  .then((error) => {
+                    alert(error.message || "failed to saved");
+                  })
+                  .catch((err) => {
+                    alert("test failed: " + err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              alert("Test failed: " + err.message);
+            });
         });
 
-        document.getElementById('inputForm2').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const userData = Object.fromEntries(formData);
-            const { password1, password2 } = userData;
-            fetch(`/save-input-pw?password1=${password1}&password2=${password2}`)
-                .then(response => response.json())
-                .then(result => {
-                    alert("Data berhasil diperbarui:\n" + "Password1: " + password1 + "\nPassword2: " + password2);
-                })
-                .catch(err => {
-                    alert('Test failed: ' + err.message);
-                });
+      document
+        .getElementById("inputFormfalse")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const userData = Object.fromEntries(formData);
+          const { emailfalse, usernamefalse, passwordfalse } = userData;
+
+          fetch(`/save-input`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: usernamefalse,
+              email: emailfalse,
+              password: passwordfalse,
+            }),
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                fetch(`/run-test?file=${encodeURIComponent(file)}`)
+                  .then((response) => response.json())
+                  .then((result) => {
+                    if (result.message == "success") {
+                      hasil.style.backgroundColor = "green";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "The test executed succesfully";
+                    } else {
+                      hasil.style.backgroundColor = "red";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "the test failed to be implemented,please contact the developer";
+                    }
+                  })
+                  .catch((err) => {
+                    alert("Test failed: " + err.message);
+                  });
+              } else {
+                response
+                  .json()
+                  .then((error) => {
+                    alert(error.message || "failed to saved");
+                  })
+                  .catch((err) => {
+                    alert("test failed: " + err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              alert("Test failed: " + err.message);
+            });
+        });
+
+      document
+        .getElementById("inputForm2")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const userData = Object.fromEntries(formData);
+          const { password1, password2 } = userData;
+          fetch(`/save-input-pw`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              password1: password1,
+              password2: password2,
+            }),
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                fetch(`/run-test?file=${encodeURIComponent(file)}`)
+                  .then((response) => response.json())
+                  .then((result) => {
+                    if (result.message == "success") {
+                      hasil.style.backgroundColor = "green";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "The test executed succesfully";
+                    } else {
+                      hasil.style.backgroundColor = "red";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "the test failed to be implemented,please contact the developer";
+                    }
+                  })
+                  .catch((err) => {
+                    alert("Test failed: " + err.message);
+                  });
+              } else {
+                response
+                  .json()
+                  .then((error) => {
+                    alert(error.message || "failed to saved");
+                  })
+                  .catch((err) => {
+                    alert("test failed: " + err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              alert("Test failed: " + err.message);
+            });
+        });
+
+      document
+        .getElementById("inputFormfalse2")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const userData = Object.fromEntries(formData);
+          const { passwordfalse1, passwordfalse2 } = userData;
+          fetch(`/save-input-pw`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              password1: passwordfalse1,
+              password2: passwordfalse2,
+            }),
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                fetch(`/run-test?file=${encodeURIComponent(file)}`)
+                  .then((response) => response.json())
+                  .then((result) => {
+                    if (result.message == "success") {
+                      hasil.style.backgroundColor = "green";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "The test executed succesfully";
+                    } else {
+                      hasil.style.backgroundColor = "red";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "the test failed to be implemented,please contact the developer";
+                    }
+                  })
+                  .catch((err) => {
+                    alert("Test failed: " + err.message);
+                  });
+              } else {
+                response
+                  .json()
+                  .then((error) => {
+                    alert(error.message || "failed to saved");
+                  })
+                  .catch((err) => {
+                    alert("test failed: " + err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              alert("Test failed: " + err.message);
+            });
+        });
+
+      document
+        .getElementById("inputForm3")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const userData = Object.fromEntries(formData);
+          const { email3, username3, password3, phone3 } = userData;
+          fetch(`/save-input-ac`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username3,
+              email: email3,
+              password: password3,
+              phone: phone3,
+            }),
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                fetch(`/run-test?file=${encodeURIComponent(file)}`)
+                  .then((response) => response.json())
+                  .then((result) => {
+                    if (result.message == "success") {
+                      hasil.style.backgroundColor = "green";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "The test executed succesfully";
+                    } else {
+                      hasil.style.backgroundColor = "red";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "the test failed to be implemented,please contact the developer";
+                    }
+                  })
+                  .catch((err) => {
+                    alert("Test failed: " + err.message);
+                  });
+              } else {
+                response
+                  .json()
+                  .then((error) => {
+                    alert(error.message || "failed to saved");
+                  })
+                  .catch((err) => {
+                    alert("test failed: " + err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              alert("Test failed: " + err.message);
+            });
+        });
+
+      document
+        .getElementById("inputFormfalse3")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const userData = Object.fromEntries(formData);
+          const { emailfalse3, usernamefalse3, passwordfalse3, phonefalse3 } =
+            userData;
+          fetch(`/save-input-ac`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: usernamefalse3,
+              email: emailfalse3,
+              password: passwordfalse3,
+              phone: phonefalse3,
+            }),
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                fetch(`/run-test?file=${encodeURIComponent(file)}`)
+                  .then((response) => response.json())
+                  .then((result) => {
+                    if (result.message == "success") {
+                      hasil.style.backgroundColor = "green";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "The test executed succesfully";
+                    } else {
+                      hasil.style.backgroundColor = "red";
+                      document.querySelector("#hasil-test h1").innerText =
+                        "the test failed to be implemented,please contact the developer";
+                    }
+                  })
+                  .catch((err) => {
+                    alert("Test failed: " + err.message);
+                  });
+              } else {
+                response
+                  .json()
+                  .then((error) => {
+                    alert(error.message || "failed to saved");
+                  })
+                  .catch((err) => {
+                    alert("test failed: " + err.message);
+                  });
+              }
+            })
+            .catch((err) => {
+              alert("Test failed: " + err.message);
+            });
         });
     </script>
-</body>
+  </body>
 </html>

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon index.js",
-    "play":"nodemon test.js"
+    "play": "nodemon test.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "firebase-admin": "^12.1.0",
     "google-auth-library": "^9.9.0",
     "googleapis": "^136.0.0",
+    "joi": "^17.13.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.3",

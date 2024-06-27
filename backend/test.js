@@ -3,12 +3,81 @@ const fs = require("fs");
 const path = require("path");
 const { exec } = require("child_process");
 const bodyParser = require("body-parser");
+const Joi = require("joi");
 
 const app = express();
-const testDir = path.join(__dirname, "test");
+const testDir = path.join(__dirname, "test2");
 const dataPath = path.join(__dirname, "data.json");
+const newDataPath = path.join(__dirname, "newData.json");
+const newDataPath2 = path.join(__dirname, "registerdata.json");
 app.use(bodyParser.json());
 app.use(express.static("public"));
+
+const accountSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    "string.email": "Email tidak valid",
+    "any.required": "Email diperlukan",
+    "string.empty": "Email diperlukan",
+  }),
+  username: Joi.string().min(3).required().messages({
+    "string.min": "Username minimal harus memiliki 3 karakter",
+    "any.required": "Username diperlukan",
+    "string.empty": "Username diperlukan",
+  }),
+  phone: Joi.string()
+    .pattern(/^\+?1?\d{9,15}$/)
+    .optional()
+    .messages({
+      "string.pattern.base": "Nomor telepon tidak valid",
+    }),
+  password: Joi.string().min(3).required().messages({
+    "string.min": "Password minimal harus memiliki 6 karakter",
+    "any.required": "Password diperlukan",
+    "string.empty": "Password diperlukan",
+  }),
+});
+
+const registerSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    "string.email": "Email tidak valid",
+    "any.required": "Email diperlukan",
+    "string.empty": "Email diperlukan",
+  }),
+  username: Joi.string().min(3).required().messages({
+    "string.min": "Username minimal harus memiliki 3 karakter",
+    "any.required": "Username diperlukan",
+    "string.empty": "Username diperlukan",
+  }),
+  password: Joi.string().min(3).required().messages({
+    "string.min": "Password minimal harus memiliki 6 karakter",
+    "any.required": "Password diperlukan",
+    "string.empty": "Password diperlukan",
+  }),
+});
+
+const changePasswordSchema = Joi.object({
+  password1: Joi.string().min(3).required().messages({
+    "string.min": "Password minimal harus memiliki 6 karakter",
+    "any.required": "Password diperlukan",
+    "string.empty": "Password diperlukan",
+  }),
+  password2: Joi.string().min(3).required().messages({
+    "string.min": "Password minimal harus memiliki 6 karakter",
+    "any.required": "Password diperlukan",
+    "string.empty": "Password diperlukan",
+  }),
+});
+
+const validate = (schema) => (req, res, next) => {
+  const { error } = schema.validate(req.body);
+  if (error) {
+    const errorMessage = error.details
+      .map((detail) => detail.message)
+      .join(", ");
+    return res.status(400).json({ message: errorMessage });
+  }
+  next();
+};
 
 app.get("/files", (req, res) => {
   fs.readdir(testDir, (err, files) => {
@@ -17,6 +86,26 @@ app.get("/files", (req, res) => {
     }
     res.json(files.filter((file) => file.endsWith(".test.js")));
   });
+});
+
+app.get("/data-input", (req, res) => {
+  try {
+    const rawData2 = fs.readFileSync(newDataPath);
+    jsonData2 = JSON.parse(rawData2);
+    return res.json(jsonData2);
+  } catch (error) {
+    res.status(500).send("Unable to load true data");
+  }
+});
+
+app.get("/data-input-rg", (req, res) => {
+  try {
+    const rawData2 = fs.readFileSync(newDataPath2);
+    jsonData2 = JSON.parse(rawData2);
+    return res.json(jsonData2);
+  } catch (error) {
+    res.status(500).send("Unable to load true data");
+  }
 });
 
 app.get("/test-functions", (req, res) => {
@@ -41,13 +130,13 @@ app.get("/test-functions", (req, res) => {
 
 app.get("/run-test", (req, res) => {
   const file = req.query.file;
-  const func = req.query.func;
-  console.log(func);
-  if (!file || !func) {
-    return res.status(400).send("File or function not specified");
+
+  if (!file) {
+    return res.status(400).send("File  not specified");
   }
   const filePath = path.join(file);
-  const command = `npx jest --forceExit ${filePath} -t "${func}"`;
+  const command = `npx jest --forceExit ${filePath}`;
+  //-t "${func}"
   console.log(`Running command: ${command}`);
   const jestProcess = exec(command, { shell: true });
 
@@ -62,7 +151,6 @@ app.get("/run-test", (req, res) => {
     stderr += data;
   });
 
-
   jestProcess.on("close", (code) => {
     console.log(`Child process exited with code ${code}`);
     if (code !== 0) {
@@ -74,8 +162,8 @@ app.get("/run-test", (req, res) => {
   });
 });
 
-app.get("/save-input", (req, res) => {
-  const { email, password, username } = req.query; // Ambil nilai baru untuk a dan b dari body permintaan
+app.post("/save-input", validate(registerSchema), (req, res) => {
+  const { email, password, username } = req.body; // Ambil nilai baru untuk a dan b dari body permintaan
   // Baca file JSON yang ada
   let rawData = fs.readFileSync(dataPath);
   let data = JSON.parse(rawData);
@@ -88,25 +176,44 @@ app.get("/save-input", (req, res) => {
   // Tulis kembali objek JSON yang diperbarui ke file
   fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
-  res.json({ message: "Data create succes", data });
+  res.status(200).json({ message: "Data create succes", data });
 });
 
-app.get("/save-input-pw", (req, res) => {
-  const { password1,password2 } = req.query; // Ambil nilai baru untuk a dan b dari body permintaan
+app.post("/save-input-ac", validate(accountSchema), (req, res) => {
+  const { email, password, username, phone } = req.body; // Ambil nilai baru untuk a dan b dari body permintaan
   // Baca file JSON yang ada
   let rawData = fs.readFileSync(dataPath);
   let data = JSON.parse(rawData);
 
   // Perbarui nilai yang diperlukan tanpa menghapus properti lain
-  
-  if (password1 !== undefined) data.password1 = password1;
-  if (password2 !== undefined) data.password2 = password2;
-
+  if (email !== undefined) data.email = email;
+  if (password !== undefined) data.password = password;
+  if (username !== undefined) data.username = username;
+  data.phone = phone;
 
   // Tulis kembali objek JSON yang diperbarui ke file
   fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
-  res.json({ message: "Data create succes", data });
+  res.status(200).json({ message: "Data create succes", data });
+});
+
+app.post("/save-input-pw", validate(changePasswordSchema), (req, res) => {
+  const { password1, password2 } = req.body;
+  let rawData = fs.readFileSync(dataPath);
+  let data = JSON.parse(rawData);
+
+  if (password1 !== password2) {
+    return res
+      .status(400)
+      .json({ message: "Please write the exact same password" });
+  } else {
+    if (password1 !== undefined) data.password1 = password1;
+    if (password2 !== undefined) data.password2 = password2;
+
+    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+
+    return res.status(200).json({ message: "Data create succes", data });
+  }
 });
 
 const PORT = 5000;
